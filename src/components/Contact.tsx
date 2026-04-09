@@ -1,4 +1,4 @@
-import { Mail, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight, FileText } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import { PERSONAL } from "../data/content";
 import { FadeIn } from "./FadeIn";
@@ -13,6 +13,7 @@ const links: { label: string; href: string; icon: IconComponent }[] = [
   { label: "X", href: PERSONAL.x, icon: XIcon },
   { label: "Devpost", href: PERSONAL.devpost, icon: ArrowUpRight },
   { label: "Shipyard", href: PERSONAL.shipyard, icon: ArrowUpRight },
+  { label: "Resume", href: "/resume.pdf", icon: FileText },
 ];
 
 export function Contact() {

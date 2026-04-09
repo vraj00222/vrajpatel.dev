@@ -136,28 +136,49 @@ export function GitHubActivity() {
       .then((r) => r.json())
       .then(async (data) => {
         if (!data.items) return;
-        const prs: MergedPR[] = [];
-        for (const pr of data.items) {
-          const repoPath = pr.repository_url.split("/").slice(-2).join("/");
-          let stars = 0;
-          try {
-            const repoRes = await fetch(
+
+        // Deduplicate repos and fetch stars in parallel
+        const repoPaths = [
+          ...new Set(
+            data.items.map((pr: { repository_url: string }) =>
+              pr.repository_url.split("/").slice(-2).join("/")
+            )
+          ),
+        ] as string[];
+
+        const starMap: Record<string, number> = {};
+        const repoResults = await Promise.allSettled(
+          repoPaths.map(async (repoPath) => {
+            const res = await fetch(
               `https://api.github.com/repos/${repoPath}`
             );
-            if (repoRes.ok) {
-              const repoData = await repoRes.json();
-              stars = repoData.stargazers_count || 0;
+            if (res.ok) {
+              const repoData = await res.json();
+              starMap[repoPath] = repoData.stargazers_count || 0;
             }
-          } catch {
-            /* ignore */
+          })
+        );
+        // Ensure all settled before building PR list
+        void repoResults;
+
+        const prs: MergedPR[] = data.items.map(
+          (pr: {
+            repository_url: string;
+            title: string;
+            html_url: string;
+          }) => {
+            const repoPath = pr.repository_url
+              .split("/")
+              .slice(-2)
+              .join("/");
+            return {
+              title: pr.title,
+              url: pr.html_url,
+              repo: repoPath,
+              stars: starMap[repoPath] || 0,
+            };
           }
-          prs.push({
-            title: pr.title,
-            url: pr.html_url,
-            repo: repoPath,
-            stars,
-          });
-        }
+        );
         setMergedPRs(prs);
       })
       .catch(() => {});

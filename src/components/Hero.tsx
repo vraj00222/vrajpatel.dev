@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { FileText } from "lucide-react";
 import { PERSONAL } from "../data/content";
 import { FadeIn } from "./FadeIn";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
@@ -63,6 +64,18 @@ export function Hero() {
                 <Icon size={16} />
               </motion.a>
             ))}
+            <span className="w-px h-4 bg-border dark:bg-dark-border" />
+            <motion.a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-[13px] text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors duration-200"
+              whileHover={{ y: -1 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            >
+              <FileText size={14} />
+              Resume
+            </motion.a>
           </div>
         </FadeIn>
       </div>
