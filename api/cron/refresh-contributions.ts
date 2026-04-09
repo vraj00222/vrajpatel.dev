@@ -11,18 +11,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const username = "vraj00222";
+  const currentYear = new Date().getUTCFullYear();
 
   try {
-    // Ping the contributions API to warm its cache for the new day
-    const response = await fetch(
-      `https://github-contributions-api.jogruber.de/v4/${username}?y=last`
-    );
-    const data = await response.json();
-    const total = data.contributions?.length ?? 0;
+    // Warm both ranges used by the UI: "last" and selected calendar year.
+    const [lastResponse, yearResponse] = await Promise.all([
+      fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`),
+      fetch(
+        `https://github-contributions-api.jogruber.de/v4/${username}?y=${currentYear}`
+      ),
+    ]);
+
+    const [lastData, yearData] = await Promise.all([
+      lastResponse.json(),
+      yearResponse.json(),
+    ]);
+    const lastTotal = lastData.contributions?.length ?? 0;
+    const yearTotal = yearData.contributions?.length ?? 0;
 
     return res.status(200).json({
       ok: true,
-      message: `Refreshed ${total} contribution days`,
+      message: "Refreshed contribution cache",
+      lastDays: lastTotal,
+      currentYear,
+      currentYearDays: yearTotal,
       timestamp: new Date().toISOString(),
     });
   } catch (err) {
