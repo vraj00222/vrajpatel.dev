@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Satoshi', system-ui, -apple-system, sans-serif;
+  --font-display: 'Clash Display', 'Satoshi', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'JetBrains Mono', monospace;
+
+  /* ── Light mode ── high-contrast black on white ── */
+  --color-bg: #ffffff;
+  --color-surface: #f8f8f8;
+  --color-text: #000000;
+  --color-text-secondary: #1a1a1a;
+  --color-text-muted: #666666;
+  --color-border: #e5e5e5;
+  --color-border-hover: #cccccc;
+  --color-hover-bg: #f2f2f2;
+
+  /* ── Dark mode ── deep black, bright white ── */
+  --color-dark-bg: #050505;
+  --color-dark-surface: #111111;
+  --color-dark-text: #ffffff;
+  --color-dark-text-secondary: #b0b0b0;
+  --color-dark-text-muted: #5a5a5a;
+  --color-dark-border: #1e1e1e;
+  --color-dark-border-hover: #333333;
+  --color-dark-hover-bg: #0f0f0f;
+
+  /* GitHub greens */
+  --color-gh-0: #ebedf0;
+  --color-gh-1: #9be9a8;
+  --color-gh-2: #40c463;
+  --color-gh-3: #30a14e;
+  --color-gh-4: #216e39;
+  --color-gh-dark-0: #161b22;
+  --color-gh-dark-1: #0e4429;
+  --color-gh-dark-2: #006d32;
+  --color-gh-dark-3: #26a641;
+  --color-gh-dark-4: #39d353;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dark body {
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-text-secondary);
+}
+
+/* Smooth crossfade */
+body, header, nav, footer, section, div, a, button, span, p, h1, h2, h3 {
+  transition:
+    background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+rect { transition: none; }
+
+::selection { background: #000; color: #fff; }
+.dark ::selection { background: #fff; color: #000; }
+
+a:focus-visible, button:focus-visible {
+  outline: 1.5px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+section[id] { scroll-margin-top: 5rem; }
+
+.section-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 0 auto;
+  max-width: 672px;
+}
+.dark .section-divider {
+  background: var(--color-dark-border);
+}
+
+.skip-link {
+  position: absolute; top: -100%; left: 1rem; z-index: 100;
+  padding: 0.5rem 1rem; background: #000; color: #fff;
+  border-radius: 0.25rem; font-size: 0.875rem; text-decoration: none;
+}
+.skip-link:focus { top: 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
