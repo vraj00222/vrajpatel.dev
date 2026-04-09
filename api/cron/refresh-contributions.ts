@@ -12,13 +12,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const username = "vraj00222";
   const currentYear = new Date().getUTCFullYear();
+  const today = new Date().toISOString().split("T")[0];
 
   try {
     // Warm both ranges used by the UI: "last" and selected calendar year.
     const [lastResponse, yearResponse] = await Promise.all([
-      fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`),
       fetch(
-        `https://github-contributions-api.jogruber.de/v4/${username}?y=${currentYear}`
+        `https://github-contributions-api.jogruber.de/v4/${username}?y=last&_=${today}`
+      ),
+      fetch(
+        `https://github-contributions-api.jogruber.de/v4/${username}?y=${currentYear}&_=${today}`
       ),
     ]);
 
