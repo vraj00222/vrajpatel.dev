@@ -12,32 +12,69 @@ export const PERSONAL = {
   ieeeLink: "https://ieeexplore.ieee.org/document/10444327",
 } as const;
 
-export const EXPERIENCE = [
+export interface ExperienceItem {
+  title: string;
+  company: string;
+  period: string;
+  location: string;
+  tech: string[];
+  bullets: string[];
+}
+
+export const EXPERIENCE: ExperienceItem[] = [
   {
     title: "Teaching Associate",
     company: "Cal State Fullerton",
     period: "Aug 2025 — Present",
-    description: "Teaching Data Structures and Algorithm Engineering to 100+ students. Automated grading with Python + Gradescope, cutting turnaround 40%.",
+    location: "Fullerton, CA",
+    tech: ["Python", "Git", "Gradescope"],
+    bullets: [
+      "Teaching CPSC 335 — Algorithm Engineering to 100+ undergraduate students, covering greedy algorithms, dynamic programming, graph traversal, and NP-completeness",
+      "Built automated grading scripts with Python and Gradescope API to batch-evaluate student submissions and provide structured feedback",
+      "Designing homework sets and exam problems that reinforce algorithmic thinking and proof techniques",
+      "Holding weekly office hours and review sessions to help students debug code and understand time complexity analysis",
+    ],
   },
   {
     title: "Research Assistant",
     company: "Yuan-Ze University, Taiwan",
     period: "Jul 2023 — Feb 2024",
-    description: "Designed LSTM-Autoencoder models for ECG anomaly detection. Co-authored IEEE paper presented at ICCE 2024 in Las Vegas.",
+    location: "Taoyuan, Taiwan",
+    tech: ["Python", "TensorFlow", "PyTorch", "Jupyter"],
+    bullets: [
+      "Designed and trained LSTM-Autoencoder models for ECG anomaly detection using the MIT-BIH Arrhythmia dataset with TensorFlow and Keras",
+      "Preprocessed 100k+ heartbeat signals — filtering noise, normalizing waveforms, and segmenting R-R intervals for sequence modeling",
+      "Co-authored IEEE paper presented at ICCE 2024 in Las Vegas, detailing the architecture and evaluation metrics",
+      "Experimented with VAE and Transformer-based baselines, benchmarking F1 scores and reconstruction error thresholds across model variants",
+    ],
   },
   {
     title: "Software Developer",
     company: "Lucent Innovation",
     period: "Feb 2023 — Jul 2023",
-    description: "Built REST APIs with Django, PostgreSQL, JWT auth. Configured CI/CD with GitHub Actions. Reduced API response times 25%.",
+    location: "Ahmedabad, India",
+    tech: ["Django", "PostgreSQL", "Docker", "Git", "GitHub Actions", "Postman", "JWT"],
+    bullets: [
+      "Built and maintained REST APIs for an internal project management platform using Django REST Framework with JWT-based authentication",
+      "Designed PostgreSQL schemas for multi-tenant data isolation, wrote migrations, and optimized query plans with indexes and CTEs",
+      "Set up CI/CD pipelines with GitHub Actions — automated linting, test suites, and Docker image builds on every push to main",
+      "Integrated third-party APIs (Stripe, SendGrid) and wrote Postman test collections to validate endpoint contracts across environments",
+    ],
   },
   {
     title: "Software Developer Intern",
     company: "RKIT Software",
     period: "May 2022 — Jul 2022",
-    description: "Built enterprise modules with ASP.NET Core and SQL Server. Optimized stored procedures reducing page load times 30%.",
+    location: "Rajkot, India",
+    tech: ["C#", "ASP.NET", "SQL Server", "JavaScript", "Git"],
+    bullets: [
+      "Built enterprise CRUD modules for an internal ERP system using ASP.NET Core MVC with Entity Framework and SQL Server",
+      "Wrote and optimized T-SQL stored procedures for reporting dashboards, improving query performance on large datasets",
+      "Implemented client-side form validation and dynamic UI components with vanilla JavaScript and jQuery",
+      "Participated in daily standups and code reviews, learning Git workflows, branching strategies, and pull request etiquette",
+    ],
   },
-] as const;
+];
 
 export const PROJECTS = [
   {
