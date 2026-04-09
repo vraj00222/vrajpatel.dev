@@ -37,7 +37,7 @@ export function Contact() {
                 href={href}
                 target={href.startsWith("mailto") ? undefined : "_blank"}
                 rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                className="group inline-flex items-center gap-2 px-3 py-2 text-[13px] font-medium rounded-md bg-dark-surface border border-dark-border text-dark-text-secondary hover:text-dark-text hover:border-dark-border-hover transition-all duration-200"
+                className="group inline-flex items-center gap-2 px-3 py-2 text-[13px] font-medium rounded-md bg-dark-surface border border-dark-border text-dark-text-secondary hover:text-dark-text hover:border-dark-border-hover transition-all duration-100"
                 style={{ ["--brand" as string]: hoverColor }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = hoverColor;

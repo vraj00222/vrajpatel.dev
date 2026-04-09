@@ -100,13 +100,16 @@ export function GitHubActivity() {
   const username = PERSONAL.githubUsername;
 
   useEffect(() => {
+    // Date string for cache-busting (changes daily at 2am via revalidation)
+    const today = new Date().toISOString().split("T")[0];
+
     fetch(`https://api.github.com/users/${username}`)
       .then((r) => r.json())
       .then(setProfile)
       .catch(() => {});
 
     fetch(
-      `https://github-contributions-api.jogruber.de/v4/${username}?y=last`
+      `https://github-contributions-api.jogruber.de/v4/${username}?y=last&_=${today}`
     )
       .then((r) => r.json())
       .then((data) => {
@@ -186,8 +189,9 @@ export function GitHubActivity() {
 
   useEffect(() => {
     if (selectedYear === "last" || allContributions[selectedYear]) return;
+    const today = new Date().toISOString().split("T")[0];
     fetch(
-      `https://github-contributions-api.jogruber.de/v4/${username}?y=${selectedYear}`
+      `https://github-contributions-api.jogruber.de/v4/${username}?y=${selectedYear}&_=${today}`
     )
       .then((r) => r.json())
       .then((data) => {

@@ -56,11 +56,10 @@ export function Hero() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-dark-text-muted transition-colors duration-200"
-                style={{ ["--hover-color" as string]: hoverColor }}
+                className="text-dark-text-muted transition-colors duration-100"
                 aria-label={label}
                 whileHover={{ y: -1, color: hoverColor }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                transition={{ duration: 0.1 }}
               >
                 <Icon size={16} />
               </motion.a>
@@ -70,9 +69,9 @@ export function Hero() {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-[13px] text-dark-text-muted transition-colors duration-200"
+              className="inline-flex items-center gap-1.5 text-[13px] text-dark-text-muted transition-colors duration-100"
               whileHover={{ y: -1, color: "#10b981" }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              transition={{ duration: 0.1 }}
             >
               <FileText size={14} />
               Resume
