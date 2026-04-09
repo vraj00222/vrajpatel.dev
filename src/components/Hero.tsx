@@ -47,30 +47,31 @@ export function Hero() {
         <FadeIn delay={0.12}>
           <div className="flex items-center gap-5 mt-6">
             {[
-              { href: PERSONAL.github, icon: GithubIcon, label: "GitHub" },
-              { href: PERSONAL.linkedin, icon: LinkedinIcon, label: "LinkedIn" },
-              { href: PERSONAL.x, icon: XIcon, label: "X" },
-            ].map(({ href, icon: Icon, label }) => (
+              { href: PERSONAL.github, icon: GithubIcon, label: "GitHub", hoverColor: "#e6edf3" },
+              { href: PERSONAL.linkedin, icon: LinkedinIcon, label: "LinkedIn", hoverColor: "#0A66C2" },
+              { href: PERSONAL.x, icon: XIcon, label: "X", hoverColor: "#e6edf3" },
+            ].map(({ href, icon: Icon, label, hoverColor }) => (
               <motion.a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors duration-200"
+                className="text-dark-text-muted transition-colors duration-200"
+                style={{ ["--hover-color" as string]: hoverColor }}
                 aria-label={label}
-                whileHover={{ y: -1 }}
+                whileHover={{ y: -1, color: hoverColor }}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
               >
                 <Icon size={16} />
               </motion.a>
             ))}
-            <span className="w-px h-4 bg-border dark:bg-dark-border" />
+            <span className="w-px h-4 bg-dark-border" />
             <motion.a
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-[13px] text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors duration-200"
-              whileHover={{ y: -1 }}
+              className="inline-flex items-center gap-1.5 text-[13px] text-dark-text-muted transition-colors duration-200"
+              whileHover={{ y: -1, color: "#10b981" }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
               <FileText size={14} />
