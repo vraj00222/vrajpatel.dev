@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Use the `.dark` class (not OS media query) for dark utilities. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: 'Satoshi', system-ui, -apple-system, sans-serif;
   --font-display: 'Clash Display', 'Satoshi', system-ui, sans-serif;
@@ -9,8 +12,8 @@
   --color-bg: #ffffff;
   --color-surface: #f8f8f8;
   --color-text: #000000;
-  --color-text-secondary: #1a1a1a;
-  --color-text-muted: #666666;
+  --color-text-secondary: #000000;
+  --color-text-muted: #222222;
   --color-border: #e5e5e5;
   --color-border-hover: #cccccc;
   --color-hover-bg: #f2f2f2;
@@ -50,7 +53,7 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   background-color: var(--color-bg);
-  color: var(--color-text-secondary);
+  color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -69,6 +72,13 @@ body, header, nav, footer, section, div, a, button, span, p, h1, h2, h3 {
     box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 rect { transition: none; }
+
+/* Keep any explicit white text class readable in light mode. */
+:root:not(.dark) .text-white,
+:root:not(.dark) .text-\[\#fff\],
+:root:not(.dark) .text-\[\#ffffff\] {
+  color: var(--color-text) !important;
+}
 
 ::selection { background: #000; color: #fff; }
 .dark ::selection { background: #fff; color: #000; }

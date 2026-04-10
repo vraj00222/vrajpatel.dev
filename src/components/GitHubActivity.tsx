@@ -31,6 +31,39 @@ const MONTH_NAMES = [
 ];
 const DAY_LABELS = ["Mon", "Wed", "Fri"]; // GitHub only labels Mon/Wed/Fri
 
+function getApiBaseUrl() {
+  if (typeof window === "undefined") return "";
+  const host = window.location.hostname;
+  // Vite dev server does not serve /api/* serverless routes.
+  if (host === "localhost" || host === "127.0.0.1") {
+    return "https://vrajpatel.xyz";
+  }
+  return "";
+}
+
+async function fetchContributions(username: string, year: string) {
+  const apiBase = getApiBaseUrl();
+  const primaryUrl = `${apiBase}/api/contributions?username=${encodeURIComponent(username)}&year=${encodeURIComponent(year)}`;
+
+  try {
+    const primary = await fetch(primaryUrl);
+    if (primary.ok) {
+      const data = await primary.json();
+      if (Array.isArray(data?.contributions)) {
+        return data;
+      }
+    }
+  } catch {
+    // Fall through to third-party endpoint below.
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+  const fallback = await fetch(
+    `https://github-contributions-api.jogruber.de/v4/${username}?y=${year}&_=${today}`
+  );
+  return fallback.json();
+}
+
 // Tracks the `dark` class on <html> so the SVG palette can swap with the
 // navbar theme toggle. Returns true when dark mode is active.
 function useIsDark() {
@@ -197,15 +230,21 @@ export function GitHubActivity() {
 
   useEffect(() => {
     fetch(`https://api.github.com/users/${username}`)
-      .then((r) => r.json())
-      .then(setProfile)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (
+          data &&
+          typeof data.public_repos === "number" &&
+          typeof data.followers === "number"
+        ) {
+          setProfile(data);
+        } else {
+          setProfile(null);
+        }
+      })
       .catch(() => {});
 
-    // Use our own /api/contributions endpoint (GitHub GraphQL + Upstash cache,
-    // 30 min TTL, refreshed by cron 2x/day). Falls back gracefully via the
-    // catch block — UI shows "Could not load contributions".
-    fetch(`/api/contributions?username=${username}&year=last`)
-      .then((r) => r.json())
+    fetchContributions(username, "last")
       .then((data) => {
         if (data.contributions) {
           setAllContributions((prev) => ({
@@ -283,8 +322,7 @@ export function GitHubActivity() {
 
   useEffect(() => {
     if (selectedYear === "last" || allContributions[selectedYear]) return;
-    fetch(`/api/contributions?username=${username}&year=${selectedYear}`)
-      .then((r) => r.json())
+    fetchContributions(username, selectedYear)
       .then((data) => {
         if (data.contributions) {
           setAllContributions((prev) => ({
