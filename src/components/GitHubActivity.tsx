@@ -19,8 +19,15 @@ interface ContributionDay {
 interface MergedPR {
   title: string;
   repo: string;
+  repoDescription: string;
   url: string;
-  stars: number;
+  stars: number | null;
+}
+
+interface SearchIssueItem {
+  repository_url: string;
+  title: string;
+  html_url: string;
 }
 
 const GH_GREENS_DARK = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
@@ -56,6 +63,78 @@ async function fetchContributions(username: string, year: string) {
   }
 
   return data;
+}
+
+async function fetchMergedPRs(username: string): Promise<MergedPR[]> {
+  const apiBase = getApiBaseUrl();
+  const url = `${apiBase}/api/merged-prs?username=${encodeURIComponent(username)}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Merged PR API ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (!Array.isArray(data?.items)) {
+      throw new Error("Invalid merged PR payload");
+    }
+
+    return data.items.map((item: MergedPR) => ({
+      ...item,
+      repoDescription: item.repoDescription || "",
+      stars: typeof item.stars === "number" ? item.stars : null,
+    }));
+  } catch {
+    const searchUrl =
+      `https://api.github.com/search/issues?q=${encodeURIComponent(
+        `author:${username} type:pr is:merged -user:${username} created:>2024-01-01`
+      )}` +
+      "&sort=updated&order=desc&per_page=10";
+
+    const searchRes = await fetch(searchUrl);
+    if (!searchRes.ok) return [];
+
+    const searchData = await searchRes.json();
+    const items = Array.isArray(searchData?.items)
+      ? (searchData.items as SearchIssueItem[])
+      : [];
+
+    const repoPaths = [
+      ...new Set(
+        items.map((pr) => pr.repository_url.split("/").slice(-2).join("/"))
+      ),
+    ];
+
+    const repoMeta: Record<string, { stars: number | null; description: string }> = {};
+    await Promise.allSettled(
+      repoPaths.map(async (repoPath) => {
+        const repoRes = await fetch(`https://api.github.com/repos/${repoPath}`);
+        if (!repoRes.ok) {
+          repoMeta[repoPath] = { stars: null, description: "" };
+          return;
+        }
+        const repoData = await repoRes.json();
+        repoMeta[repoPath] = {
+          stars:
+            typeof repoData?.stargazers_count === "number"
+              ? repoData.stargazers_count
+              : null,
+          description: repoData?.description || "",
+        };
+      })
+    );
+
+    return items.map((pr) => {
+      const repoPath = pr.repository_url.split("/").slice(-2).join("/");
+      return {
+        title: pr.title,
+        repo: repoPath,
+        repoDescription: repoMeta[repoPath]?.description || "",
+        url: pr.html_url,
+        stars: repoMeta[repoPath]?.stars ?? null,
+      };
+    });
+  }
 }
 
 function ensureFullCalendarYear(
@@ -281,55 +360,8 @@ export function GitHubActivity() {
       .catch(() => {})
       .finally(() => setLoading(false));
 
-    fetch(
-      `https://api.github.com/search/issues?q=author:${username}+type:pr+is:merged+-user:${username}+created:>2024-01-01&sort=updated&per_page=10`
-    )
-      .then((r) => r.json())
-      .then(async (data) => {
-        if (!data.items) return;
-
-        // Deduplicate repos and fetch stars in parallel
-        const repoPaths = [
-          ...new Set(
-            data.items.map((pr: { repository_url: string }) =>
-              pr.repository_url.split("/").slice(-2).join("/")
-            )
-          ),
-        ] as string[];
-
-        const starMap: Record<string, number> = {};
-        const repoResults = await Promise.allSettled(
-          repoPaths.map(async (repoPath) => {
-            const res = await fetch(
-              `https://api.github.com/repos/${repoPath}`
-            );
-            if (res.ok) {
-              const repoData = await res.json();
-              starMap[repoPath] = repoData.stargazers_count || 0;
-            }
-          })
-        );
-        // Ensure all settled before building PR list
-        void repoResults;
-
-        const prs: MergedPR[] = data.items.map(
-          (pr: {
-            repository_url: string;
-            title: string;
-            html_url: string;
-          }) => {
-            const repoPath = pr.repository_url
-              .split("/")
-              .slice(-2)
-              .join("/");
-            return {
-              title: pr.title,
-              url: pr.html_url,
-              repo: repoPath,
-              stars: starMap[repoPath] || 0,
-            };
-          }
-        );
+    fetchMergedPRs(username)
+      .then((prs) => {
         setMergedPRs(prs);
       })
       .catch(() => {});
@@ -459,46 +491,61 @@ export function GitHubActivity() {
         </FadeIn>
 
         {/* Merged PRs */}
-        {mergedPRs.length > 0 && (
-          <FadeIn delay={0.12}>
-            <h3 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mt-14 mb-5">
-              Contributions
-            </h3>
-            <div className="space-y-0.5">
+        <FadeIn delay={0.12}>
+          <h3 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mt-14 mb-5">
+            Contributions
+          </h3>
+
+          {mergedPRs.length > 0 ? (
+            <div className="space-y-2">
               {mergedPRs.map((pr, i) => (
                 <a
                   key={i}
                   href={pr.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between gap-3 -mx-3 px-3 py-2.5 rounded-lg hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-colors duration-200"
+                  className="group block -mx-3 px-3 py-3 rounded-xl border border-transparent hover:border-border dark:hover:border-dark-border hover:bg-hover-bg/70 dark:hover:bg-dark-hover-bg/60 transition-colors duration-200"
                 >
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[14px] text-text-secondary dark:text-dark-text-secondary group-hover:text-text dark:group-hover:text-dark-text transition-colors duration-200 truncate">
-                      {pr.title}
-                    </p>
-                    <p className="text-[12px] text-text-muted dark:text-dark-text-muted mt-0.5">
-                      {pr.repo}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3 shrink-0">
-                    {pr.stars > 0 && (
-                      <span className="inline-flex items-center gap-1 text-[12px] text-text-muted dark:text-dark-text-muted tabular-nums">
-                        <Star size={11} className="text-amber-500" />
-                        {pr.stars >= 1000
-                          ? `${(pr.stars / 1000).toFixed(1)}k`
-                          : pr.stars.toLocaleString()}
-                      </span>
-                    )}
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2.5">
+                        <p className="text-[13px] font-semibold text-text dark:text-dark-text tracking-tight truncate">
+                          {pr.repo}
+                        </p>
+                        <span className="inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[11px] font-medium text-text-secondary dark:text-dark-text-secondary bg-hover-bg dark:bg-dark-hover-bg border border-border dark:border-dark-border tabular-nums shrink-0">
+                          <Star size={10} className="opacity-70" />
+                          {pr.stars === null
+                            ? "n/a"
+                            : pr.stars >= 1000
+                              ? `${(pr.stars / 1000).toFixed(1)}k`
+                              : pr.stars.toLocaleString()}
+                        </span>
+                      </div>
+
+                      <p className="mt-1 text-[13px] text-text-secondary dark:text-dark-text-secondary group-hover:text-text dark:group-hover:text-dark-text transition-colors duration-200">
+                        {pr.title}
+                      </p>
+
+                      {pr.repoDescription && (
+                        <p className="mt-1.5 text-[12px] leading-5 text-text-muted dark:text-dark-text-muted overflow-hidden [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">
+                          {pr.repoDescription}
+                        </p>
+                      )}
+                    </div>
+
+                    <span className="shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
                       merged
                     </span>
                   </div>
                 </a>
               ))}
             </div>
-          </FadeIn>
-        )}
+          ) : (
+            <div className="rounded-lg border border-border dark:border-dark-border bg-surface dark:bg-dark-surface px-4 py-3 text-[13px] text-text-muted dark:text-dark-text-muted">
+              No recent merged PRs available right now.
+            </div>
+          )}
+        </FadeIn>
       </div>
     </section>
   );
