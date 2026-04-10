@@ -27,7 +27,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     company: "Cal State Fullerton",
     period: "Aug 2025 — Present",
     location: "Fullerton, CA",
-    tech: ["Python", "Git", "Gradescope"],
+    tech: ["Python", "C++", "Git", "Gradescope"],
     bullets: [
       "Teaching CPSC 335 — Algorithm Engineering to 100+ undergraduate students, covering greedy algorithms, dynamic programming, graph traversal, and NP-completeness",
       "Built automated grading scripts with Python and Gradescope API to batch-evaluate student submissions and provide structured feedback",
