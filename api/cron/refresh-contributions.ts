@@ -1,8 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-// Vercel Cron hits this twice daily (10:00 + 22:00 UTC) to invalidate the
+// Vercel Cron hits this once daily (10:00 UTC = 2am PST) to invalidate the
 // Upstash cache for the contributions API. We call /api/contributions with
 // ?refresh=1 which forces a fresh GitHub GraphQL fetch and rewrites the cache.
+// Visits in between are still fresh because the Upstash cache has a 30-min
+// TTL and any visit after expiry triggers a fresh GraphQL fetch automatically.
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const authHeader = req.headers.authorization;
