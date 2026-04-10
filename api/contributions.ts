@@ -5,8 +5,10 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 // has its own ~12h server-side cache that ignored our cache-busters.
 //
 // Cache strategy:
-//   - Upstash key per (username, range), TTL 30 min
-//   - The Vercel cron warms both ranges twice a day (10:00 + 22:00 UTC)
+//   - Upstash key per (username, range)
+//   - Live ranges (`last` + current year): max 5 min old before refresh
+//   - Historical years: 30 min TTL
+//   - The Vercel cron warms both ranges daily
 //   - The browser also serves a stale-while-revalidate header for 60s
 //
 // Required env vars:
@@ -17,10 +19,16 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL!;
 const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN!;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
-const CACHE_TTL_SECONDS = 30 * 60; // 30 minutes
+const DEFAULT_CACHE_TTL_SECONDS = 30 * 60; // 30 minutes
+const LIVE_RANGE_CACHE_TTL_SECONDS = 5 * 60; // 5 minutes for `last` and current year
+const LIVE_RANGE_MAX_AGE_MS = 5 * 60 * 1000;
 
 type Day = { date: string; count: number; level: number };
-type Payload = { total: number; contributions: Day[] };
+type Payload = {
+  total: number;
+  contributions: Day[];
+  fetchedAt?: string;
+};
 
 async function redisGet(key: string): Promise<string | null> {
   if (!UPSTASH_URL || !UPSTASH_TOKEN) return null;
@@ -53,6 +61,39 @@ async function redisSetEx(key: string, value: string, ttl: number) {
     });
   } catch {
     /* ignore */
+  }
+}
+
+async function redisSet(key: string, value: string) {
+  if (!UPSTASH_URL || !UPSTASH_TOKEN) return;
+  try {
+    await fetch(UPSTASH_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${UPSTASH_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(["SET", key, value]),
+    });
+  } catch {
+    /* ignore */
+  }
+}
+
+function parseCachedPayload(raw: string | null): Payload | null {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    if (
+      typeof parsed?.total === "number" &&
+      Array.isArray(parsed?.contributions) &&
+      (parsed?.fetchedAt === undefined || typeof parsed?.fetchedAt === "string")
+    ) {
+      return parsed as Payload;
+    }
+    return null;
+  } catch {
+    return null;
   }
 }
 
@@ -153,15 +194,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const year = (req.query.year as string) || "last";
   const refresh = req.query.refresh === "1";
 
+  if (year !== "last" && !/^\d{4}$/.test(year)) {
+    return res.status(400).json({ error: "Invalid year. Use 'last' or YYYY." });
+  }
+
+  const nowYear = new Date().getUTCFullYear();
+  const parsedYear = year === "last" ? null : parseInt(year, 10);
+  const isLiveRange = year === "last" || parsedYear === nowYear;
+  const cacheTtlSeconds = isLiveRange
+    ? LIVE_RANGE_CACHE_TTL_SECONDS
+    : DEFAULT_CACHE_TTL_SECONDS;
+
   const cacheKey = `gh:contrib:${username}:${year}`;
+  const staleKey = `gh:contrib:lastgood:${username}:${year}`;
 
   // Try cache first (unless explicit refresh)
   if (!refresh) {
-    const cached = await redisGet(cacheKey);
-    if (cached) {
+    const cached = parseCachedPayload(await redisGet(cacheKey));
+    const cachedAgeMs = cached?.fetchedAt
+      ? Date.now() - Date.parse(cached.fetchedAt)
+      : Number.POSITIVE_INFINITY;
+    const cachedIsFresh = !isLiveRange || cachedAgeMs <= LIVE_RANGE_MAX_AGE_MS;
+
+    if (cached && cachedIsFresh) {
       res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=600");
       res.setHeader("X-Cache", "HIT");
-      return res.status(200).json(JSON.parse(cached));
+      return res.status(200).json(cached);
     }
   }
 
@@ -173,12 +231,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const range = getDateRange(year);
-    const payload = await fetchFromGitHub(username, range);
-    await redisSetEx(cacheKey, JSON.stringify(payload), CACHE_TTL_SECONDS);
+    const payload = {
+      ...(await fetchFromGitHub(username, range)),
+      fetchedAt: new Date().toISOString(),
+    };
+    const serialized = JSON.stringify(payload);
+    await Promise.all([
+      redisSetEx(cacheKey, serialized, cacheTtlSeconds),
+      redisSet(staleKey, serialized),
+    ]);
     res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=600");
     res.setHeader("X-Cache", "MISS");
     return res.status(200).json(payload);
   } catch (err) {
+    const stale = parseCachedPayload(await redisGet(staleKey));
+    if (stale) {
+      res.setHeader("Cache-Control", "public, max-age=30, stale-while-revalidate=600");
+      res.setHeader("X-Cache", "STALE");
+      return res.status(200).json(stale);
+    }
     return res.status(500).json({ error: String(err) });
   }
 }

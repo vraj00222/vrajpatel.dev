@@ -43,25 +43,19 @@ function getApiBaseUrl() {
 
 async function fetchContributions(username: string, year: string) {
   const apiBase = getApiBaseUrl();
-  const primaryUrl = `${apiBase}/api/contributions?username=${encodeURIComponent(username)}&year=${encodeURIComponent(year)}`;
+  const url = `${apiBase}/api/contributions?username=${encodeURIComponent(username)}&year=${encodeURIComponent(year)}`;
 
-  try {
-    const primary = await fetch(primaryUrl);
-    if (primary.ok) {
-      const data = await primary.json();
-      if (Array.isArray(data?.contributions)) {
-        return data;
-      }
-    }
-  } catch {
-    // Fall through to third-party endpoint below.
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Contributions API ${response.status}`);
   }
 
-  const today = new Date().toISOString().split("T")[0];
-  const fallback = await fetch(
-    `https://github-contributions-api.jogruber.de/v4/${username}?y=${year}&_=${today}`
-  );
-  return fallback.json();
+  const data = await response.json();
+  if (!Array.isArray(data?.contributions)) {
+    throw new Error("Invalid contributions payload");
+  }
+
+  return data;
 }
 
 // Tracks the `dark` class on <html> so the SVG palette can swap with the

@@ -1,10 +1,24 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-// Vercel Cron hits this once daily (10:00 UTC = 2am PST) to invalidate the
-// Upstash cache for the contributions API. We call /api/contributions with
-// ?refresh=1 which forces a fresh GitHub GraphQL fetch and rewrites the cache.
-// Visits in between are still fresh because the Upstash cache has a 30-min
-// TTL and any visit after expiry triggers a fresh GraphQL fetch automatically.
+// Vercel Cron hits this once daily (10:00 UTC) to force-refresh both ranges
+// used by the GitHub graph. The API still auto-refreshes for users whenever
+// the 30-minute cache key expires.
+
+type ContributionsResponse = {
+  total?: number;
+  contributions?: Array<{ date: string; count: number; level: number }>;
+  error?: string;
+};
+
+async function jsonOrThrow(
+  response: Response,
+  label: string
+): Promise<ContributionsResponse> {
+  if (!response.ok) {
+    throw new Error(`${label} refresh failed: ${response.status} ${await response.text()}`);
+  }
+  return response.json() as Promise<ContributionsResponse>;
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const authHeader = req.headers.authorization;
@@ -26,8 +40,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       fetch(`${base}?username=${username}&year=${currentYear}&refresh=1`),
     ]);
     const [lastData, yearData] = await Promise.all([
-      lastRes.json(),
-      yearRes.json(),
+      jsonOrThrow(lastRes, "last-year"),
+      jsonOrThrow(yearRes, "current-year"),
     ]);
 
     return res.status(200).json({
