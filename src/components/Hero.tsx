@@ -68,25 +68,44 @@ export function Hero() {
                           ? false
                           : { y: 16, opacity: 0, filter: "blur(3px)" }
                       }
-                      animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                      exit={
-                        shouldReduceMotion
-                          ? { opacity: 1 }
-                          : { y: -16, opacity: 0, filter: "blur(3px)" }
-                      }
-                      transition={
-                        shouldReduceMotion
+                      animate={{
+                        y: 0,
+                        opacity: 1,
+                        filter: "blur(0px)",
+                        transition: shouldReduceMotion
                           ? { duration: 0 }
                           : {
                               duration: 0.62,
                               ease: [0.22, 1, 0.36, 1],
                               opacity: {
-                                duration: 0.46,
+                                duration: 0.48,
                                 ease: [0.33, 1, 0.68, 1],
                               },
                               filter: {
-                                duration: 0.46,
+                                duration: 0.48,
                                 ease: [0.33, 1, 0.68, 1],
+                              },
+                            },
+                      }}
+                      exit={
+                        shouldReduceMotion
+                          ? { opacity: 1 }
+                          : {
+                              y: -16,
+                              opacity: 0,
+                              filter: "blur(3px)",
+                              transition: {
+                                delay: 0.1,
+                                duration: 0.5,
+                                ease: [0.33, 1, 0.68, 1],
+                                opacity: {
+                                  duration: 0.4,
+                                  ease: [0.33, 1, 0.68, 1],
+                                },
+                                filter: {
+                                  duration: 0.4,
+                                  ease: [0.33, 1, 0.68, 1],
+                                },
                               },
                             }
                       }
