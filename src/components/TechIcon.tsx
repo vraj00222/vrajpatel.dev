@@ -315,6 +315,24 @@ function LetterIcon({ name, size, color }: { name: string; size: number; color: 
   );
 }
 
+export function getTechColor(name: string): string {
+  return tech[name]?.color ?? "#a0a0a0";
+}
+
+export function getTechLogo(
+  name: string,
+  size = 16,
+  colorOverride?: string
+): ReactNode {
+  const entry = tech[name];
+  const color = colorOverride ?? getTechColor(name);
+  return entry ? (
+    entry.icon({ size, color })
+  ) : (
+    <LetterIcon name={name} size={size} color={color} />
+  );
+}
+
 /* ── Exported component — expanding pill on hover ─────────────────── */
 
 interface TechIconProps {
