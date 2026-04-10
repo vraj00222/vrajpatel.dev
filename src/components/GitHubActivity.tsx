@@ -58,6 +58,27 @@ async function fetchContributions(username: string, year: string) {
   return data;
 }
 
+function ensureFullCalendarYear(
+  year: string,
+  days: ContributionDay[]
+): ContributionDay[] {
+  const parsedYear = Number.parseInt(year, 10);
+  if (Number.isNaN(parsedYear)) return days;
+
+  const byDate = new Map(days.map((d) => [d.date, d]));
+  const full: ContributionDay[] = [];
+  const cursor = new Date(Date.UTC(parsedYear, 0, 1));
+  const end = new Date(Date.UTC(parsedYear, 11, 31));
+
+  while (cursor <= end) {
+    const iso = cursor.toISOString().slice(0, 10);
+    full.push(byDate.get(iso) ?? { date: iso, count: 0, level: 0 });
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+
+  return full;
+}
+
 // Tracks the `dark` class on <html> so the SVG palette can swap with the
 // navbar theme toggle. Returns true when dark mode is active.
 function useIsDark() {
@@ -319,9 +340,13 @@ export function GitHubActivity() {
     fetchContributions(username, selectedYear)
       .then((data) => {
         if (data.contributions) {
+          const normalized = ensureFullCalendarYear(
+            selectedYear,
+            data.contributions
+          );
           setAllContributions((prev) => ({
             ...prev,
-            [selectedYear]: data.contributions,
+            [selectedYear]: normalized,
           }));
         }
       })
