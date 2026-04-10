@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { NAV_LINKS } from "../data/content";
 import { useActiveSection } from "../hooks/useActiveSection";
 
 const sectionIds = NAV_LINKS.map((l) => l.href.replace("#", ""));
 
+function getInitialTheme(): "light" | "dark" {
+  if (typeof document === "undefined") return "dark";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
   const active = useActiveSection(sectionIds);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle("dark", theme === "dark");
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {
+      /* ignore — private mode, etc. */
+    }
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-bg/70 dark:bg-dark-bg/70 backdrop-blur-xl backdrop-saturate-150 border-b border-border dark:border-dark-border">
@@ -38,6 +56,25 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-1">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-md text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-all duration-200"
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={theme}
+                initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
+                transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
+                className="inline-flex"
+              >
+                {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+              </motion.span>
+            </AnimatePresence>
+          </button>
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden p-2 rounded-md text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-all duration-200"

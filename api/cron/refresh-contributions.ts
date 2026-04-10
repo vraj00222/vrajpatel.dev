@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-// Vercel Cron hits this at 2am UTC daily to warm the contributions API cache
-// The actual client-side fetches use a date-based cache-buster, so fresh data
-// loads for visitors automatically each new day.
+// Vercel Cron hits this twice daily (10:00 + 22:00 UTC) to invalidate the
+// Upstash cache for the contributions API. We call /api/contributions with
+// ?refresh=1 which forces a fresh GitHub GraphQL fetch and rewrites the cache.
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const authHeader = req.headers.authorization;
@@ -12,32 +12,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const username = "vraj00222";
   const currentYear = new Date().getUTCFullYear();
-  const today = new Date().toISOString().split("T")[0];
+
+  // Build absolute URL to our own /api/contributions
+  const host = req.headers.host || "vrajpatel.dev";
+  const protocol = host.startsWith("localhost") ? "http" : "https";
+  const base = `${protocol}://${host}/api/contributions`;
 
   try {
-    // Warm both ranges used by the UI: "last" and selected calendar year.
-    const [lastResponse, yearResponse] = await Promise.all([
-      fetch(
-        `https://github-contributions-api.jogruber.de/v4/${username}?y=last&_=${today}`
-      ),
-      fetch(
-        `https://github-contributions-api.jogruber.de/v4/${username}?y=${currentYear}&_=${today}`
-      ),
+    const [lastRes, yearRes] = await Promise.all([
+      fetch(`${base}?username=${username}&year=last&refresh=1`),
+      fetch(`${base}?username=${username}&year=${currentYear}&refresh=1`),
     ]);
-
     const [lastData, yearData] = await Promise.all([
-      lastResponse.json(),
-      yearResponse.json(),
+      lastRes.json(),
+      yearRes.json(),
     ]);
-    const lastTotal = lastData.contributions?.length ?? 0;
-    const yearTotal = yearData.contributions?.length ?? 0;
 
     return res.status(200).json({
       ok: true,
-      message: "Refreshed contribution cache",
-      lastDays: lastTotal,
+      message: "Refreshed contribution cache from GitHub GraphQL",
+      lastTotal: lastData.total ?? null,
       currentYear,
-      currentYearDays: yearTotal,
+      currentYearTotal: yearData.total ?? null,
       timestamp: new Date().toISOString(),
     });
   } catch (err) {

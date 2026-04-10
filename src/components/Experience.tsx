@@ -15,7 +15,7 @@ export function Experience() {
     <section id="experience" className="py-14 px-6" data-section="experience">
       <div className="mx-auto max-w-2xl">
         <FadeIn>
-          <h2 className="font-display text-sm font-semibold text-dark-text uppercase tracking-widest mb-8">
+          <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mb-8">
             Work
           </h2>
         </FadeIn>
@@ -23,35 +23,35 @@ export function Experience() {
         <div className="space-y-4">
           {EXPERIENCE.map((job, i) => (
             <FadeIn key={i} delay={i * 0.05}>
-              <div className="rounded-lg border border-dark-border overflow-hidden">
+              <div className="rounded-lg border border-border dark:border-dark-border overflow-hidden">
                 {/* Header — always visible, clickable */}
                 <button
                   onClick={() => toggle(i)}
-                  className="w-full text-left px-4 py-4 bg-dark-surface hover:bg-dark-hover-bg transition-colors duration-200"
+                  className="w-full text-left px-4 py-4 bg-surface dark:bg-dark-surface hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-colors duration-200"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2.5 flex-wrap">
-                        <span className="text-[15px] font-semibold text-dark-text">
+                        <span className="text-[15px] font-semibold text-text dark:text-dark-text">
                           {job.company}
                         </span>
                         {i === 0 && (
-                          <span className="text-[11px] font-medium text-emerald-400 bg-emerald-500/15 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-500/15 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                             Working
                           </span>
                         )}
                       </div>
-                      <p className="text-[13px] text-dark-text-muted mt-0.5">
+                      <p className="text-[13px] text-text-muted dark:text-dark-text-muted mt-0.5">
                         {job.title}
                       </p>
                     </div>
                     <div className="shrink-0 flex items-center gap-3">
                       <div className="text-right hidden sm:block">
-                        <p className="text-[13px] text-dark-text-secondary tabular-nums">
+                        <p className="text-[13px] text-text-secondary dark:text-dark-text-secondary tabular-nums">
                           {job.period}
                         </p>
-                        <p className="text-[12px] text-dark-text-muted mt-0.5">
+                        <p className="text-[12px] text-text-muted dark:text-dark-text-muted mt-0.5">
                           {job.location}
                         </p>
                       </div>
@@ -61,14 +61,14 @@ export function Experience() {
                       >
                         <ChevronDown
                           size={14}
-                          className="text-dark-text-muted"
+                          className="text-text-muted dark:text-dark-text-muted"
                         />
                       </motion.div>
                     </div>
                   </div>
                   {/* Mobile period/location */}
                   <div className="sm:hidden mt-1.5">
-                    <p className="text-[12px] text-dark-text-muted">
+                    <p className="text-[12px] text-text-muted dark:text-dark-text-muted">
                       {job.period} &middot; {job.location}
                     </p>
                   </div>
@@ -84,10 +84,10 @@ export function Experience() {
                       transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="border-t border-dark-border px-4 py-4 space-y-4">
+                      <div className="border-t border-border dark:border-dark-border px-4 py-4 space-y-4">
                         {/* Tech stack */}
                         <div>
-                          <p className="text-[13px] font-semibold text-dark-text mb-2.5">
+                          <p className="text-[13px] font-semibold text-text dark:text-dark-text mb-2.5">
                             Technologies & Tools
                           </p>
                           <div className="flex flex-wrap gap-1.5">
@@ -99,14 +99,14 @@ export function Experience() {
 
                         {/* What I've done */}
                         <div>
-                          <p className="text-[13px] font-semibold text-dark-text mb-2">
+                          <p className="text-[13px] font-semibold text-text dark:text-dark-text mb-2">
                             What I've done
                           </p>
                           <ul className="space-y-2">
                             {job.bullets.map((bullet, bi) => (
                               <li
                                 key={bi}
-                                className="text-[13px] text-dark-text-secondary leading-[1.7] pl-3 relative before:content-['▪'] before:absolute before:left-0 before:text-dark-text-muted before:text-[10px] before:top-0.75"
+                                className="text-[13px] text-text-secondary dark:text-dark-text-secondary leading-[1.7] pl-3 relative before:content-['▪'] before:absolute before:left-0 before:text-text-muted dark:before:text-dark-text-muted before:text-[10px] before:top-0.75"
                               >
                                 {bullet}
                               </li>

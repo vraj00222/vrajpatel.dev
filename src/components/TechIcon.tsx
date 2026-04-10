@@ -332,7 +332,7 @@ export function TechIcon({ name, size = 16 }: TechIconProps) {
       layout
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="flex items-center gap-1.5 h-8 rounded-full border border-dashed border-dark-border hover:border-solid hover:border-dark-border-hover bg-dark-surface cursor-default overflow-hidden"
+      className="flex items-center gap-1.5 h-8 rounded-full border border-dashed border-border dark:border-dark-border hover:border-solid hover:border-border-hover dark:hover:border-dark-border-hover bg-surface dark:bg-dark-surface cursor-default overflow-hidden"
       style={{ paddingLeft: 7, paddingRight: hovered ? 10 : 7 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
     >
@@ -352,7 +352,7 @@ export function TechIcon({ name, size = 16 }: TechIconProps) {
           animate={{ opacity: 1, width: "auto" }}
           exit={{ opacity: 0, width: 0 }}
           transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-          className="text-[12px] font-medium text-dark-text whitespace-nowrap overflow-hidden"
+          className="text-[12px] font-medium text-text dark:text-dark-text whitespace-nowrap overflow-hidden"
         >
           {name}
         </motion.span>

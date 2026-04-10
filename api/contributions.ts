@@ -1,0 +1,184 @@
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+
+// Direct GitHub GraphQL proxy with Upstash cache.
+// Replaces the third-party github-contributions-api.jogruber.de proxy, which
+// has its own ~12h server-side cache that ignored our cache-busters.
+//
+// Cache strategy:
+//   - Upstash key per (username, range), TTL 30 min
+//   - The Vercel cron warms both ranges twice a day (10:00 + 22:00 UTC)
+//   - The browser also serves a stale-while-revalidate header for 60s
+//
+// Required env vars:
+//   GITHUB_TOKEN              — classic PAT with `read:user` scope (or fine-grained with public read)
+//   UPSTASH_REDIS_REST_URL    — already set
+//   UPSTASH_REDIS_REST_TOKEN  — already set
+
+const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL!;
+const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN!;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
+const CACHE_TTL_SECONDS = 30 * 60; // 30 minutes
+
+type Day = { date: string; count: number; level: number };
+type Payload = { total: number; contributions: Day[] };
+
+async function redisGet(key: string): Promise<string | null> {
+  if (!UPSTASH_URL || !UPSTASH_TOKEN) return null;
+  try {
+    const res = await fetch(UPSTASH_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${UPSTASH_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(["GET", key]),
+    });
+    const json = await res.json();
+    return json?.result ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function redisSetEx(key: string, value: string, ttl: number) {
+  if (!UPSTASH_URL || !UPSTASH_TOKEN) return;
+  try {
+    await fetch(UPSTASH_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${UPSTASH_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(["SET", key, value, "EX", ttl.toString()]),
+    });
+  } catch {
+    /* ignore */
+  }
+}
+
+// GitHub GraphQL returns 4 levels: NONE, FIRST_QUARTILE, SECOND_QUARTILE,
+// THIRD_QUARTILE, FOURTH_QUARTILE. Map to the 0–4 ints the UI already uses.
+const LEVEL_MAP: Record<string, number> = {
+  NONE: 0,
+  FIRST_QUARTILE: 1,
+  SECOND_QUARTILE: 2,
+  THIRD_QUARTILE: 3,
+  FOURTH_QUARTILE: 4,
+};
+
+function getDateRange(year: string): { from: string; to: string } {
+  if (year === "last") {
+    const to = new Date();
+    const from = new Date(to);
+    from.setUTCFullYear(to.getUTCFullYear() - 1);
+    from.setUTCDate(from.getUTCDate() + 1); // exclusive lower bound → 365 days
+    return { from: from.toISOString(), to: to.toISOString() };
+  }
+  // Calendar year
+  const y = parseInt(year, 10);
+  const from = new Date(Date.UTC(y, 0, 1, 0, 0, 0));
+  const now = new Date();
+  // For the current year, cap "to" at now so GitHub doesn't error on a future date.
+  const isCurrent = y === now.getUTCFullYear();
+  const to = isCurrent ? now : new Date(Date.UTC(y, 11, 31, 23, 59, 59));
+  return { from: from.toISOString(), to: to.toISOString() };
+}
+
+async function fetchFromGitHub(
+  username: string,
+  range: { from: string; to: string }
+): Promise<Payload> {
+  const query = `
+    query($login: String!, $from: DateTime!, $to: DateTime!) {
+      user(login: $login) {
+        contributionsCollection(from: $from, to: $to) {
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                date
+                contributionCount
+                contributionLevel
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      "Content-Type": "application/json",
+      "User-Agent": "vrajpatel.dev",
+    },
+    body: JSON.stringify({
+      query,
+      variables: { login: username, from: range.from, to: range.to },
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`GitHub GraphQL ${res.status}: ${await res.text()}`);
+  }
+  const json = await res.json();
+  if (json.errors) {
+    throw new Error(`GitHub GraphQL errors: ${JSON.stringify(json.errors)}`);
+  }
+
+  const calendar = json.data?.user?.contributionsCollection?.contributionCalendar;
+  if (!calendar) throw new Error("No calendar data in GitHub response");
+
+  const days: Day[] = [];
+  for (const week of calendar.weeks) {
+    for (const day of week.contributionDays) {
+      days.push({
+        date: day.date,
+        count: day.contributionCount,
+        level: LEVEL_MAP[day.contributionLevel] ?? 0,
+      });
+    }
+  }
+  return { total: calendar.totalContributions, contributions: days };
+}
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  if (req.method === "OPTIONS") return res.status(200).end();
+
+  const username = (req.query.username as string) || "vraj00222";
+  const year = (req.query.year as string) || "last";
+  const refresh = req.query.refresh === "1";
+
+  const cacheKey = `gh:contrib:${username}:${year}`;
+
+  // Try cache first (unless explicit refresh)
+  if (!refresh) {
+    const cached = await redisGet(cacheKey);
+    if (cached) {
+      res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=600");
+      res.setHeader("X-Cache", "HIT");
+      return res.status(200).json(JSON.parse(cached));
+    }
+  }
+
+  if (!GITHUB_TOKEN) {
+    return res.status(500).json({
+      error: "GITHUB_TOKEN not configured. Set it in Vercel env vars.",
+    });
+  }
+
+  try {
+    const range = getDateRange(year);
+    const payload = await fetchFromGitHub(username, range);
+    await redisSetEx(cacheKey, JSON.stringify(payload), CACHE_TTL_SECONDS);
+    res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=600");
+    res.setHeader("X-Cache", "MISS");
+    return res.status(200).json(payload);
+  } catch (err) {
+    return res.status(500).json({ error: String(err) });
+  }
+}

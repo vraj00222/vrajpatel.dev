@@ -23,46 +23,142 @@ interface MergedPR {
   stars: number;
 }
 
-const GH_GREENS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
+const GH_GREENS_DARK = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
+const GH_GREENS_LIGHT = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
+const MONTH_NAMES = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
+const DAY_LABELS = ["Mon", "Wed", "Fri"]; // GitHub only labels Mon/Wed/Fri
+
+// Tracks the `dark` class on <html> so the SVG palette can swap with the
+// navbar theme toggle. Returns true when dark mode is active.
+function useIsDark() {
+  const [isDark, setIsDark] = useState(() =>
+    typeof document !== "undefined"
+      ? document.documentElement.classList.contains("dark")
+      : true
+  );
+  useEffect(() => {
+    const obs = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    });
+    obs.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => obs.disconnect();
+  }, []);
+  return isDark;
+}
 
 function ContributionGraph({
   contributions,
+  isDark,
 }: {
   contributions: ContributionDay[][];
+  isDark: boolean;
 }) {
-  const colors = GH_GREENS;
-  const size = 10;
+  const colors = isDark ? GH_GREENS_DARK : GH_GREENS_LIGHT;
+  const labelClass = isDark ? "text-dark-text-muted" : "text-text-muted";
+  const size = 11;
   const gap = 3;
+  const cell = size + gap;
+  const labelGutter = 26; // left gutter for day-of-week labels
+  const monthBand = 16; // top band for month labels
+  const gridWidth = contributions.length * cell;
+  const gridHeight = 7 * cell - gap;
+
+  // Month labels — match GitHub exactly: place a label at the first week
+  // whose Sunday (row 0) falls in a new month. Sundays change month exactly
+  // once per ~4 weeks, so labels are naturally spaced 4–5 columns apart.
+  // Skip week 0 if the data starts mid-week (its Sunday is padding) — the
+  // next week will carry the label instead.
+  const monthLabels: { x: number; label: string }[] = [];
+  let lastMonth = -1;
+  contributions.forEach((week, wi) => {
+    const sunday = week[0];
+    if (!sunday?.date) return; // padding cell, skip
+    const m = new Date(sunday.date).getUTCMonth();
+    if (m !== lastMonth) {
+      monthLabels.push({ x: wi * cell, label: MONTH_NAMES[m] });
+      lastMonth = m;
+    }
+  });
+  // If the very first label is too close to column 0 (would clip the text
+  // visually) or if its anchor week is also the first week of the data,
+  // GitHub typically still shows it — leave as-is.
 
   return (
     <div className="overflow-x-auto pb-1">
       <svg
-        width={contributions.length * (size + gap)}
-        height={7 * (size + gap) - gap}
+        width={gridWidth + labelGutter}
+        height={gridHeight + monthBand}
         className="block"
+        role="img"
+        aria-label="GitHub contribution graph"
       >
-        {contributions.map((week, wi) =>
-          week.map((day, di) => (
-            <motion.rect
-              key={`${wi}-${di}`}
-              x={wi * (size + gap)}
-              y={di * (size + gap)}
-              width={size}
-              height={size}
-              rx={2}
-              fill={colors[day.level]}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: wi * 0.004, duration: 0.15 }}
-            >
-              <title>
-                {day.date
-                  ? `${day.date}: ${day.count} contribution${day.count !== 1 ? "s" : ""}`
-                  : ""}
-              </title>
-            </motion.rect>
-          ))
-        )}
+        {/* Month labels */}
+        <g
+          fill="currentColor"
+          className={labelClass}
+          fontSize="10"
+          fontFamily="ui-sans-serif, system-ui, sans-serif"
+        >
+          {monthLabels.map((m, i) => (
+            <text key={i} x={labelGutter + m.x} y={11}>
+              {m.label}
+            </text>
+          ))}
+        </g>
+
+        {/* Day-of-week labels (Mon, Wed, Fri) */}
+        <g
+          fill="currentColor"
+          className={labelClass}
+          fontSize="9"
+          fontFamily="ui-sans-serif, system-ui, sans-serif"
+        >
+          {DAY_LABELS.map((d, i) => {
+            // rows: 0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat
+            const row = i === 0 ? 1 : i === 1 ? 3 : 5;
+            return (
+              <text
+                key={d}
+                x={0}
+                y={monthBand + row * cell + size - 1}
+              >
+                {d}
+              </text>
+            );
+          })}
+        </g>
+
+        {/* Contribution cells */}
+        <g transform={`translate(${labelGutter}, ${monthBand})`}>
+          {contributions.map((week, wi) =>
+            week.map((day, di) => (
+              <motion.rect
+                key={`${wi}-${di}`}
+                x={wi * cell}
+                y={di * cell}
+                width={size}
+                height={size}
+                rx={2}
+                fill={colors[day.level]}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: wi * 0.003, duration: 0.12 }}
+              >
+                <title>
+                  {day.date
+                    ? `${day.date}: ${day.count} contribution${day.count !== 1 ? "s" : ""}`
+                    : ""}
+                </title>
+              </motion.rect>
+            ))
+          )}
+        </g>
       </svg>
     </div>
   );
@@ -100,17 +196,15 @@ export function GitHubActivity() {
   const username = PERSONAL.githubUsername;
 
   useEffect(() => {
-    // Date string for cache-busting (changes daily at 2am via revalidation)
-    const today = new Date().toISOString().split("T")[0];
-
     fetch(`https://api.github.com/users/${username}`)
       .then((r) => r.json())
       .then(setProfile)
       .catch(() => {});
 
-    fetch(
-      `https://github-contributions-api.jogruber.de/v4/${username}?y=last&_=${today}`
-    )
+    // Use our own /api/contributions endpoint (GitHub GraphQL + Upstash cache,
+    // 30 min TTL, refreshed by cron 2x/day). Falls back gracefully via the
+    // catch block — UI shows "Could not load contributions".
+    fetch(`/api/contributions?username=${username}&year=last`)
       .then((r) => r.json())
       .then((data) => {
         if (data.contributions) {
@@ -189,10 +283,7 @@ export function GitHubActivity() {
 
   useEffect(() => {
     if (selectedYear === "last" || allContributions[selectedYear]) return;
-    const today = new Date().toISOString().split("T")[0];
-    fetch(
-      `https://github-contributions-api.jogruber.de/v4/${username}?y=${selectedYear}&_=${today}`
-    )
+    fetch(`/api/contributions?username=${username}&year=${selectedYear}`)
       .then((r) => r.json())
       .then((data) => {
         if (data.contributions) {
@@ -205,10 +296,12 @@ export function GitHubActivity() {
       .catch(() => {});
   }, [selectedYear, allContributions, username]);
 
+  const isDark = useIsDark();
   const currentDays = allContributions[selectedYear];
   const weeks = currentDays ? groupIntoWeeks(currentDays) : null;
   const totalContributions =
     currentDays?.reduce((sum, d) => sum + d.count, 0) || 0;
+  const greens = isDark ? GH_GREENS_DARK : GH_GREENS_LIGHT;
 
   return (
     <section id="github" className="py-14 px-6" data-section="github">
@@ -262,13 +355,26 @@ export function GitHubActivity() {
 
             {/* Graph */}
             {loading ? (
-              <div className="h-22 flex items-center justify-center text-[13px] text-text-muted dark:text-dark-text-muted animate-pulse">
+              <div className="h-28 flex items-center justify-center text-[13px] text-text-muted dark:text-dark-text-muted animate-pulse">
                 Loading contributions...
               </div>
             ) : weeks ? (
-              <ContributionGraph contributions={weeks} />
+              <>
+                <ContributionGraph contributions={weeks} isDark={isDark} />
+                <div className="flex items-center justify-end gap-1.5 mt-2 text-[10px] text-text-muted dark:text-dark-text-muted">
+                  <span>Less</span>
+                  {greens.map((c) => (
+                    <span
+                      key={c}
+                      className="inline-block w-2.5 h-2.5 rounded-xs"
+                      style={{ backgroundColor: c }}
+                    />
+                  ))}
+                  <span>More</span>
+                </div>
+              </>
             ) : (
-              <div className="h-22 flex items-center justify-center text-[13px] text-text-muted dark:text-dark-text-muted">
+              <div className="h-28 flex items-center justify-center text-[13px] text-text-muted dark:text-dark-text-muted">
                 Could not load contributions
               </div>
             )}

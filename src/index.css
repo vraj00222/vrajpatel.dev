@@ -25,7 +25,7 @@
   --color-dark-border-hover: #333333;
   --color-dark-hover-bg: #0f0f0f;
 
-  /* GitHub greens */
+  /* GitHub greens — light + dark */
   --color-gh-0: #ebedf0;
   --color-gh-1: #9be9a8;
   --color-gh-2: #40c463;
@@ -37,6 +37,12 @@
   --color-gh-dark-3: #26a641;
   --color-gh-dark-4: #39d353;
 }
+
+/* color-scheme follows the active mode so native scrollbars / form controls
+   match, regardless of the OS-level preference. The `.dark` class is set on
+   <html> by the navbar toggle (or persisted via localStorage). */
+:root { color-scheme: light; }
+.dark { color-scheme: dark; }
 
 html { scroll-behavior: smooth; }
 

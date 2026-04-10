@@ -2,6 +2,18 @@
 <html lang="en" class="scroll-smooth dark">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // No-flash theme bootstrap: reads saved choice and applies it before
+      // React mounts so users never see a flicker. Defaults to dark when no
+      // choice has been saved (regardless of system preference).
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var dark = saved ? saved === 'dark' : true;
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vraj Patel — Software Engineer</title>
