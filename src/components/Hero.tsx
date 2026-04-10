@@ -58,7 +58,7 @@ export function Hero() {
                 {PERSONAL.name}
               </h1>
               <p className="text-sm text-text-muted dark:text-dark-text-muted mt-0.5">
-                <span className="relative inline-flex h-[1.2em] overflow-hidden align-middle">
+                <span className="relative inline-flex h-[1.45em] overflow-hidden align-middle">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.span
                       key={activeRole}
