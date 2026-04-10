@@ -194,8 +194,8 @@ function ContributionGraph({
 function groupIntoWeeks(days: ContributionDay[]): ContributionDay[][] {
   const weeks: ContributionDay[][] = [];
   let currentWeek: ContributionDay[] = [];
-  const firstDay = new Date(days[0]?.date || "");
-  const startPad = firstDay.getDay();
+  const firstDay = new Date(`${days[0]?.date || ""}T00:00:00Z`);
+  const startPad = firstDay.getUTCDay();
   for (let i = 0; i < startPad; i++) {
     currentWeek.push({ date: "", count: 0, level: 0 });
   }

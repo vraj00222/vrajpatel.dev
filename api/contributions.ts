@@ -30,6 +30,22 @@ type Payload = {
   fetchedAt?: string;
 };
 
+function fillCalendarYear(year: number, days: Day[]): Day[] {
+  const byDate = new Map(days.map((d) => [d.date, d]));
+  const result: Day[] = [];
+  const cursor = new Date(Date.UTC(year, 0, 1));
+  const end = new Date(Date.UTC(year, 11, 31));
+
+  while (cursor <= end) {
+    const iso = cursor.toISOString().slice(0, 10);
+    const existing = byDate.get(iso);
+    result.push(existing ?? { date: iso, count: 0, level: 0 });
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+
+  return result;
+}
+
 async function redisGet(key: string): Promise<string | null> {
   if (!UPSTASH_URL || !UPSTASH_TOKEN) return null;
   try {
@@ -231,8 +247,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const range = getDateRange(year);
+    const fetched = await fetchFromGitHub(username, range);
+    const yearInt = year === "last" ? null : parseInt(year, 10);
+    const contributions = yearInt
+      ? fillCalendarYear(yearInt, fetched.contributions)
+      : fetched.contributions;
+
     const payload = {
-      ...(await fetchFromGitHub(username, range)),
+      total: fetched.total,
+      contributions,
       fetchedAt: new Date().toISOString(),
     };
     const serialized = JSON.stringify(payload);
