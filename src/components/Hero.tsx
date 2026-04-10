@@ -1,11 +1,37 @@
-import { motion } from "framer-motion";
-import { FileText } from "lucide-react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { FileText, MapPin } from "lucide-react";
 import { PERSONAL } from "../data/content";
 import { FadeIn } from "./FadeIn";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import heroPhoto from "../assets/vraj.jpg";
 
+const ROTATING_ROLES = [
+  "Teaching Associate",
+  "Deep Learning Researcher",
+  "Software Engineer",
+  "Full-Stack Engineer",
+  "Machine Learning Engineer",
+];
+
 export function Hero() {
+  const [activeRoleIndex, setActiveRoleIndex] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (shouldReduceMotion || ROTATING_ROLES.length <= 1) {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveRoleIndex((prev) => (prev + 1) % ROTATING_ROLES.length);
+    }, 3000);
+
+    return () => window.clearInterval(intervalId);
+  }, [shouldReduceMotion]);
+
+  const activeRole = ROTATING_ROLES[activeRoleIndex];
+
   return (
     <section id="hero" className="pt-28 pb-6 px-6" data-section="hero">
       <div className="mx-auto max-w-2xl">
@@ -32,7 +58,47 @@ export function Hero() {
                 {PERSONAL.name}
               </h1>
               <p className="text-sm text-text-muted dark:text-dark-text-muted mt-0.5">
-                Software Engineer &middot; {PERSONAL.location}
+                <span className="relative inline-flex h-[1.2em] overflow-hidden align-middle">
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.span
+                      key={activeRole}
+                      className="inline-block whitespace-nowrap will-change-[transform,opacity,filter]"
+                      initial={
+                        shouldReduceMotion
+                          ? false
+                          : { y: 16, opacity: 0, filter: "blur(3px)" }
+                      }
+                      animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                      exit={
+                        shouldReduceMotion
+                          ? { opacity: 1 }
+                          : { y: -16, opacity: 0, filter: "blur(3px)" }
+                      }
+                      transition={
+                        shouldReduceMotion
+                          ? { duration: 0 }
+                          : {
+                              duration: 0.62,
+                              ease: [0.22, 1, 0.36, 1],
+                              opacity: {
+                                duration: 0.46,
+                                ease: [0.33, 1, 0.68, 1],
+                              },
+                              filter: {
+                                duration: 0.46,
+                                ease: [0.33, 1, 0.68, 1],
+                              },
+                            }
+                      }
+                    >
+                      {activeRole}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+              </p>
+              <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-text-muted dark:text-dark-text-muted">
+                <MapPin size={12} className="opacity-80" />
+                {PERSONAL.location}
               </p>
             </div>
           </div>
