@@ -205,16 +205,25 @@ function ContributionGraph({
   // once per ~4 weeks, so labels are naturally spaced 4–5 columns apart.
   // Skip week 0 if the data starts mid-week (its Sunday is padding) — the
   // next week will carry the label instead.
-  const monthLabels: { x: number; label: string }[] = [];
+  const rawMonthLabels: { x: number; label: string }[] = [];
   let lastMonth = -1;
   contributions.forEach((week, wi) => {
     const sunday = week[0];
     if (!sunday?.date) return; // padding cell, skip
     const m = new Date(sunday.date).getUTCMonth();
     if (m !== lastMonth) {
-      monthLabels.push({ x: wi * cell, label: MONTH_NAMES[m] });
+      rawMonthLabels.push({ x: wi * cell, label: MONTH_NAMES[m] });
       lastMonth = m;
     }
+  });
+  // Drop a label if the next label is within ~3 columns — otherwise the text
+  // overlaps (e.g. "Apr" and "May" collide when April only has one week
+  // visible at the start of a rolling window). GitHub does the same.
+  const MIN_LABEL_GAP_COLS = 3;
+  const monthLabels = rawMonthLabels.filter((lab, i) => {
+    const next = rawMonthLabels[i + 1];
+    if (!next) return true;
+    return (next.x - lab.x) / cell >= MIN_LABEL_GAP_COLS;
   });
   // If the very first label is too close to column 0 (would clip the text
   // visually) or if its anchor week is also the first week of the data,
