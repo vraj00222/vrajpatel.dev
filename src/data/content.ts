@@ -78,6 +78,14 @@ export const EXPERIENCE: ExperienceItem[] = [
 
 export const PROJECTS = [
   {
+    name: "IntelMaxxing",
+    description: "Palantir Gotham for careers. Five AI agents scrape HN hiring threads, fresh funding, YC batches, and Reddit chatter to surface companies about to hire before the posting lands — narrated as ElevenLabs voice briefings.",
+    tech: ["Next.js", "TypeScript", "Gemma 4", "ElevenLabs", "GitHub API"],
+    github: "https://github.com/vraj00222/intelmaxx",
+    live: "https://intelmaxxing.tech",
+    award: "Best Solo Hack — Citrus Hack 2026",
+  },
+  {
     name: "GitConnect",
     description: "AI-powered platform that matches dev mentors with students by analyzing GitHub activity. Won $1,000 at HackDartmouth.",
     tech: ["React", "GitHub API", "Gemini AI", "Tailwind"],
@@ -91,12 +99,6 @@ export const PROJECTS = [
     tech: ["TypeScript", "React", "Chrome API", "ExecuTorch"],
     github: "https://github.com/vraj00222",
     award: "SFHACKS 2026",
-  },
-  {
-    name: "Windowbundler",
-    description: "macOS app that groups windows into workspaces with global hotkey switching. Built with Electron + Swift accessibility APIs.",
-    tech: ["TypeScript", "Electron", "Swift", "React"],
-    github: "https://github.com/vraj00222",
   },
   {
     name: "TUI",
