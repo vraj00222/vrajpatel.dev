@@ -315,8 +315,18 @@ export function GitHubActivity() {
   const [allContributions, setAllContributions] = useState<
     Record<string, ContributionDay[]>
   >({});
-  const [selectedYear, setSelectedYear] = useState("last");
-  const [availableYears, setAvailableYears] = useState<string[]>(["last"]);
+  // Default to the current calendar year (Jan–Dec) instead of the rolling
+  // 365-day window. The "Year" tab still fetches the rolling window on demand.
+  const [selectedYear, setSelectedYear] = useState(() =>
+    String(new Date().getUTCFullYear())
+  );
+  // Static tab list: "Year" (rolling) + every year back through 2024.
+  const [availableYears] = useState<string[]>(() => {
+    const now = new Date().getUTCFullYear();
+    const years: string[] = ["last"];
+    for (let y = now; y >= 2024; y--) years.push(String(y));
+    return years;
+  });
   const [mergedPRs, setMergedPRs] = useState<MergedPR[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -338,24 +348,19 @@ export function GitHubActivity() {
       })
       .catch(() => {});
 
-    fetchContributions(username, "last")
+    // Initial fetch: current calendar year, padded to Jan–Dec.
+    const initialYear = String(new Date().getUTCFullYear());
+    fetchContributions(username, initialYear)
       .then((data) => {
-        if (data.contributions) {
-          setAllContributions((prev) => ({
-            ...prev,
-            last: data.contributions,
-          }));
-          const years = new Set<string>();
-          years.add("last");
-          for (const c of data.contributions) {
-            years.add(c.date.split("-")[0]);
-          }
-          const filtered = Array.from(years)
-            .filter((y) => y === "last" || parseInt(y) >= 2024)
-            .sort()
-            .reverse();
-          setAvailableYears(["last", ...filtered.filter((y) => y !== "last")]);
-        }
+        if (!data.contributions) return;
+        const normalized = ensureFullCalendarYear(
+          initialYear,
+          data.contributions
+        );
+        setAllContributions((prev) => ({
+          ...prev,
+          [initialYear]: normalized,
+        }));
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -368,19 +373,19 @@ export function GitHubActivity() {
   }, [username]);
 
   useEffect(() => {
-    if (selectedYear === "last" || allContributions[selectedYear]) return;
+    if (allContributions[selectedYear]) return;
     fetchContributions(username, selectedYear)
       .then((data) => {
-        if (data.contributions) {
-          const normalized = ensureFullCalendarYear(
-            selectedYear,
-            data.contributions
-          );
-          setAllContributions((prev) => ({
-            ...prev,
-            [selectedYear]: normalized,
-          }));
-        }
+        if (!data.contributions) return;
+        // "last" is a rolling 365-day window; don't pad it to a calendar year.
+        const normalized =
+          selectedYear === "last"
+            ? data.contributions
+            : ensureFullCalendarYear(selectedYear, data.contributions);
+        setAllContributions((prev) => ({
+          ...prev,
+          [selectedYear]: normalized,
+        }));
       })
       .catch(() => {});
   }, [selectedYear, allContributions, username]);
