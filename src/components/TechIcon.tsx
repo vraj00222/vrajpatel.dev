@@ -292,6 +292,31 @@ const tech: Record<string, TechEntry> = {
       </svg>
     ),
   },
+  "Gemma 4": {
+    color: "#8B5CF6",
+    icon: ({ size }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <path d="M12 24C12 18.84 12 16.26 10.97 14.22A10 10 0 009.78 12.56C8.03 10.5 5.16 9.84 0 9V9C5.16 8.16 8.03 7.5 9.78 5.44A10 10 0 0010.97 3.78C12 1.74 12 0 12 0C12 0 12 1.74 13.03 3.78A10 10 0 0014.22 5.44C15.97 7.5 18.84 8.16 24 9V9C18.84 9.84 15.97 10.5 14.22 12.56A10 10 0 0013.03 14.22C12 16.26 12 18.84 12 24Z" fill="url(#gemma4-grad)"/>
+        <defs>
+          <linearGradient id="gemma4-grad" x1="0" y1="0" x2="24" y2="24">
+            <stop stopColor="#4285F4"/>
+            <stop offset="0.5" stopColor="#A855F7"/>
+            <stop offset="1" stopColor="#EA4335"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    ),
+  },
+  ElevenLabs: {
+    color: "#000000",
+    icon: ({ size }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24">
+        <rect x="1" y="1" width="22" height="22" rx="4" fill="#ffffff"/>
+        <rect x="8" y="5.5" width="3" height="13" fill="#000000"/>
+        <rect x="13" y="5.5" width="3" height="13" fill="#000000"/>
+      </svg>
+    ),
+  },
 };
 
 /* ── Fallback: letter avatar ──────────────────────────────────────── */
