@@ -4,6 +4,10 @@ import { Star } from "lucide-react";
 import { PERSONAL } from "../data/content";
 import { FadeIn } from "./FadeIn";
 import { GithubIcon } from "./Icons";
+// Historical years are bundled as static JSON — they don't change, so we avoid
+// the API hop (and the loading flash) and render them in one frame.
+import contrib2024 from "../data/contributions-2024.json";
+import contrib2025 from "../data/contributions-2025.json";
 
 interface GitHubProfile {
   public_repos: number;
@@ -314,7 +318,10 @@ export function GitHubActivity() {
   const [profile, setProfile] = useState<GitHubProfile | null>(null);
   const [allContributions, setAllContributions] = useState<
     Record<string, ContributionDay[]>
-  >({});
+  >(() => ({
+    "2024": contrib2024 as ContributionDay[],
+    "2025": contrib2025 as ContributionDay[],
+  }));
   // Default to the current calendar year (Jan–Dec) instead of the rolling
   // 365-day window. The "Year" tab still fetches the rolling window on demand.
   const [selectedYear, setSelectedYear] = useState(() =>
@@ -328,9 +335,21 @@ export function GitHubActivity() {
     return years;
   });
   const [mergedPRs, setMergedPRs] = useState<MergedPR[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Only show a loading state when the initially-selected year isn't already
+  // bundled as static data. 2024/2025 render in one frame, no flash.
+  const [loading, setLoading] = useState(() => {
+    const currentYear = String(new Date().getUTCFullYear());
+    return currentYear !== "2024" && currentYear !== "2025";
+  });
 
   const username = PERSONAL.githubUsername;
+
+  const selectYear = (year: string) => {
+    if (year !== selectedYear && !allContributions[year]) {
+      setLoading(true);
+    }
+    setSelectedYear(year);
+  };
 
   useEffect(() => {
     fetch(`https://api.github.com/users/${username}`)
@@ -348,23 +367,6 @@ export function GitHubActivity() {
       })
       .catch(() => {});
 
-    // Initial fetch: current calendar year, padded to Jan–Dec.
-    const initialYear = String(new Date().getUTCFullYear());
-    fetchContributions(username, initialYear)
-      .then((data) => {
-        if (!data.contributions) return;
-        const normalized = ensureFullCalendarYear(
-          initialYear,
-          data.contributions
-        );
-        setAllContributions((prev) => ({
-          ...prev,
-          [initialYear]: normalized,
-        }));
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-
     fetchMergedPRs(username)
       .then((prs) => {
         setMergedPRs(prs);
@@ -374,9 +376,10 @@ export function GitHubActivity() {
 
   useEffect(() => {
     if (allContributions[selectedYear]) return;
+    let cancelled = false;
     fetchContributions(username, selectedYear)
       .then((data) => {
-        if (!data.contributions) return;
+        if (cancelled || !data.contributions) return;
         // "last" is a rolling 365-day window; don't pad it to a calendar year.
         const normalized =
           selectedYear === "last"
@@ -387,7 +390,13 @@ export function GitHubActivity() {
           [selectedYear]: normalized,
         }));
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [selectedYear, allContributions, username]);
 
   const isDark = useIsDark();
@@ -434,7 +443,7 @@ export function GitHubActivity() {
                 {availableYears.map((year) => (
                   <button
                     key={year}
-                    onClick={() => setSelectedYear(year)}
+                    onClick={() => selectYear(year)}
                     className={`px-2.5 py-1 text-[11px] rounded-md font-medium transition-all duration-200 ${
                       selectedYear === year
                         ? "bg-text text-bg dark:bg-dark-text dark:text-dark-bg shadow-sm"
