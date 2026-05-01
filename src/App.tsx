@@ -7,11 +7,16 @@ import { GitHubActivity } from "./components/GitHubActivity";
 import { Reading } from "./components/Reading";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
+import { BlogPage } from "./components/BlogPage";
 function Divider() {
   return <div className="section-divider mx-6" />;
 }
 
 export default function App() {
+  if (typeof window !== "undefined" && window.location.pathname === "/blog") {
+    return <BlogPage />;
+  }
+
   return (
     <div className="min-h-screen">
       <a href="#about" className="skip-link">

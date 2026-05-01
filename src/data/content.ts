@@ -149,5 +149,6 @@ export const NAV_LINKS = [
   { label: "GitHub", href: "#github" },
   { label: "Projects", href: "#projects" },
   { label: "Reading", href: "#reading" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "#contact" },
 ] as const;
