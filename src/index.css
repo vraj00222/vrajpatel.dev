@@ -49,6 +49,15 @@
 
 html { scroll-behavior: smooth; }
 
+/* Aurora background sweep — used by the /blog Coming Soon page. */
+@keyframes aurora {
+  from { background-position: 50% 50%, 50% 50%; }
+  to   { background-position: 350% 50%, 350% 50%; }
+}
+@utility animate-aurora {
+  animation: aurora 60s linear infinite;
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
