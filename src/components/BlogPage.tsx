@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ChevronRight, Moon, Shield, Sun } from "lucide-react";
 import { AuroraBackground } from "./ui/aurora-background";
@@ -57,6 +57,48 @@ export function BlogPage() {
   }, [theme]);
 
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+
+  const scrollToSection = (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const section = document.getElementById(id);
+    if (!section) return;
+    // Respect user preference for reduced motion
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      section.scrollIntoView({ behavior: "auto", block: "start" });
+      window.history.replaceState(null, "", `#${id}`);
+      return;
+    }
+
+    // Custom animated scroll for more control over duration & easing
+    const startY = window.scrollY || window.pageYOffset;
+    const targetRect = section.getBoundingClientRect();
+    const offsetTop = targetRect.top + startY;
+    // account for scroll-margin-top set in CSS (5rem ~ 80px)
+    const scrollOffset = Math.max(0, offsetTop - 80);
+    const duration = 650; // ms
+
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    let startTime: number | null = null;
+    const step = (timestamp: number) => {
+      if (startTime === null) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      const eased = easeOutCubic(progress);
+      const currentY = Math.round(startY + (scrollOffset - startY) * eased);
+      window.scrollTo(0, currentY);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        // ensure final position and update hash without adding history entry
+        section.scrollIntoView({ behavior: "auto", block: "start" });
+        window.history.replaceState(null, "", `#${id}`);
+      }
+    };
+
+    requestAnimationFrame(step);
+  };
 
   return (
     <AuroraBackground>
@@ -130,6 +172,7 @@ export function BlogPage() {
                 <li key={section.id}>
                   <a
                     href={`#${section.id}`}
+                    onClick={scrollToSection(section.id)}
                     className="inline-flex items-center gap-2 text-[14px] text-text-secondary dark:text-dark-text-secondary hover:text-text dark:hover:text-dark-text transition-colors duration-200"
                   >
                     <ChevronRight size={13} className="opacity-70" />
