@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { ChevronDown, Star } from "lucide-react";
 import { PERSONAL } from "../data/content";
 import { FadeIn } from "./FadeIn";
 import { GithubIcon } from "./Icons";
@@ -41,6 +41,8 @@ const MONTH_NAMES = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 const DAY_LABELS = ["Mon", "Wed", "Fri"]; // GitHub only labels Mon/Wed/Fri
+const MIN_CONTRIBUTED_REPO_STARS = 500;
+const INITIAL_VISIBLE_CONTRIBUTIONS = 4;
 
 function getApiBaseUrl() {
   if (typeof window === "undefined") return "";
@@ -344,6 +346,7 @@ export function GitHubActivity() {
     return years;
   });
   const [mergedPRs, setMergedPRs] = useState<MergedPR[]>([]);
+  const [showAllContributions, setShowAllContributions] = useState(false);
   // Only show a loading state when the initially-selected year isn't already
   // bundled as static data. 2024/2025 render in one frame, no flash.
   const [loading, setLoading] = useState(() => {
@@ -414,6 +417,14 @@ export function GitHubActivity() {
   const totalContributions =
     currentDays?.reduce((sum, d) => sum + d.count, 0) || 0;
   const greens = isDark ? GH_GREENS_DARK : GH_GREENS_LIGHT;
+  const filteredMergedPRs = mergedPRs.filter(
+    (pr) => (pr.stars ?? 0) >= MIN_CONTRIBUTED_REPO_STARS
+  );
+  const hasMoreContributions =
+    filteredMergedPRs.length > INITIAL_VISIBLE_CONTRIBUTIONS;
+  const visibleMergedPRs = showAllContributions
+    ? filteredMergedPRs
+    : filteredMergedPRs.slice(0, INITIAL_VISIBLE_CONTRIBUTIONS);
 
   return (
     <section id="github" className="py-14 px-6" data-section="github">
@@ -519,53 +530,89 @@ export function GitHubActivity() {
             Contributions
           </h3>
 
-          {mergedPRs.length > 0 ? (
-            <div className="space-y-2">
-              {mergedPRs.map((pr, i) => (
-                <a
-                  key={i}
-                  href={pr.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block -mx-3 px-3 py-3 rounded-xl border border-transparent hover:border-border dark:hover:border-dark-border hover:bg-hover-bg/70 dark:hover:bg-dark-hover-bg/60 transition-colors duration-200"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2.5">
-                        <p className="text-[13px] font-semibold text-text dark:text-dark-text tracking-tight truncate">
-                          {pr.repo}
-                        </p>
-                        <span className="inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[11px] font-medium text-text-secondary dark:text-dark-text-secondary bg-hover-bg dark:bg-dark-hover-bg border border-border dark:border-dark-border tabular-nums shrink-0">
-                          <Star size={10} className="opacity-70" />
-                          {pr.stars === null
-                            ? "n/a"
-                            : pr.stars >= 1000
-                              ? `${(pr.stars / 1000).toFixed(1)}k`
-                              : pr.stars.toLocaleString()}
+          {filteredMergedPRs.length > 0 ? (
+            <div>
+              <motion.div
+                layout
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="relative"
+              >
+                <div className="space-y-2">
+                  {visibleMergedPRs.map((pr, i) => (
+                    <a
+                      key={i}
+                      href={pr.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block -mx-3 px-3 py-3 rounded-xl border border-transparent hover:border-border dark:hover:border-dark-border hover:bg-hover-bg/70 dark:hover:bg-dark-hover-bg/60 transition-colors duration-200"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2.5">
+                            <p className="text-[13px] font-semibold text-text dark:text-dark-text tracking-tight truncate">
+                              {pr.repo}
+                            </p>
+                            <span className="inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[11px] font-medium text-text-secondary dark:text-dark-text-secondary bg-hover-bg dark:bg-dark-hover-bg border border-border dark:border-dark-border tabular-nums shrink-0">
+                              <Star size={10} className="opacity-70" />
+                              {pr.stars === null
+                                ? "n/a"
+                                : pr.stars >= 1000
+                                  ? `${(pr.stars / 1000).toFixed(1)}k`
+                                  : pr.stars.toLocaleString()}
+                            </span>
+                          </div>
+
+                          <p className="mt-1 text-[13px] text-text-secondary dark:text-dark-text-secondary group-hover:text-text dark:group-hover:text-dark-text transition-colors duration-200">
+                            {pr.title}
+                          </p>
+
+                          {pr.repoDescription && (
+                            <p className="mt-1.5 text-[12px] leading-5 text-text-muted dark:text-dark-text-muted overflow-hidden [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">
+                              {pr.repoDescription}
+                            </p>
+                          )}
+                        </div>
+
+                        <span className="shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                          merged
                         </span>
                       </div>
+                    </a>
+                  ))}
+                </div>
 
-                      <p className="mt-1 text-[13px] text-text-secondary dark:text-dark-text-secondary group-hover:text-text dark:group-hover:text-dark-text transition-colors duration-200">
-                        {pr.title}
-                      </p>
+                {!showAllContributions && hasMoreContributions && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-bg via-bg/75 to-transparent dark:from-dark-bg dark:via-dark-bg/75 backdrop-blur-[2px]"
+                  />
+                )}
+              </motion.div>
 
-                      {pr.repoDescription && (
-                        <p className="mt-1.5 text-[12px] leading-5 text-text-muted dark:text-dark-text-muted overflow-hidden [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">
-                          {pr.repoDescription}
-                        </p>
-                      )}
-                    </div>
-
-                    <span className="shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
-                      merged
-                    </span>
-                  </div>
-                </a>
-              ))}
+              {hasMoreContributions && (
+                <div className="mt-2 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllContributions((prev) => !prev)}
+                    className="inline-flex items-center gap-1.5 text-[12px] font-medium text-text-secondary dark:text-dark-text-secondary hover:text-text dark:hover:text-dark-text transition-colors duration-200"
+                  >
+                    {showAllContributions ? "Show less" : "Load more"}
+                    <motion.span
+                      animate={{ rotate: showAllContributions ? 180 : 0 }}
+                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <ChevronDown size={14} />
+                    </motion.span>
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <div className="rounded-lg border border-border dark:border-dark-border bg-surface dark:bg-dark-surface px-4 py-3 text-[13px] text-text-muted dark:text-dark-text-muted">
-              No recent merged PRs available right now.
+              No recent merged PRs found from repositories with 500+ stars.
             </div>
           )}
         </FadeIn>
