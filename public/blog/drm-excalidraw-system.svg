@@ -1,0 +1,38 @@
+<svg width="1400" height="900" viewBox="0 0 1400 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="900" fill="#ECE9E9"/>
+
+  <rect x="200" y="120" width="280" height="220" rx="34" fill="#E9B6B7" stroke="#232323" stroke-width="3"/>
+  <text x="340" y="235" text-anchor="middle" font-family="system-ui, sans-serif" font-size="38" fill="#1E1E1E">USER</text>
+
+  <rect x="680" y="60" width="360" height="280" rx="34" fill="#E9B6B7" stroke="#232323" stroke-width="3"/>
+  <text x="860" y="130" text-anchor="middle" font-family="system-ui, sans-serif" font-size="34" fill="#1E1E1E">EC2</text>
+  <text x="860" y="175" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" fill="#1E1E1E">- verify your identity</text>
+  <text x="860" y="210" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" fill="#1E1E1E">- return encrypted file</text>
+  <text x="860" y="245" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" fill="#1E1E1E">- licensing server call</text>
+
+  <rect x="110" y="500" width="540" height="170" rx="24" fill="#E9B6B7" stroke="#232323" stroke-width="3"/>
+  <text x="380" y="585" text-anchor="middle" font-family="system-ui, sans-serif" font-size="34" fill="#1E1E1E">TEE</text>
+  <text x="380" y="625" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" fill="#1E1E1E">(Trusted Execution Environment)</text>
+
+  <text x="1020" y="520" text-anchor="middle" font-family="system-ui, sans-serif" font-size="46" fill="#1E1E1E">Google server</text>
+  <rect x="940" y="540" width="330" height="340" rx="24" fill="#E9B6B7" stroke="#232323" stroke-width="3"/>
+  <text x="1105" y="700" text-anchor="middle" font-family="system-ui, sans-serif" font-size="42" fill="#1E1E1E">licensing server</text>
+
+  <line x1="490" y1="230" x2="670" y2="230" stroke="#232323" stroke-width="4"/>
+  <polygon points="670,230 648,218 648,242" fill="#232323"/>
+  <text x="575" y="214" text-anchor="middle" font-family="system-ui, sans-serif" font-size="38" fill="#1E1E1E">playback</text>
+
+  <line x1="310" y1="500" x2="310" y2="350" stroke="#232323" stroke-width="4"/>
+  <polygon points="310,350 298,372 322,372" fill="#232323"/>
+
+  <line x1="365" y1="350" x2="365" y2="500" stroke="#232323" stroke-width="4"/>
+  <polygon points="365,500 353,478 377,478" fill="#232323"/>
+
+  <line x1="650" y1="545" x2="940" y2="630" stroke="#232323" stroke-width="4"/>
+  <polygon points="940,630 920,614 913,638" fill="#232323"/>
+  <text x="785" y="588" text-anchor="middle" font-family="system-ui, sans-serif" font-size="30" fill="#1E1E1E" transform="rotate(15 785 588)">META DATA</text>
+
+  <line x1="940" y1="690" x2="650" y2="610" stroke="#232323" stroke-width="4"/>
+  <polygon points="650,610 675,603 669,627" fill="#232323"/>
+  <text x="800" y="660" text-anchor="middle" font-family="system-ui, sans-serif" font-size="40" fill="#1E1E1E" transform="rotate(-10 800 660)">playback</text>
+</svg>
