@@ -6,7 +6,7 @@ export const PERSONAL = {
   github: "https://github.com/vraj00222",
   githubUsername: "vraj00222",
   linkedin: "https://www.linkedin.com/in/vraj-patel-60275319b/",
-  x: "https://x.com/vraj_sol",
+  x: "https://x.com/vrjpatel_",
   devpost: "https://devpost.com/vrajpatel00222",
   shipyard: "https://shipyardhq.tech/profile/8fcf2965-ecce-401f-ae40-256f07a85be9",
   ieeeLink: "https://ieeexplore.ieee.org/document/10444327",
