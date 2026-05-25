@@ -138,9 +138,16 @@ export const EDUCATION = [
 ] as const;
 
 export const SKILLS = [
-  "Python", "TypeScript", "JavaScript", "C++", "SQL",
-  "React", "Next.js", "Node.js", "Django", "Tailwind CSS",
-  "PostgreSQL", "MongoDB", "Docker", "AWS", "Git",
+  // Languages
+  "TypeScript", "Python", "JavaScript", "SQL", "C++",
+  // AI / Agents
+  "Claude API", "OpenAI", "Vercel AI SDK", "Ollama", "MCP", "RAG",
+  // Frameworks & Runtime
+  "Next.js", "React", "Node.js", "Express", "Django", "FastAPI", "Electron", "Ink", "Tailwind CSS",
+  // Infra & Tools
+  "AWS", "Docker", "GitHub Actions", "Vercel",
+  "PostgreSQL", "MySQL", "MongoDB", "Redis",
+  "Git", "Postman", "Claude Code", "Cursor",
 ] as const;
 
 export const NAV_LINKS = [

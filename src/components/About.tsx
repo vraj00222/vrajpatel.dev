@@ -1,7 +1,7 @@
 import { SKILLS, EDUCATION, PUBLICATION } from "../data/content";
 import { FadeIn } from "./FadeIn";
 import { useState, type CSSProperties } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Copy, Check, ArrowUpRight } from "lucide-react";
 import { getTechColor, getTechLogo } from "./TechIcon";
 
@@ -24,6 +24,27 @@ function getReadableTextColor(hex: string) {
 
 export function About() {
   const [copied, setCopied] = useState(false);
+  const reduce = useReducedMotion();
+
+  const skillsContainer = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reduce ? 0 : 0.025,
+        delayChildren: reduce ? 0 : 0.05,
+      },
+    },
+  };
+
+  const skillItem = {
+    hidden: { opacity: 0, y: reduce ? 0 : 10, scale: reduce ? 1 : 0.94 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { type: "spring" as const, stiffness: 420, damping: 28, mass: 0.6 },
+    },
+  };
 
   const copyBibtex = async () => {
     await navigator.clipboard.writeText(PUBLICATION.bibtex);
@@ -40,22 +61,31 @@ export function About() {
           <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mb-5">
             Skills
           </h2>
-          <div className="flex flex-wrap gap-2">
+          <motion.div
+            className="flex flex-wrap gap-2"
+            variants={skillsContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-60px" }}
+          >
             {SKILLS.map((skill) => {
-              // Next.js brand white would disappear on light backgrounds.
-              const skillColor = skill === "Next.js" ? "#2d2d2d" : getTechColor(skill);
+              // Next.js / Vercel / Cursor brand white would disappear on light backgrounds.
+              const isWhiteBrand = skill === "Next.js" || skill === "Vercel" || skill === "Vercel AI SDK" || skill === "Cursor";
+              const skillColor = isWhiteBrand ? "#2d2d2d" : getTechColor(skill);
               const hoverTextColor = getReadableTextColor(skillColor);
-              const logoColor = skill === "Next.js" ? "#ffffff" : skillColor;
+              const logoColor = isWhiteBrand ? "#ffffff" : skillColor;
 
               return (
                 <motion.span
                   key={skill}
-                  className="group relative isolate overflow-hidden px-3 py-1.5 text-[13px] font-medium rounded-md bg-surface dark:bg-dark-surface border border-border dark:border-dark-border text-text-secondary dark:text-dark-text-secondary transition-all duration-150 hover:border-(--skill-color)"
+                  variants={skillItem}
+                  className="group relative isolate overflow-hidden px-3 py-1.5 text-[13px] font-medium rounded-md bg-surface dark:bg-dark-surface border border-border dark:border-dark-border text-text-secondary dark:text-dark-text-secondary transition-[border-color,box-shadow] duration-150 hover:border-(--skill-color) hover:shadow-[0_4px_14px_-6px_var(--skill-color)]"
                   style={{ "--skill-color": skillColor, "--skill-fg": hoverTextColor } as CSSProperties}
                   whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 580, damping: 32 }}
                 >
-                  <span className="pointer-events-none absolute inset-0 -z-10 -translate-x-[102%] transform-gpu bg-(--skill-color) transition-transform duration-180 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0" />
+                  <span className="pointer-events-none absolute inset-0 -z-10 -translate-x-[102%] transform-gpu bg-(--skill-color) transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0" />
 
                   <span className="relative z-10 inline-flex items-center gap-1.5">
                     <span className="flex h-4.5 w-4.5 items-center justify-center rounded-md bg-bg/90 dark:bg-dark-bg/85 opacity-0 -translate-x-1 scale-95 shadow-sm transition-all duration-150 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100">
@@ -68,7 +98,7 @@ export function About() {
                 </motion.span>
               );
             })}
-          </div>
+          </motion.div>
         </FadeIn>
 
         {/* Education */}
