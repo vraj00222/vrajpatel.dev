@@ -21,7 +21,7 @@ const links: LinkItem[] = [
   { label: "X", href: PERSONAL.x, icon: XIcon, hoverColor: "#e6edf3", hoverColorLight: "#000000" },
   { label: "Devpost", href: PERSONAL.devpost, icon: ArrowUpRight, hoverColor: "#003E54", hoverColorLight: "#003E54" },
   { label: "Shipyard", href: PERSONAL.shipyard, icon: ArrowUpRight, hoverColor: "#06B6D4", hoverColorLight: "#06B6D4" },
-  { label: "Resume", href: "/resume.pdf", icon: FileText, hoverColor: "#10b981", hoverColorLight: "#10b981" },
+  { label: "Resume", href: "/resume.pdf?v=2026-05-25", icon: FileText, hoverColor: "#10b981", hoverColorLight: "#10b981" },
 ];
 
 export function Contact() {
