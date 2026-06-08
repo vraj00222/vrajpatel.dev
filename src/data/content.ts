@@ -78,6 +78,13 @@ export const EXPERIENCE: ExperienceItem[] = [
 
 export const PROJECTS = [
   {
+    name: "Yellow",
+    description: "Version control for a running backend. When your app crashes in prod, Yellow freezes the exact database state in that millisecond, diffs it against healthy to name the root cause, then a Replicas AI agent opens a fix PR you approve from Telegram.",
+    tech: ["TypeScript", "React", "InsForge", "OpenAI", "MCP"],
+    github: "https://github.com/vraj00222/yellow-",
+    live: "https://www.youtube.com/shorts/u8KBF_esBb4",
+  },
+  {
     name: "IntelMaxxing",
     description: "Palantir Gotham for careers. Five AI agents scrape HN hiring threads, fresh funding, YC batches, and Reddit chatter to surface companies about to hire before the posting lands — narrated as ElevenLabs voice briefings.",
     tech: ["Next.js", "TypeScript", "Gemma 4", "ElevenLabs", "GitHub API"],
@@ -99,12 +106,6 @@ export const PROJECTS = [
     tech: ["TypeScript", "React", "Chrome API", "ExecuTorch"],
     github: "https://github.com/vraj00222",
     award: "SFHACKS 2026",
-  },
-  {
-    name: "TUI",
-    description: "npm library of terminal UI primitives for AI coding agents. Spinners, prompts, tables. 54 peak weekly downloads.",
-    tech: ["TypeScript", "Node.js", "npm"],
-    github: "https://github.com/vraj00222",
   },
 ] as const;
 
