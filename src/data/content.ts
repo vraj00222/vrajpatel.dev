@@ -83,6 +83,7 @@ export const PROJECTS = [
     tech: ["TypeScript", "React", "InsForge", "OpenAI", "MCP"],
     github: "https://github.com/vraj00222/yellow-",
     live: "https://www.youtube.com/shorts/u8KBF_esBb4",
+    award: "Entrepreneur First Hackathon",
   },
   {
     name: "IntelMaxxing",
