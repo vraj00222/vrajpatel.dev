@@ -25,7 +25,7 @@ export const EXPERIENCE: ExperienceItem[] = [
   {
     title: "Teaching Associate",
     company: "Cal State Fullerton",
-    period: "Aug 2025 — Present",
+    period: "Aug 2025 — Jun 2026",
     location: "Fullerton, CA",
     tech: ["Python", "C++", "Git", "Gradescope"],
     bullets: [

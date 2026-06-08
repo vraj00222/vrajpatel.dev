@@ -35,7 +35,7 @@ export function Experience() {
                         <span className="text-[15px] font-semibold text-text dark:text-dark-text">
                           {job.company}
                         </span>
-                        {i === 0 && (
+                        {job.period.includes("Present") && (
                           <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-500/15 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                             Working
