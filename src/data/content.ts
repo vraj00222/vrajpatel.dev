@@ -195,6 +195,7 @@ export const HACKATHONS: Hackathon[] = [
     image: "/hackathons/insforge.png",
     alt: "InsForge Hackathon poster",
     won: false,
+    project: "Yellow",
   },
 ];
 
