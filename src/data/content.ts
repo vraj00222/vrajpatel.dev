@@ -86,12 +86,26 @@ export const PROJECTS = [
     award: "Entrepreneur First Hackathon",
   },
   {
+    name: "agent-farm",
+    description: "A local dev tool that parallelizes Claude Code. Hand it a list of tasks and it spawns a Git worktree per task, runs an autonomous agent inside each, then surfaces the diffs for you to review and cherry-pick into main — zero conflicts, full parallelism.",
+    tech: ["TypeScript", "Claude Code", "Git", "Node.js"],
+    github: "https://github.com/vraj00222/agent-farm",
+    live: "https://agent-farm-website.vercel.app/",
+  },
+  {
     name: "IntelMaxxing",
     description: "Palantir Gotham for careers. Five AI agents scrape HN hiring threads, fresh funding, YC batches, and Reddit chatter to surface companies about to hire before the posting lands — narrated as ElevenLabs voice briefings.",
     tech: ["Next.js", "TypeScript", "Gemma 4", "ElevenLabs", "GitHub API"],
     github: "https://github.com/vraj00222/intelmaxx",
     live: "https://intelmaxxing.tech",
     award: "Best Solo Hack — Citrus Hack 2026",
+  },
+  {
+    name: "PocketLLM",
+    description: "Your AI lives on a USB stick. Plug in, chat with a local model, unplug — zero install, zero footprint, nothing left behind. Fully offline inference for the privacy-conscious and the air-gapped.",
+    tech: ["TypeScript", "Ollama", "Node.js"],
+    github: "https://github.com/vraj00222/pocketllm",
+    live: "https://pocketllm-site.vercel.app/",
   },
   {
     name: "GitConnect",
@@ -102,11 +116,43 @@ export const PROJECTS = [
     award: "$1k Prize — HackDartmouth X",
   },
   {
+    name: "RapidMVP",
+    description: "An in-browser AI app builder in the spirit of Bolt and Lovable. Describe a product in plain English and it scaffolds, edits, and live-previews a working full-stack MVP — no local setup required.",
+    tech: ["TypeScript", "React", "Vercel AI SDK", "Tailwind CSS"],
+    github: "https://github.com/vraj00222/RapidMVP",
+  },
+  {
     name: "GreenLane",
     description: "Chrome extension for sustainability-scored shopping. On-device AI via Meta ExecuTorch, zero data transmission.",
     tech: ["TypeScript", "React", "Chrome API", "ExecuTorch"],
     github: "https://github.com/vraj00222",
     award: "SFHACKS 2026",
+  },
+  {
+    name: "repomap",
+    description: "Turns any repository into a structured map of files, symbols, and dependencies — a compact, navigable view of a codebase that's as useful for onboarding humans as it is for feeding context to LLMs.",
+    tech: ["TypeScript", "Node.js"],
+    github: "https://github.com/vraj00222/repomap",
+  },
+  {
+    name: "tui",
+    description: "A UI component library for terminal-based AI agents. Composable boxes, spinners, and streaming panes that make it easy to build rich, legible CLI interfaces for agentic tools.",
+    tech: ["TypeScript", "Ink", "Node.js"],
+    github: "https://github.com/vraj00222/tui",
+    live: "https://tui-ruby.vercel.app",
+  },
+  {
+    name: "windowbundler",
+    description: "A macOS window manager that saves and restores your window layouts as named workspace bundles. One keystroke snaps your entire setup — editors, terminals, browsers — back into place.",
+    tech: ["TypeScript", "Electron", "Node.js"],
+    github: "https://github.com/vraj00222/windowbundler",
+  },
+  {
+    name: "404 Museum",
+    description: "A museum of 404 pages — a curated, interactive gallery collecting the most creative 'page not found' screens on the web, because even dead ends deserve good design.",
+    tech: ["JavaScript", "React"],
+    github: "https://github.com/vraj00222/404-museum",
+    live: "https://404-museum-five.vercel.app/",
   },
 ] as const;
 
