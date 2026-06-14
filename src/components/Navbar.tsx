@@ -30,7 +30,7 @@ export function Navbar() {
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-bg/70 dark:bg-dark-bg/70 backdrop-blur-xl backdrop-saturate-150 border-b border-border dark:border-dark-border">
-      <nav className="mx-auto max-w-2xl flex items-center justify-between px-6 h-12">
+      <nav className="mx-auto max-w-3xl flex items-center justify-between gap-8 px-6 h-14">
         <a
           href="#hero"
           className="font-display text-sm font-semibold text-text dark:text-dark-text tracking-tight"
@@ -55,7 +55,7 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <button
             onClick={toggleTheme}
             className="p-2 rounded-md text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-all duration-200"

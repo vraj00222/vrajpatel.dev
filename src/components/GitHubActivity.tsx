@@ -427,7 +427,7 @@ export function GitHubActivity() {
     : filteredMergedPRs.slice(0, INITIAL_VISIBLE_CONTRIBUTIONS);
 
   return (
-    <section id="github" className="py-14 px-6" data-section="github">
+    <section id="github" className="py-16 px-6" data-section="github">
       <div className="mx-auto max-w-2xl">
         <FadeIn>
           <div className="flex items-center justify-between mb-5">

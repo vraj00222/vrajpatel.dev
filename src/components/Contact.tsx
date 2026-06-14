@@ -26,7 +26,7 @@ const links: LinkItem[] = [
 
 export function Contact() {
   return (
-    <section id="contact" className="py-14 px-6" data-section="contact">
+    <section id="contact" className="py-16 px-6" data-section="contact">
       <div className="mx-auto max-w-2xl">
         <FadeIn>
           <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mb-2">

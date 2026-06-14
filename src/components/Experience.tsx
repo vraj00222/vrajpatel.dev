@@ -12,7 +12,7 @@ export function Experience() {
     setExpanded((prev) => (prev === i ? null : i));
 
   return (
-    <section id="experience" className="py-14 px-6" data-section="experience">
+    <section id="experience" className="py-16 px-6" data-section="experience">
       <div className="mx-auto max-w-2xl">
         <FadeIn>
           <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mb-8">

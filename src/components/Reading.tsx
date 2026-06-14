@@ -11,7 +11,7 @@ export function Reading() {
     setExpandedCategory((prev) => (prev === label ? null : label));
 
   return (
-    <section id="reading" className="py-14 px-6" data-section="reading">
+    <section id="reading" className="py-16 px-6" data-section="reading">
       <div className="mx-auto max-w-2xl">
         <FadeIn>
           <div className="flex items-center justify-between mb-6">

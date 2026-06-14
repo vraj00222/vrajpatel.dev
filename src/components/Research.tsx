@@ -14,7 +14,7 @@ export function Research() {
   };
 
   return (
-    <section id="research" className="py-14 px-6" data-section="research">
+    <section id="research" className="py-16 px-6" data-section="research">
       <div className="mx-auto max-w-2xl">
         <FadeIn>
           <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mb-6">

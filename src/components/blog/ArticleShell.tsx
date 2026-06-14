@@ -49,14 +49,14 @@ export function ArticleShell({
 
   return (
     <AuroraBackground>
-      <header className="relative z-10 mx-auto max-w-2xl w-full flex-none flex items-center justify-between px-6 h-12">
+      <header className="relative z-10 mx-auto max-w-3xl w-full flex-none flex items-center justify-between gap-8 px-6 h-14">
         <a
           href="/"
           className="font-display text-sm font-semibold text-text dark:text-dark-text tracking-tight"
         >
           vraj.
         </a>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <a
             href="/blog"
             className="inline-flex items-center gap-1.5 px-2 py-1.5 text-[13px] text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors duration-200"

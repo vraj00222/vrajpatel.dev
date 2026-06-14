@@ -24,7 +24,7 @@ export function Projects() {
   const showLess = () => setVisibleCount(INITIAL_VISIBLE);
 
   return (
-    <section id="projects" className="py-14 px-6" data-section="projects">
+    <section id="projects" className="py-16 px-6" data-section="projects">
       <div className="mx-auto max-w-2xl">
         <FadeIn>
           <div className="flex items-center justify-between mb-6">

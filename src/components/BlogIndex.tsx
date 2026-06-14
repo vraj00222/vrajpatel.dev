@@ -40,14 +40,14 @@ export function BlogIndex() {
 
   return (
     <AuroraBackground>
-      <header className="relative z-10 mx-auto max-w-3xl w-full flex-none flex items-center justify-between px-6 h-12">
+      <header className="relative z-10 mx-auto max-w-3xl w-full flex-none flex items-center justify-between gap-8 px-6 h-14">
         <a
           href="/"
           className="font-display text-sm font-semibold text-text dark:text-dark-text tracking-tight"
         >
           vraj.
         </a>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <a
             href="/"
             className="inline-flex items-center gap-1.5 px-2 py-1.5 text-[13px] text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors duration-200"
@@ -92,7 +92,7 @@ export function BlogIndex() {
           </p>
         </motion.div>
 
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="mt-8 flex flex-col gap-4">
           {POSTS.map((post, i) => {
             const Icon = ICONS[post.icon];
             return (
@@ -106,50 +106,35 @@ export function BlogIndex() {
                   delay: 0.08 + i * 0.08,
                   ease: [0.4, 0, 0.2, 1],
                 }}
-                whileHover={{ y: -3 }}
-                className={`group relative flex flex-col overflow-hidden rounded-2xl border border-border/80 dark:border-dark-border/80 bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-xl p-6 transition-[border-color,box-shadow] duration-300 hover:border-border-hover dark:hover:border-dark-border-hover hover:shadow-[0_18px_40px_-20px_rgba(0,0,0,0.25)] dark:hover:shadow-[0_18px_50px_-20px_rgba(0,0,0,0.8)] ${
-                  post.featured ? "sm:col-span-2 sm:p-8" : ""
-                }`}
+                whileHover={{ y: -2 }}
+                className="group flex items-center gap-5 rounded-2xl border border-border/80 dark:border-dark-border/80 bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-xl p-5 sm:p-6 transition-[border-color,box-shadow] duration-300 hover:border-border-hover dark:hover:border-dark-border-hover hover:shadow-[0_18px_40px_-22px_rgba(0,0,0,0.25)] dark:hover:shadow-[0_18px_50px_-22px_rgba(0,0,0,0.8)]"
               >
-                {/* Oversized watermark icon on the featured tile */}
-                {post.featured && (
-                  <Icon
-                    className="pointer-events-none absolute -right-6 -top-6 text-text/[0.04] dark:text-dark-text/[0.05]"
-                    size={150}
-                    strokeWidth={1.25}
-                    aria-hidden
-                  />
-                )}
-
-                <div className="relative z-10 inline-flex w-fit items-center gap-2 rounded-full border border-border dark:border-dark-border bg-hover-bg/80 dark:bg-dark-hover-bg/80 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary">
-                  <Icon size={12} />
-                  {post.category}
+                <div className="hidden sm:flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-border dark:border-dark-border bg-hover-bg/60 dark:bg-dark-hover-bg/60 text-text-secondary dark:text-dark-text-secondary">
+                  <Icon size={22} strokeWidth={1.5} />
                 </div>
 
-                <h2
-                  className={`relative z-10 mt-4 font-display font-bold tracking-tight text-text dark:text-dark-text ${
-                    post.featured ? "text-2xl sm:text-3xl" : "text-xl"
-                  }`}
-                >
-                  {post.title}
-                </h2>
-
-                <p className="relative z-10 mt-2 flex-1 text-[14px] leading-6 text-text-secondary dark:text-dark-text-secondary">
-                  {post.excerpt}
-                </p>
-
-                <div className="relative z-10 mt-5 flex items-center justify-between text-[12px] text-text-muted dark:text-dark-text-muted">
-                  <span>
-                    {post.date} · {post.readingTime}
-                  </span>
-                  <span className="inline-flex items-center gap-1 font-medium text-text-secondary dark:text-dark-text-secondary group-hover:text-text dark:group-hover:text-dark-text transition-colors duration-200">
-                    Read
-                    <ArrowUpRight
-                      size={13}
-                      className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-border dark:border-dark-border bg-hover-bg/80 dark:bg-dark-hover-bg/80 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary">
+                      <Icon size={11} />
+                      {post.category}
+                    </span>
+                    <span className="text-[11px] text-text-muted dark:text-dark-text-muted">
+                      {post.date} · {post.readingTime}
+                    </span>
+                  </div>
+                  <h2 className="mt-2 font-display text-xl font-bold tracking-tight text-text dark:text-dark-text">
+                    {post.title}
+                  </h2>
+                  <p className="mt-1 text-[14px] leading-6 text-text-secondary dark:text-dark-text-secondary line-clamp-2">
+                    {post.excerpt}
+                  </p>
                 </div>
+
+                <ArrowUpRight
+                  size={18}
+                  className="hidden sm:block shrink-0 self-start mt-1 text-text-muted dark:text-dark-text-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
               </motion.a>
             );
           })}

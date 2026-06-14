@@ -45,7 +45,7 @@ export function About() {
   };
 
   return (
-    <section id="about" className="py-14 px-6" data-section="about">
+    <section id="about" className="py-16 px-6" data-section="about">
       <div className="mx-auto max-w-2xl space-y-16">
 
         {/* Skills */}
