@@ -156,6 +156,48 @@ export const PROJECTS = [
   },
 ] as const;
 
+export interface Hackathon {
+  name: string;
+  image: string;
+  alt: string;
+  /** Won hackathons get the sunshine glow treatment. */
+  won: boolean;
+  result?: string;
+  project?: string;
+}
+
+export const HACKATHONS: Hackathon[] = [
+  {
+    name: "HackDartmouth X",
+    image: "/hackathons/hackdartmouth.png",
+    alt: "HackDartmouth pine-tree logo",
+    won: true,
+    result: "$1,000 prize",
+    project: "GitConnect",
+  },
+  {
+    name: "Citrus Hack 2026",
+    image: "/hackathons/citrus-hack.png",
+    alt: "Citrus Hack 2026 orange badge",
+    won: true,
+    result: "Best Solo Hack",
+    project: "IntelMaxxing",
+  },
+  {
+    name: "SF Hacks 2026",
+    image: "/hackathons/sf-hacks.png",
+    alt: "SF Hacks logo",
+    won: false,
+    project: "GreenLane",
+  },
+  {
+    name: "InsForge Hackathon",
+    image: "/hackathons/insforge.png",
+    alt: "InsForge Hackathon poster",
+    won: false,
+  },
+];
+
 export const PUBLICATION = {
   title: "ECG Anomaly Detection with LSTM-Autoencoder for Heartbeat Analysis",
   authors: "I. Farady, V. Patel, C.-C. Kuo, C.-Y. Lin",
@@ -203,6 +245,7 @@ export const NAV_LINKS = [
   { label: "Work", href: "#experience" },
   { label: "GitHub", href: "#github" },
   { label: "Projects", href: "#projects" },
+  { label: "Hackathons", href: "#hackathons" },
   { label: "Reading", href: "#reading" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "#contact" },
