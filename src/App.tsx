@@ -3,6 +3,7 @@ import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { Experience } from "./components/Experience";
 import { Projects } from "./components/Projects";
+import { Research } from "./components/Research";
 import { GitHubActivity } from "./components/GitHubActivity";
 import { Reading } from "./components/Reading";
 import { Contact } from "./components/Contact";
@@ -33,6 +34,8 @@ export default function App() {
         <GitHubActivity />
         <Divider />
         <Projects />
+        <Divider />
+        <Research />
         <Divider />
         <Reading />
         <Divider />

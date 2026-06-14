@@ -1,8 +1,7 @@
-import { SKILLS, EDUCATION, PUBLICATION } from "../data/content";
+import { SKILLS, EDUCATION } from "../data/content";
 import { FadeIn } from "./FadeIn";
-import { useState, type CSSProperties } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Copy, Check, ArrowUpRight } from "lucide-react";
+import { type CSSProperties } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { getTechColor, getTechLogo } from "./TechIcon";
 
 function getReadableTextColor(hex: string) {
@@ -23,7 +22,6 @@ function getReadableTextColor(hex: string) {
 }
 
 export function About() {
-  const [copied, setCopied] = useState(false);
   const reduce = useReducedMotion();
 
   const skillsContainer = {
@@ -44,12 +42,6 @@ export function About() {
       scale: 1,
       transition: { type: "spring" as const, stiffness: 420, damping: 28, mass: 0.6 },
     },
-  };
-
-  const copyBibtex = async () => {
-    await navigator.clipboard.writeText(PUBLICATION.bibtex);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -122,51 +114,6 @@ export function About() {
                 </span>
               </div>
             ))}
-          </div>
-        </FadeIn>
-
-        {/* Publication */}
-        <FadeIn delay={0.1}>
-          <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mb-5">
-            Research
-          </h2>
-          <div className="rounded-lg border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-5">
-            <p className="text-[15px] text-text dark:text-dark-text font-semibold leading-snug">
-              {PUBLICATION.title}
-            </p>
-            <p className="text-[13px] text-text-muted dark:text-dark-text-muted mt-2">
-              {PUBLICATION.authors}
-            </p>
-            <p className="text-[13px] text-text-muted dark:text-dark-text-muted mt-0.5">
-              {PUBLICATION.venue}
-            </p>
-            <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border dark:border-dark-border">
-              <a
-                href={PUBLICATION.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-[13px] font-medium text-text dark:text-dark-text hover:text-text-secondary dark:hover:text-dark-text-secondary transition-colors duration-200"
-              >
-                <ArrowUpRight size={13} />
-                View on IEEE
-              </a>
-              <button
-                onClick={copyBibtex}
-                className="inline-flex items-center gap-1.5 text-[13px] font-medium text-text dark:text-dark-text hover:text-text-secondary dark:hover:text-dark-text-secondary transition-colors duration-200"
-              >
-                <AnimatePresence mode="wait" initial={false}>
-                  {copied ? (
-                    <motion.span key="ok" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-                      <Check size={13} /> Copied!
-                    </motion.span>
-                  ) : (
-                    <motion.span key="cp" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="inline-flex items-center gap-1.5">
-                      <Copy size={13} /> Cite BibTeX
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </button>
-            </div>
           </div>
         </FadeIn>
       </div>
