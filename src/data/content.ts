@@ -78,6 +78,12 @@ export const EXPERIENCE: ExperienceItem[] = [
 
 export const PROJECTS = [
   {
+    name: "Claudware",
+    description: "Describe any object in plain language and Claude designs it, makes it printable, shows it forming live in a 3D viewport you can orbit, inspects its own render to fix mistakes, then exports a print-ready file. An AI 3D-printing studio with five CAD engines behind one brain.",
+    tech: ["TypeScript", "React", "Three.js", "Claude Code"],
+    github: "https://github.com/vraj00222/Claudware",
+  },
+  {
     name: "Yellow",
     description: "Version control for a running backend. When your app crashes in prod, Yellow freezes the exact database state in that millisecond, diffs it against healthy to name the root cause, then a Replicas AI agent opens a fix PR you approve from Telegram.",
     tech: ["TypeScript", "React", "InsForge", "OpenAI", "MCP"],
@@ -196,6 +202,13 @@ export const HACKATHONS: Hackathon[] = [
     alt: "InsForge Hackathon poster",
     won: false,
     project: "Yellow",
+  },
+  {
+    name: "CAL AI Hackathon 2026",
+    image: "/hackathons/ai-hackathon.png",
+    alt: "CAL AI Hackathon 2026 logo",
+    won: false,
+    project: "Claudware",
   },
 ];
 
