@@ -82,6 +82,7 @@ export const PROJECTS = [
     description: "Describe any object in plain language and Claude designs it, makes it printable, shows it forming live in a 3D viewport you can orbit, inspects its own render to fix mistakes, then exports a print-ready file. An AI 3D-printing studio with five CAD engines behind one brain.",
     tech: ["TypeScript", "React", "Three.js", "Claude Code"],
     github: "https://github.com/vraj00222/Claudware",
+    live: "https://claudewaresite.vercel.app/",
   },
   {
     name: "Yellow",
