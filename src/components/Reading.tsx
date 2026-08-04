@@ -12,7 +12,8 @@ export function Reading() {
 
   return (
     <section id="reading" className="py-16 px-6" data-section="reading">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-4xl">
+        <div className="max-w-2xl">
         <FadeIn>
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest">
@@ -97,6 +98,7 @@ export function Reading() {
               </div>
             </FadeIn>
           ))}
+        </div>
         </div>
       </div>
     </section>

@@ -92,7 +92,7 @@ export function Hackathons() {
 
   return (
     <section id="hackathons" className="py-16 px-6" data-section="hackathons">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-4xl">
         <FadeIn>
           <div className="mb-6 flex items-center justify-between">
             <h2 className="font-display text-sm font-semibold uppercase tracking-widest text-text dark:text-dark-text">

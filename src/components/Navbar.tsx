@@ -30,7 +30,7 @@ export function Navbar() {
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-bg/70 dark:bg-dark-bg/70 backdrop-blur-xl backdrop-saturate-150 border-b border-border dark:border-dark-border">
-      <nav className="mx-auto max-w-3xl flex items-center justify-between gap-8 px-6 h-14">
+      <nav className="mx-auto max-w-4xl flex items-center justify-between gap-8 px-6 h-14">
         <a
           href="#hero"
           className="font-display text-sm font-semibold text-text dark:text-dark-text tracking-tight"

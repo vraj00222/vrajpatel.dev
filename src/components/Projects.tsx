@@ -25,7 +25,7 @@ export function Projects() {
 
   return (
     <section id="projects" className="py-16 px-6" data-section="projects">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-4xl">
         <FadeIn>
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest">
@@ -59,7 +59,9 @@ export function Projects() {
                           </span>
                         )}
                       </div>
-                      <p className="text-[14px] text-text-secondary dark:text-dark-text-secondary mt-1.5 leading-[1.6]">
+                      {/* Capped independently of the wider section so the
+                          measure stays around 75 characters. */}
+                      <p className="max-w-2xl text-[14px] text-text-secondary dark:text-dark-text-secondary mt-1.5 leading-[1.6]">
                         {project.description}
                       </p>
                     </div>

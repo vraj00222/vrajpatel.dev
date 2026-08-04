@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check, ArrowUpRight } from "lucide-react";
+import { Copy, Check, ArrowUpRight, BadgeCheck } from "lucide-react";
 import { PUBLICATION } from "../data/content";
 import { FadeIn } from "./FadeIn";
 
@@ -15,7 +15,8 @@ export function Research() {
 
   return (
     <section id="research" className="py-16 px-6" data-section="research">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-4xl">
+        <div className="max-w-2xl">
         <FadeIn>
           <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mb-6">
             Research
@@ -23,15 +24,26 @@ export function Research() {
         </FadeIn>
 
         <FadeIn delay={0.06}>
-          <div className="rounded-lg border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-5">
-            <p className="text-[15px] text-text dark:text-dark-text font-semibold leading-snug">
+          {/* Blue accent (left rail + venue badge) marks this as peer-reviewed;
+              amber is reserved for hackathon wins, emerald for "currently". */}
+          <div className="rounded-lg border border-border dark:border-dark-border border-l-2 border-l-blue-600 dark:border-l-blue-400 bg-surface dark:bg-dark-surface p-5">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+              <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/10 dark:bg-blue-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
+                <BadgeCheck size={11} />
+                {PUBLICATION.venue}
+              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-text-muted dark:text-dark-text-muted">
+                Peer-reviewed
+              </span>
+            </div>
+            <h3 className="font-display text-[19px] text-text dark:text-dark-text font-semibold leading-snug tracking-tight mt-3">
               {PUBLICATION.title}
-            </p>
+            </h3>
             <p className="text-[13px] text-text-muted dark:text-dark-text-muted mt-2">
               {PUBLICATION.authors}
             </p>
-            <p className="text-[13px] text-text-muted dark:text-dark-text-muted mt-0.5">
-              {PUBLICATION.venue}
+            <p className="font-mono text-[11px] text-text-muted dark:text-dark-text-muted mt-1">
+              doi:{PUBLICATION.doi}
             </p>
             <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border dark:border-dark-border">
               <a
@@ -62,6 +74,7 @@ export function Research() {
             </div>
           </div>
         </FadeIn>
+        </div>
       </div>
     </section>
   );

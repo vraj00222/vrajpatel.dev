@@ -13,7 +13,10 @@ export function Experience() {
 
   return (
     <section id="experience" className="py-16 px-6" data-section="experience">
-      <div className="mx-auto max-w-2xl">
+      {/* Outer track is shared by every section so the left edge never moves;
+          prose sits in a narrower measure inside it. */}
+      <div className="mx-auto max-w-4xl">
+        <div className="max-w-2xl">
         <FadeIn>
           <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest mb-8">
             Work
@@ -120,6 +123,7 @@ export function Experience() {
               </div>
             </FadeIn>
           ))}
+        </div>
         </div>
       </div>
     </section>

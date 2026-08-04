@@ -100,11 +100,13 @@ a:focus-visible, button:focus-visible {
 
 section[id] { scroll-margin-top: 5rem; }
 
+/* Matches the 4xl track every section hangs off, so the rule lines up with
+   the left rail instead of floating on the old narrower measure. */
 .section-divider {
   height: 1px;
   background: var(--color-border);
   margin: 0 auto;
-  max-width: 672px;
+  max-width: 896px;
 }
 .dark .section-divider {
   background: var(--color-dark-border);

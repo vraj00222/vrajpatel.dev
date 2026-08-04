@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown, Star } from "lucide-react";
 import { PERSONAL } from "../data/content";
@@ -43,6 +43,9 @@ const MONTH_NAMES = [
 const DAY_LABELS = ["Mon", "Wed", "Fri"]; // GitHub only labels Mon/Wed/Fri
 const MIN_CONTRIBUTED_REPO_STARS = 500;
 const INITIAL_VISIBLE_CONTRIBUTIONS = 4;
+const CELL_GAP = 3;
+const MIN_CELL_SIZE = 11; // GitHub's own square size — the narrow-screen floor
+const MAX_CELL_SIZE = 13; // cap so the grid never reads as blown up
 
 function getApiBaseUrl() {
   if (typeof window === "undefined") return "";
@@ -194,11 +197,36 @@ function ContributionGraph({
 }) {
   const colors = isDark ? GH_GREENS_DARK : GH_GREENS_LIGHT;
   const labelClass = isDark ? "text-dark-text-muted" : "text-text-muted";
-  const size = 11;
-  const gap = 3;
-  const cell = size + gap;
+  const gap = CELL_GAP;
   const labelGutter = 26; // left gutter for day-of-week labels
   const monthBand = 16; // top band for month labels
+
+  // The squares grow to fill whatever width the section gives us (this section
+  // runs at max-w-4xl), so the extra width becomes a bigger graph rather than
+  // padding. Below the floor the wrapper scrolls horizontally, exactly as
+  // before — the SVG never forces the page wider than the viewport.
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [availableWidth, setAvailableWidth] = useState(0);
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const measure = () => setAvailableWidth(el.clientWidth);
+    measure();
+    const obs = new ResizeObserver(measure);
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const size = availableWidth
+    ? Math.min(
+        MAX_CELL_SIZE,
+        Math.max(
+          MIN_CELL_SIZE,
+          Math.floor((availableWidth - labelGutter) / contributions.length) - gap
+        )
+      )
+    : MIN_CELL_SIZE;
+  const cell = size + gap;
   const gridWidth = contributions.length * cell;
   const gridHeight = 7 * cell - gap;
 
@@ -232,7 +260,7 @@ function ContributionGraph({
   // GitHub typically still shows it — leave as-is.
 
   return (
-    <div className="overflow-x-auto pb-1">
+    <div ref={wrapperRef} className="overflow-x-auto pb-1">
       <svg
         width={gridWidth + labelGutter}
         height={gridHeight + monthBand}
@@ -428,7 +456,7 @@ export function GitHubActivity() {
 
   return (
     <section id="github" className="py-16 px-6" data-section="github">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-4xl">
         <FadeIn>
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-display text-sm font-semibold text-text dark:text-dark-text uppercase tracking-widest">
