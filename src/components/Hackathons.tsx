@@ -1,6 +1,10 @@
-import { Trophy } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ChevronDown, Trophy } from "lucide-react";
 import { HACKATHONS, type Hackathon } from "../data/content";
 import { FadeIn } from "./FadeIn";
+
+const INITIAL_VISIBLE = 4;
 
 function WonCard({ h }: { h: Hackathon }) {
   const subtitle = [h.result, h.project].filter(Boolean).join(" · ");
@@ -76,9 +80,15 @@ function AttendedCard({ h }: { h: Hackathon }) {
 }
 
 export function Hackathons() {
+  // Only the first rows show; the rest sit behind the arrow.
+  const [expanded, setExpanded] = useState(false);
+
   const wins = HACKATHONS.filter((h) => h.won).length;
   // Won entries first so the highlighted cards lead the grid.
   const ordered = [...HACKATHONS].sort((a, b) => Number(b.won) - Number(a.won));
+
+  const hasMore = ordered.length > INITIAL_VISIBLE;
+  const visible = expanded ? ordered : ordered.slice(0, INITIAL_VISIBLE);
 
   return (
     <section id="hackathons" className="py-16 px-6" data-section="hackathons">
@@ -95,13 +105,40 @@ export function Hackathons() {
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {ordered.map((h, i) => (
-            <FadeIn key={h.name} delay={i * 0.05}>
-              {h.won ? <WonCard h={h} /> : <AttendedCard h={h} />}
-            </FadeIn>
-          ))}
+        <div className="relative">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {visible.map((h, i) => (
+              <FadeIn key={h.name} delay={(i % INITIAL_VISIBLE) * 0.05}>
+                {h.won ? <WonCard h={h} /> : <AttendedCard h={h} />}
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* Fade hint that more hackathons are tucked below */}
+          {hasMore && !expanded && (
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-bg via-bg/75 to-transparent dark:from-dark-bg dark:via-dark-bg/75" />
+          )}
         </div>
+
+        {hasMore && (
+          <div className="mt-4 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setExpanded((e) => !e)}
+              aria-expanded={expanded}
+              aria-label={expanded ? "Show fewer hackathons" : "Show all hackathons"}
+              className="rounded-md p-1.5 text-text-muted dark:text-dark-text-muted hover:text-text dark:hover:text-dark-text hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-colors duration-200"
+            >
+              <motion.span
+                className="block"
+                animate={{ rotate: expanded ? 180 : 0 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <ChevronDown size={16} />
+              </motion.span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
