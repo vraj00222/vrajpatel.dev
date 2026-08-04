@@ -78,6 +78,12 @@ export const EXPERIENCE: ExperienceItem[] = [
 
 export const PROJECTS = [
   {
+    name: "Hopper",
+    description: "Every scanner tells you a package is vulnerable. Hopper walks the five hops from that package, through the dependencies nobody chose to install, to the customer contract it breaches and the hour you owe them notice by. Most advisories return no path at all — and that proof of absence is the product.",
+    tech: ["TypeScript", "FalkorDB", "Claude API", "React", "Express"],
+    github: "https://github.com/vraj00222/hopper",
+  },
+  {
     name: "Claudware",
     description: "Describe any object in plain language and Claude designs it, makes it printable, shows it forming live in a 3D viewport you can orbit, inspects its own render to fix mistakes, then exports a print-ready file. An AI 3D-printing studio with five CAD engines behind one brain.",
     tech: ["TypeScript", "React", "Three.js", "Claude Code"],
@@ -211,6 +217,13 @@ export const HACKATHONS: Hackathon[] = [
     won: false,
     project: "Claudware",
   },
+  {
+    name: "Memory Meets Motion 2026",
+    image: "/hackathons/memory-meets-motion.png",
+    alt: "Memory Meets Motion Hackathon poster",
+    won: false,
+    project: "Hopper",
+  },
 ];
 
 export const PUBLICATION = {
@@ -242,17 +255,45 @@ export const EDUCATION = [
   },
 ] as const;
 
-export const SKILLS = [
-  // Languages
-  "TypeScript", "Python", "JavaScript", "SQL", "C++",
-  // AI / Agents
-  "Claude API", "OpenAI", "Vercel AI SDK", "Ollama", "MCP", "RAG",
-  // Frameworks & Runtime
-  "Next.js", "React", "Node.js", "Express", "Django", "FastAPI", "Electron", "Ink", "Tailwind CSS",
-  // Infra & Tools
-  "AWS", "Docker", "GitHub Actions", "Vercel",
-  "PostgreSQL", "MySQL", "MongoDB", "Redis",
-  "Git", "Postman", "Claude Code", "Cursor",
+/**
+ * Grouped so the row reads as an inventory instead of a wall of chips.
+ * "Graph & Streaming" is the hackathon stack — the sponsor systems Hopper
+ * was built on, kept together because they only make sense as a set.
+ */
+export const SKILL_GROUPS = [
+  {
+    label: "Languages",
+    items: ["TypeScript", "Python", "JavaScript", "SQL", "C++"],
+  },
+  {
+    label: "AI & Agents",
+    items: [
+      "Claude API", "OpenAI", "Vercel AI SDK", "Ollama",
+      "MCP", "RAG", "Graph RAG", "Multi-Agent Systems", "Guild.ai",
+    ],
+  },
+  {
+    label: "Graph & Streaming",
+    items: ["FalkorDB", "Cypher", "LaserData", "Apache Iggy", "RocketRide"],
+  },
+  {
+    label: "Frameworks & Runtime",
+    items: [
+      "Next.js", "React", "Node.js", "Express",
+      "Django", "FastAPI", "Electron", "Ink", "Tailwind CSS",
+    ],
+  },
+  {
+    label: "Data & Infra",
+    items: [
+      "PostgreSQL", "MySQL", "MongoDB", "Redis", "InsForge",
+      "AWS", "Docker", "GitHub Actions", "Vercel",
+    ],
+  },
+  {
+    label: "Tools",
+    items: ["Git", "Postman", "Claude Code", "Cursor"],
+  },
 ] as const;
 
 export const NAV_LINKS = [

@@ -435,6 +435,99 @@ const tech: Record<string, TechEntry> = {
       </svg>
     ),
   },
+
+  /* Hackathon-stack marks. These vendors ship no simple-icons path, so the
+     glyphs below are drawn to read at 13px rather than to imitate a logo. */
+  FalkorDB: {
+    color: "#DB2777",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round">
+        <path d="M12 6.8v4.4M8.6 17.2l2.6-4M15.4 17.2l-2.6-4" />
+        <circle cx="12" cy="4.6" r="2.4" fill={color} stroke="none" />
+        <circle cx="6.6" cy="18.6" r="2.4" fill={color} stroke="none" />
+        <circle cx="17.4" cy="18.6" r="2.4" fill={color} stroke="none" />
+      </svg>
+    ),
+  },
+  Cypher: {
+    color: "#22D3EE",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        {/* a traversal: node → node → node, left to right */}
+        <circle cx="4.5" cy="17.5" r="2.5" fill={color} stroke="none" />
+        <circle cx="12" cy="7" r="2.5" fill={color} stroke="none" />
+        <circle cx="19.5" cy="17.5" r="2.5" fill={color} stroke="none" />
+        <path d="M6.3 15.4 10.2 9.4M13.8 9.4l3.9 6" />
+      </svg>
+    ),
+  },
+  "Graph RAG": {
+    color: "#8B5CF6",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        {/* retrieval over a graph: hops, then the lens */}
+        <circle cx="5" cy="6" r="2.2" fill={color} stroke="none" />
+        <circle cx="5" cy="17.5" r="2.2" fill={color} stroke="none" />
+        <circle cx="13" cy="11.5" r="2.2" fill={color} stroke="none" />
+        <path d="M6.9 7.1 11.2 10.3M6.9 16.4l4.3-3.2" />
+        <circle cx="18" cy="17" r="4" />
+        <path d="M21 20l1.4 1.4" />
+      </svg>
+    ),
+  },
+  LaserData: {
+    color: "#38BDF8",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* an emitter and the beam it holds open */}
+        <circle cx="4.5" cy="12" r="2.6" fill={color} stroke="none" />
+        <path d="M9 12h12M9.5 7.5h8M9.5 16.5h8" />
+      </svg>
+    ),
+  },
+  "Apache Iggy": {
+    color: "#F97316",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* a partitioned log, messages moving right */}
+        <rect x="2.5" y="4.5" width="4" height="15" rx="1.4" fill={color} stroke="none" />
+        <path d="M10 8.5l4 3.5-4 3.5M16.5 8.5l4 3.5-4 3.5" />
+      </svg>
+    ),
+  },
+  RocketRide: {
+    color: "#EF4444",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12.5 2.5c3.8 1.6 6 5.3 5.8 9.4l-3.4 3.4-6.2-6.2 3.4-3.4a10 10 0 01.4-3.2z" fill={color} stroke="none" />
+        <path d="M8.7 9.1 5.3 10 3.9 13l3 .6M14.9 15.3l-.9 3.4-3 1.4-.6-3" />
+        <path d="M4.5 19.5l2.6-2.6" />
+      </svg>
+    ),
+  },
+  "Guild.ai": {
+    color: "#A78BFA",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        {/* agents under one gate */}
+        <path d="M12 2.5l8 3.6v6c0 4.5-3.3 8.2-8 9.4-4.7-1.2-8-4.9-8-9.4v-6l8-3.6z" />
+        <path d="M8.6 12.2l2.4 2.4 4.4-4.6" />
+      </svg>
+    ),
+  },
+  "Multi-Agent Systems": {
+    color: "#34D399",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        {/* three workers hanging off one shared bus */}
+        <circle cx="4.6" cy="5" r="2.4" fill={color} stroke="none" />
+        <circle cx="12" cy="5" r="2.4" fill={color} stroke="none" />
+        <circle cx="19.4" cy="5" r="2.4" fill={color} stroke="none" />
+        <path d="M4.6 9v3.5M12 9v3.5M19.4 9v3.5" />
+        <path d="M3 16.5h18" />
+      </svg>
+    ),
+  },
 };
 
 /* ── Fallback: letter avatar ──────────────────────────────────────── */

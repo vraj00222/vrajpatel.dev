@@ -1,4 +1,4 @@
-import { SKILLS, EDUCATION } from "../data/content";
+import { SKILL_GROUPS, EDUCATION } from "../data/content";
 import { FadeIn } from "./FadeIn";
 import { type CSSProperties } from "react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -54,42 +54,51 @@ export function About() {
             Skills
           </h2>
           <motion.div
-            className="flex flex-wrap gap-2"
+            className="space-y-5"
             variants={skillsContainer}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-60px" }}
           >
-            {SKILLS.map((skill) => {
-              // Next.js / Vercel / Cursor brand white would disappear on light backgrounds.
-              const isWhiteBrand = skill === "Next.js" || skill === "Vercel" || skill === "Vercel AI SDK" || skill === "Cursor";
-              const skillColor = isWhiteBrand ? "#2d2d2d" : getTechColor(skill);
-              const hoverTextColor = getReadableTextColor(skillColor);
-              const logoColor = isWhiteBrand ? "#ffffff" : skillColor;
+            {SKILL_GROUPS.map((group) => (
+              <div key={group.label}>
+                <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-text-muted dark:text-dark-text-muted">
+                  {group.label}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((skill) => {
+                    // Next.js / Vercel / Cursor brand white would disappear on light backgrounds.
+                    const isWhiteBrand = skill === "Next.js" || skill === "Vercel" || skill === "Vercel AI SDK" || skill === "Cursor";
+                    const skillColor = isWhiteBrand ? "#2d2d2d" : getTechColor(skill);
+                    const hoverTextColor = getReadableTextColor(skillColor);
+                    const logoColor = isWhiteBrand ? "#ffffff" : skillColor;
 
-              return (
-                <motion.span
-                  key={skill}
-                  variants={skillItem}
-                  className="group relative isolate overflow-hidden px-3 py-1.5 text-[13px] font-medium rounded-md bg-surface dark:bg-dark-surface border border-border dark:border-dark-border text-text-secondary dark:text-dark-text-secondary transition-[border-color,box-shadow] duration-150 hover:border-(--skill-color) hover:shadow-[0_4px_14px_-6px_var(--skill-color)]"
-                  style={{ "--skill-color": skillColor, "--skill-fg": hoverTextColor } as CSSProperties}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: "spring", stiffness: 580, damping: 32 }}
-                >
-                  <span className="pointer-events-none absolute inset-0 -z-10 -translate-x-[102%] transform-gpu bg-(--skill-color) transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0" />
+                    return (
+                      <motion.span
+                        key={skill}
+                        variants={skillItem}
+                        className="group relative isolate overflow-hidden px-3 py-1.5 text-[13px] font-medium rounded-md bg-surface dark:bg-dark-surface border border-border dark:border-dark-border text-text-secondary dark:text-dark-text-secondary transition-[border-color,box-shadow] duration-150 hover:border-(--skill-color) hover:shadow-[0_4px_14px_-6px_var(--skill-color)]"
+                        style={{ "--skill-color": skillColor, "--skill-fg": hoverTextColor } as CSSProperties}
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ type: "spring", stiffness: 580, damping: 32 }}
+                      >
+                        <span className="pointer-events-none absolute inset-0 -z-10 -translate-x-[102%] transform-gpu bg-(--skill-color) transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0" />
 
-                  <span className="relative z-10 inline-flex items-center gap-1.5">
-                    <span className="flex h-4.5 w-4.5 items-center justify-center rounded-md bg-bg/90 dark:bg-dark-bg/85 opacity-0 -translate-x-1 scale-95 shadow-sm transition-all duration-150 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100">
-                      {getTechLogo(skill, 13, logoColor)}
-                    </span>
-                    <span className="transition-colors duration-150 group-hover:text-(--skill-fg) dark:group-hover:text-(--skill-fg)">
-                      {skill}
-                    </span>
-                  </span>
-                </motion.span>
-              );
-            })}
+                        <span className="relative z-10 inline-flex items-center gap-1.5">
+                          <span className="flex h-4.5 w-4.5 items-center justify-center rounded-md bg-bg/90 dark:bg-dark-bg/85 opacity-0 -translate-x-1 scale-95 shadow-sm transition-all duration-150 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100">
+                            {getTechLogo(skill, 13, logoColor)}
+                          </span>
+                          <span className="transition-colors duration-150 group-hover:text-(--skill-fg) dark:group-hover:text-(--skill-fg)">
+                            {skill}
+                          </span>
+                        </span>
+                      </motion.span>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </motion.div>
         </FadeIn>
 
