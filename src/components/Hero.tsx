@@ -1,42 +1,19 @@
-import { useEffect, useState } from "react";
 import type { Variants } from "framer-motion";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { FileText, MapPin } from "lucide-react";
 import { PERSONAL } from "../data/content";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import heroPhoto from "../assets/vraj.jpg";
 
-const ROTATING_ROLES = [
-  "Teaching Associate",
-  "Deep Learning Researcher",
-  "Software Engineer",
-  "Full-Stack Engineer",
-  "Machine Learning Engineer",
-];
-
 // The one claim the page is built around. Split out of PERSONAL.bio, which
-// ships as a single paragraph.
+// ships as a single paragraph. Everything else in the hero stays small so the
+// statement has room on both sides of it.
 const THESIS = "I build full-stack systems, publish ML research, and teach algorithms.";
-const CONTEXT_LINE = "Software engineer and CS grad student at Cal State Fullerton.";
-const AVAILABILITY_LINE = "Currently looking for full-time roles starting May 2026.";
+const SUPPORTING_LINE =
+  "Software engineer and CS grad student at Cal State Fullerton, looking for full-time roles starting May 2026.";
 
 export function Hero() {
-  const [activeRoleIndex, setActiveRoleIndex] = useState(0);
   const shouldReduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (shouldReduceMotion || ROTATING_ROLES.length <= 1) {
-      return;
-    }
-
-    const intervalId = window.setInterval(() => {
-      setActiveRoleIndex((prev) => (prev + 1) % ROTATING_ROLES.length);
-    }, 3000);
-
-    return () => window.clearInterval(intervalId);
-  }, [shouldReduceMotion]);
-
-  const activeRole = ROTATING_ROLES[activeRoleIndex];
 
   // Single choreographed page-load sequence: identity → statement → copy → links.
   const sequence: Variants = {
@@ -98,85 +75,22 @@ export function Hero() {
           </div>
         </motion.div>
 
-        <motion.div variants={step} className="mt-8">
-          {/* Rotating roles, demoted to an eyebrow above the statement. */}
-          <p className="text-[13px] text-text-muted dark:text-dark-text-muted">
-            <span className="relative inline-flex h-[1.45em] overflow-hidden align-middle">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  key={activeRole}
-                  className="inline-block whitespace-nowrap will-change-[transform,opacity,filter]"
-                  initial={
-                    shouldReduceMotion
-                      ? false
-                      : { y: 16, opacity: 0, filter: "blur(3px)" }
-                  }
-                  animate={{
-                    y: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    transition: shouldReduceMotion
-                      ? { duration: 0 }
-                      : {
-                          duration: 0.62,
-                          ease: [0.22, 1, 0.36, 1],
-                          opacity: {
-                            duration: 0.48,
-                            ease: [0.33, 1, 0.68, 1],
-                          },
-                          filter: {
-                            duration: 0.48,
-                            ease: [0.33, 1, 0.68, 1],
-                          },
-                        },
-                  }}
-                  exit={
-                    shouldReduceMotion
-                      ? { opacity: 1 }
-                      : {
-                          y: -16,
-                          opacity: 0,
-                          filter: "blur(3px)",
-                          transition: {
-                            delay: 0.1,
-                            duration: 0.5,
-                            ease: [0.33, 1, 0.68, 1],
-                            opacity: {
-                              duration: 0.4,
-                              ease: [0.33, 1, 0.68, 1],
-                            },
-                            filter: {
-                              duration: 0.4,
-                              ease: [0.33, 1, 0.68, 1],
-                            },
-                          },
-                        }
-                  }
-                >
-                  {activeRole}
-                </motion.span>
-              </AnimatePresence>
-            </span>
-          </p>
-
+        <motion.div variants={step}>
           <p
-            className="mt-2 font-display font-semibold leading-[1.05] tracking-[-0.025em] text-balance text-text dark:text-dark-text"
+            className="mt-14 font-display font-semibold leading-[1.05] tracking-[-0.025em] text-balance text-text dark:text-dark-text"
             style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
           >
             {THESIS}
           </p>
         </motion.div>
 
-        <motion.div variants={step} className="mt-7 space-y-1.5">
-          <p className="text-[15px] leading-[1.7] text-text-secondary dark:text-dark-text-secondary">
-            {CONTEXT_LINE}
-          </p>
-          <p className="text-[15px] leading-[1.7] font-medium text-text-secondary dark:text-dark-text-secondary">
-            {AVAILABILITY_LINE}
+        <motion.div variants={step}>
+          <p className="mt-10 max-w-lg text-[15px] leading-[1.7] text-text-secondary dark:text-dark-text-secondary">
+            {SUPPORTING_LINE}
           </p>
         </motion.div>
 
-        <motion.div variants={step} className="flex items-center gap-5 mt-7">
+        <motion.div variants={step} className="flex items-center gap-5 mt-6">
           {[
             { href: PERSONAL.github, icon: GithubIcon, label: "GitHub", hoverColor: "#000000", hoverColorDark: "#e6edf3" },
             { href: PERSONAL.linkedin, icon: LinkedinIcon, label: "LinkedIn", hoverColor: "#0A66C2", hoverColorDark: "#0A66C2" },
