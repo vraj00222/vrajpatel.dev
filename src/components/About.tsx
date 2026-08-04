@@ -67,11 +67,14 @@ export function About() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {group.items.map((skill) => {
-                    // Next.js / Vercel / Cursor brand white would disappear on light backgrounds.
+                    // Next.js / Vercel / Cursor are white-on-black brands. The chip wash
+                    // uses near-black so it reads in either theme; the mark itself follows
+                    // currentColor so it flips with the theme instead of vanishing into
+                    // the light-mode icon well.
                     const isWhiteBrand = skill === "Next.js" || skill === "Vercel" || skill === "Vercel AI SDK" || skill === "Cursor";
                     const skillColor = isWhiteBrand ? "#2d2d2d" : getTechColor(skill);
                     const hoverTextColor = getReadableTextColor(skillColor);
-                    const logoColor = isWhiteBrand ? "#ffffff" : skillColor;
+                    const logoColor = isWhiteBrand ? "currentColor" : skillColor;
 
                     return (
                       <motion.span
@@ -86,7 +89,7 @@ export function About() {
                         <span className="pointer-events-none absolute inset-0 -z-10 -translate-x-[102%] transform-gpu bg-(--skill-color) transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0" />
 
                         <span className="relative z-10 inline-flex items-center gap-1.5">
-                          <span className="flex h-4.5 w-4.5 items-center justify-center rounded-md bg-bg/90 dark:bg-dark-bg/85 opacity-0 -translate-x-1 scale-95 shadow-sm transition-all duration-150 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100">
+                          <span className="flex h-4.5 w-4.5 items-center justify-center rounded-md bg-bg/90 dark:bg-dark-bg/85 text-[#2d2d2d] dark:text-white opacity-0 -translate-x-1 scale-95 shadow-sm transition-all duration-150 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100">
                             {getTechLogo(skill, 13, logoColor)}
                           </span>
                           <span className="transition-colors duration-150 group-hover:text-(--skill-fg) dark:group-hover:text-(--skill-fg)">
