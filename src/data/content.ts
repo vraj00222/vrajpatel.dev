@@ -296,11 +296,26 @@ export const SKILL_GROUPS = [
   },
 ] as const;
 
+// Deep-dive builds: papers and core ideas implemented from scratch, each
+// living on its own page. Card images resolve in Labs.tsx by id.
+export const LABS = [
+  {
+    id: "attention-is-all-you-need",
+    title: "Attention Is All You Need",
+    description:
+      "The Transformer paper rebuilt end to end — the full architecture in the paper's own colors, every equation explained step by step, a live attention playground, and a complete NumPy implementation you can download and run.",
+    href: "https://transformer-three-ebon.vercel.app",
+    tags: ["Transformer", "NumPy", "Interactive", "Paper implementation"],
+    year: "2026",
+  },
+] as const;
+
 export const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Work", href: "#experience" },
   { label: "GitHub", href: "#github" },
   { label: "Projects", href: "#projects" },
+  { label: "Labs", href: "#labs" },
   { label: "Hackathons", href: "#hackathons" },
   { label: "Reading", href: "#reading" },
   { label: "Blog", href: "/blog" },

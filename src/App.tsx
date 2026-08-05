@@ -4,6 +4,7 @@ import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { Experience } from "./components/Experience";
 import { Projects } from "./components/Projects";
+import { Labs } from "./components/Labs";
 import { Research } from "./components/Research";
 import { Hackathons } from "./components/Hackathons";
 import { GitHubActivity } from "./components/GitHubActivity";
@@ -50,6 +51,8 @@ export default function App() {
         <GitHubActivity />
         <Divider />
         <Projects />
+        <Divider />
+        <Labs />
         <Divider />
         <Research />
         <Divider />
