@@ -116,7 +116,7 @@ export function Hero() {
           ))}
           <span className="w-px h-4 bg-border dark:bg-dark-border" />
           <motion.a
-            href="/resume.pdf?v=2026-08-06"
+            href="/resume.pdf?v=2026-08-06-2"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-[13px] text-text-muted dark:text-dark-text-muted transition-colors duration-100"
