@@ -224,6 +224,12 @@ export const HACKATHONS: Hackathon[] = [
     won: false,
     project: "Hopper",
   },
+  {
+    name: "Beta Fund: Agent & Token Economy Hackathon",
+    image: "/hackathons/beta-fund.png",
+    alt: "Beta Fund Agent & Token Economy Hackathon poster, sponsored by Snowflake",
+    won: false,
+  },
 ];
 
 export const PUBLICATION = {
