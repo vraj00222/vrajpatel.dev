@@ -167,6 +167,18 @@ export const PROJECTS = [
     github: "https://github.com/vraj00222/404-museum",
     live: "https://404-museum-five.vercel.app/",
   },
+  {
+    name: "Crew",
+    description: "An agent swarm you watch instead of read. Say one sentence and five voice-native agents split an inbox-clearing, calendar-booking task between themselves, narrating in five different accents — when one hits a decision only you can make, it phones you, asks out loud, and the crew carries on from your answer.",
+    tech: ["JavaScript", "Swift", "VoiceOS", "MCP", "Python"],
+    github: "https://github.com/vraj00222/crew",
+  },
+  {
+    name: "Amortize",
+    description: "A local proxy that makes AI agents cheaper to run. Point any client at it with one env var — no code changes — and it strips context the model doesn't need, replays verified prior work instead of re-running the model, and proves the savings with a per-step cost ledger: measured −28% tokens on a cold run and −97% on a replayed skill, same output.",
+    tech: ["Python", "Snowflake", "Anthropic API", "uv"],
+    github: "https://github.com/vraj00222/Amort",
+  },
 ] as const;
 
 export interface Hackathon {
@@ -229,6 +241,14 @@ export const HACKATHONS: Hackathon[] = [
     image: "/hackathons/beta-fund.png",
     alt: "Beta Fund Agent & Token Economy Hackathon poster, sponsored by Snowflake",
     won: false,
+    project: "Amortize",
+  },
+  {
+    name: "Hack with VoiceOS",
+    image: "/hackathons/voiceos.png",
+    alt: "Hack with VoiceOS hackathon flyer, backed by Y Combinator",
+    won: false,
+    project: "Crew",
   },
 ];
 
