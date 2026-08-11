@@ -289,14 +289,22 @@ export const EDUCATION = [
 export const SKILL_GROUPS = [
   {
     label: "Languages",
-    items: ["TypeScript", "Python", "JavaScript", "SQL", "C++"],
+    items: [
+      "TypeScript", "Python", "JavaScript", "SQL",
+      "C++", "C#", "Swift", "WebAssembly",
+    ],
   },
   {
     label: "AI & Agents",
     items: [
-      "Claude API", "OpenAI", "Vercel AI SDK", "Ollama",
+      "Claude API", "OpenAI", "Gemini AI", "Gemma 4", "Novita AI",
+      "Ollama", "ElevenLabs", "ExecuTorch", "Vercel AI SDK", "VoiceOS",
       "MCP", "RAG", "Graph RAG", "Multi-Agent Systems", "Guild.ai",
     ],
+  },
+  {
+    label: "ML & Research",
+    items: ["PyTorch", "TensorFlow", "NumPy", "Jupyter"],
   },
   {
     label: "Graph & Streaming",
@@ -305,20 +313,20 @@ export const SKILL_GROUPS = [
   {
     label: "Frameworks & Runtime",
     items: [
-      "Next.js", "React", "Node.js", "Express",
-      "Django", "FastAPI", "Electron", "Ink", "Tailwind CSS",
+      "Next.js", "React", "Node.js", "Express", "Django", "FastAPI",
+      "ASP.NET", "Electron", "Ink", "Three.js", "Vite", "Tailwind CSS",
     ],
   },
   {
     label: "Data & Infra",
     items: [
-      "PostgreSQL", "MySQL", "MongoDB", "Redis", "InsForge",
-      "AWS", "Docker", "GitHub Actions", "Vercel",
+      "PostgreSQL", "MySQL", "MongoDB", "Redis", "SQLite",
+      "Snowflake", "InsForge", "AWS", "Docker", "GitHub Actions", "Vercel",
     ],
   },
   {
     label: "Tools",
-    items: ["Git", "Postman", "Claude Code", "Cursor"],
+    items: ["Git", "uv", "npm", "Postman", "Claude Code", "Cursor"],
   },
 ] as const;
 
