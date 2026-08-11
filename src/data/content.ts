@@ -78,17 +78,66 @@ export const EXPERIENCE: ExperienceItem[] = [
 
 export const PROJECTS = [
   {
+    name: "Transformer",
+    description: "\"Attention Is All You Need,\" rebuilt from scratch. An interactive explainer walking through the full Transformer architecture and the underlying math, backed by a from-scratch NumPy implementation — no ML framework doing the heavy lifting.",
+    tech: ["TypeScript", "React", "Python", "NumPy"],
+    github: "https://github.com/vraj00222/transformer",
+    live: "https://transformer-three-ebon.vercel.app",
+  },
+  {
+    name: "Amortize",
+    description: "A local proxy that makes AI agents cheaper to run. Point any client at it with one env var — no code changes — and it strips context the model doesn't need, replays verified prior work instead of re-running the model, and proves the savings with a per-step cost ledger: measured −28% tokens on a cold run and −97% on a replayed skill, same output.",
+    tech: ["Python", "Snowflake", "Anthropic API", "uv"],
+    github: "https://github.com/vraj00222/Amort",
+  },
+  {
+    name: "Inflight",
+    description: "A live simulator of continuous batching — the scheduling trick behind vLLM and TGI that keeps a GPU full by reclaiming a slot the instant one sequence finishes instead of waiting on the whole batch. Toggle static vs. continuous and watch GPU utilization, throughput, and p99 latency move in real time.",
+    tech: ["React", "TypeScript", "Vite", "Recharts"],
+    github: "https://github.com/vraj00222/InFlight",
+  },
+  {
+    name: "myrpc",
+    description: "A raw TCP server-to-server protocol built on Node's `net` module instead of gRPC or HTTP — hand-rolled connection handling and message framing (SOF/EOF markers) to understand what's actually happening underneath the abstractions everyone takes for granted.",
+    tech: ["Node.js", "TCP", "JavaScript"],
+    github: "https://github.com/vraj00222/myrpc",
+  },
+  {
     name: "Hopper",
     description: "Every scanner tells you a package is vulnerable. Hopper walks the five hops from that package, through the dependencies nobody chose to install, to the customer contract it breaches and the hour you owe them notice by. Most advisories return no path at all — and that proof of absence is the product.",
     tech: ["TypeScript", "FalkorDB", "Claude API", "React", "Express"],
     github: "https://github.com/vraj00222/hopper",
   },
   {
-    name: "Claudware",
-    description: "Describe any object in plain language and Claude designs it, makes it printable, shows it forming live in a 3D viewport you can orbit, inspects its own render to fix mistakes, then exports a print-ready file. An AI 3D-printing studio with five CAD engines behind one brain.",
-    tech: ["TypeScript", "React", "Three.js", "Claude Code"],
-    github: "https://github.com/vraj00222/Claudware",
-    live: "https://claudewaresite.vercel.app/",
+    name: "tetris",
+    description: "Tetris with the entire game loop — collision detection, rotation, line clears — written in raw WebAssembly Text Format, not compiled from C or Rust. 2.3KB binary, sub-5ms frame time, zero garbage collection, 2-3x faster than the equivalent JavaScript.",
+    tech: ["WebAssembly", "WAT", "JavaScript"],
+    github: "https://github.com/vraj00222/tetris",
+  },
+  {
+    name: "tokenizer",
+    description: "A from-scratch walkthrough of how LLMs turn text into tokens — UTF-8 byte encoding through to Byte-Pair Encoding merge selection, the same core algorithm behind GPT-family tokenizers, in one annotated file.",
+    tech: ["TypeScript"],
+    github: "https://github.com/vraj00222/tokenizer",
+  },
+  {
+    name: "repomap",
+    description: "Turns any repository into a structured map of files, symbols, and dependencies — a compact, navigable view of a codebase that's as useful for onboarding humans as it is for feeding context to LLMs.",
+    tech: ["TypeScript", "Node.js"],
+    github: "https://github.com/vraj00222/repomap",
+  },
+  {
+    name: "Crew",
+    description: "An agent swarm you watch instead of read. Say one sentence and five voice-native agents split an inbox-clearing, calendar-booking task between themselves, narrating in five different accents — when one hits a decision only you can make, it phones you, asks out loud, and the crew carries on from your answer.",
+    tech: ["JavaScript", "Swift", "VoiceOS", "MCP", "Python"],
+    github: "https://github.com/vraj00222/crew",
+  },
+  {
+    name: "agent-farm",
+    description: "A local dev tool that parallelizes Claude Code. Hand it a list of tasks and it spawns a Git worktree per task, runs an autonomous agent inside each, then surfaces the diffs for you to review and cherry-pick into main — zero conflicts, full parallelism.",
+    tech: ["TypeScript", "Claude Code", "Git", "Node.js"],
+    github: "https://github.com/vraj00222/agent-farm",
+    live: "https://agent-farm-website.vercel.app/",
   },
   {
     name: "Yellow",
@@ -99,11 +148,11 @@ export const PROJECTS = [
     award: "Entrepreneur First Hackathon",
   },
   {
-    name: "agent-farm",
-    description: "A local dev tool that parallelizes Claude Code. Hand it a list of tasks and it spawns a Git worktree per task, runs an autonomous agent inside each, then surfaces the diffs for you to review and cherry-pick into main — zero conflicts, full parallelism.",
-    tech: ["TypeScript", "Claude Code", "Git", "Node.js"],
-    github: "https://github.com/vraj00222/agent-farm",
-    live: "https://agent-farm-website.vercel.app/",
+    name: "Claudware",
+    description: "Describe any object in plain language and Claude designs it, makes it printable, shows it forming live in a 3D viewport you can orbit, inspects its own render to fix mistakes, then exports a print-ready file. An AI 3D-printing studio with five CAD engines behind one brain.",
+    tech: ["TypeScript", "React", "Three.js", "Claude Code"],
+    github: "https://github.com/vraj00222/Claudware",
+    live: "https://claudewaresite.vercel.app/",
   },
   {
     name: "IntelMaxxing",
@@ -119,6 +168,13 @@ export const PROJECTS = [
     tech: ["TypeScript", "Ollama", "Node.js"],
     github: "https://github.com/vraj00222/pocketllm",
     live: "https://pocketllm-site.vercel.app/",
+  },
+  {
+    name: "tui",
+    description: "A UI component library for terminal-based AI agents. Composable boxes, spinners, and streaming panes that make it easy to build rich, legible CLI interfaces for agentic tools.",
+    tech: ["TypeScript", "Ink", "Node.js"],
+    github: "https://github.com/vraj00222/tui",
+    live: "https://tui-ruby.vercel.app",
   },
   {
     name: "GitConnect",
@@ -142,23 +198,16 @@ export const PROJECTS = [
     award: "SFHACKS 2026",
   },
   {
-    name: "repomap",
-    description: "Turns any repository into a structured map of files, symbols, and dependencies — a compact, navigable view of a codebase that's as useful for onboarding humans as it is for feeding context to LLMs.",
-    tech: ["TypeScript", "Node.js"],
-    github: "https://github.com/vraj00222/repomap",
-  },
-  {
-    name: "tui",
-    description: "A UI component library for terminal-based AI agents. Composable boxes, spinners, and streaming panes that make it easy to build rich, legible CLI interfaces for agentic tools.",
-    tech: ["TypeScript", "Ink", "Node.js"],
-    github: "https://github.com/vraj00222/tui",
-    live: "https://tui-ruby.vercel.app",
-  },
-  {
     name: "windowbundler",
     description: "A macOS window manager that saves and restores your window layouts as named workspace bundles. One keystroke snaps your entire setup — editors, terminals, browsers — back into place.",
     tech: ["TypeScript", "Electron", "Node.js"],
     github: "https://github.com/vraj00222/windowbundler",
+  },
+  {
+    name: "LLM Colosseum",
+    description: "Six LLMs — DeepSeek, Qwen, Kimi, GLM, MiniMax — dropped into a shrinking-zone roguelike arena, each making real API calls to decide its own moves. Turn resolution, alliances, betrayal, and a fallback AI for whichever model times out first.",
+    tech: ["React", "TypeScript", "Zustand", "Vite"],
+    github: "https://github.com/vraj00222/llm-colosseum",
   },
   {
     name: "404 Museum",
@@ -166,18 +215,6 @@ export const PROJECTS = [
     tech: ["JavaScript", "React"],
     github: "https://github.com/vraj00222/404-museum",
     live: "https://404-museum-five.vercel.app/",
-  },
-  {
-    name: "Crew",
-    description: "An agent swarm you watch instead of read. Say one sentence and five voice-native agents split an inbox-clearing, calendar-booking task between themselves, narrating in five different accents — when one hits a decision only you can make, it phones you, asks out loud, and the crew carries on from your answer.",
-    tech: ["JavaScript", "Swift", "VoiceOS", "MCP", "Python"],
-    github: "https://github.com/vraj00222/crew",
-  },
-  {
-    name: "Amortize",
-    description: "A local proxy that makes AI agents cheaper to run. Point any client at it with one env var — no code changes — and it strips context the model doesn't need, replays verified prior work instead of re-running the model, and proves the savings with a per-step cost ledger: measured −28% tokens on a cold run and −97% on a replayed skill, same output.",
-    tech: ["Python", "Snowflake", "Anthropic API", "uv"],
-    github: "https://github.com/vraj00222/Amort",
   },
 ] as const;
 
