@@ -58,18 +58,20 @@ html { scroll-behavior: smooth; }
   animation: aurora 60s linear infinite;
 }
 
-/* Rainbow bonkers — the Tetris easter-egg button goes full send. */
-@keyframes rainbow-bonkers {
-  0%   { background-color: #f00000; box-shadow: 0 0 18px 4px #f0000090; }
-  17%  { background-color: #f0a000; box-shadow: 0 0 18px 4px #f0a00090; }
-  34%  { background-color: #f0f000; box-shadow: 0 0 18px 4px #f0f00090; }
-  50%  { background-color: #00c000; box-shadow: 0 0 18px 4px #00c00090; }
-  67%  { background-color: #00c0d0; box-shadow: 0 0 18px 4px #00c0d090; }
-  84%  { background-color: #4040f0; box-shadow: 0 0 18px 4px #4040f090; }
-  100% { background-color: #f00000; box-shadow: 0 0 18px 4px #f0000090; }
+/* Pastel crayon rainbow — the Tetris easter-egg button. The gradient is
+   twice the button's width and shifts by exactly one image width per cycle,
+   so with matching first/last stops the loop is seamless (no glow, no jump). */
+@keyframes rainbow-sweep {
+  from { background-position: 0% 50%; }
+  to   { background-position: 200% 50%; }
 }
-@utility animate-rainbow-bonkers {
-  animation: rainbow-bonkers 2.5s linear infinite;
+@utility animate-rainbow-sweep {
+  background-image: linear-gradient(
+    90deg,
+    #ffadad, #ffd6a5, #fdffb6, #caffbf, #9bf6ff, #a0c4ff, #bdb2ff, #ffc6ff, #ffadad
+  );
+  background-size: 200% 100%;
+  animation: rainbow-sweep 9s linear infinite;
 }
 
 body {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Gamepad2, X } from "lucide-react";
 
@@ -10,19 +10,49 @@ const CONTROLS = [
   ["R", "Restart"],
 ];
 
+// The embedded page renders at a fixed size; everything else in the dialog
+// (heading, controls, the blurb, padding) costs roughly this much height.
+const GAME_W = 506;
+const GAME_H = 606;
+const CHROME_H = 230;
+const MODAL_W = 720;
+
+/** Scale the board down so the whole dialog fits on screen without scrolling. */
+function useGameScale(open: boolean) {
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    if (!open) return;
+    const compute = () =>
+      setScale(
+        Math.min(
+          1,
+          (window.innerHeight * 0.9 - CHROME_H) / GAME_H,
+          (Math.min(MODAL_W, window.innerWidth - 32) - 40) / GAME_W
+        )
+      );
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, [open]);
+
+  return scale;
+}
+
 export function TetrisEasterEgg() {
   const [open, setOpen] = useState(false);
+  const scale = useGameScale(open);
 
   return (
-    <>
+    <div className="flex justify-center pb-12 px-6">
       <button
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Play a Tetris easter egg"
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-lg px-4 h-12 text-white font-semibold [text-shadow:0_1px_3px_rgba(0,0,0,0.6)] animate-rainbow-bonkers hover:scale-105 transition-transform duration-200"
+        className="flex items-center gap-2 rounded-lg px-5 h-11 text-[13px] font-semibold text-[#2b2b2b] animate-rainbow-sweep hover:scale-105 transition-transform duration-200"
       >
-        <Gamepad2 size={18} />
-        Easter egg
+        <Gamepad2 size={16} />
+        Easter egg — click me!
       </button>
 
       <AnimatePresence>
@@ -40,7 +70,8 @@ export function TetrisEasterEgg() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 8 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="max-h-[90vh] w-full max-w-[600px] overflow-y-auto rounded-xl border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-5"
+              style={{ maxWidth: MODAL_W }}
+              className="max-h-[90vh] w-full overflow-y-auto rounded-xl border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-5"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="mb-4 flex items-start justify-between gap-4">
@@ -72,13 +103,22 @@ export function TetrisEasterEgg() {
               </div>
 
               <div className="flex justify-center">
-                <iframe
-                  src="/games/tetris/index.html"
-                  title="Tetris (WebAssembly)"
-                  width={506}
-                  height={606}
-                  className="max-w-full rounded-lg border border-border dark:border-dark-border"
-                />
+                <div
+                  className="overflow-hidden rounded-lg border border-border dark:border-dark-border"
+                  style={{ width: GAME_W * scale, height: GAME_H * scale }}
+                >
+                  <iframe
+                    src="/games/tetris/index.html"
+                    title="Tetris (WebAssembly)"
+                    width={GAME_W}
+                    height={GAME_H}
+                    style={{
+                      border: 0,
+                      transform: `scale(${scale})`,
+                      transformOrigin: "top left",
+                    }}
+                  />
+                </div>
               </div>
 
               <p className="mt-4 text-[12.5px] text-text-muted dark:text-dark-text-muted leading-relaxed">
@@ -93,6 +133,6 @@ export function TetrisEasterEgg() {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 }

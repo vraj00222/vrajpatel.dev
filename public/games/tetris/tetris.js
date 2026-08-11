@@ -7,6 +7,24 @@ let wasmExports = null;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+// Logical (CSS) size of the board. The backing store is scaled by the
+// device pixel ratio below so the game isn't blurry on retina displays.
+const VIEW_WIDTH = 500;
+const VIEW_HEIGHT = 600;
+
+function setupHiDPI() {
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = VIEW_WIDTH * dpr;
+  canvas.height = VIEW_HEIGHT * dpr;
+  canvas.style.width = VIEW_WIDTH + 'px';
+  canvas.style.height = VIEW_HEIGHT + 'px';
+  // Draw in CSS pixels; the transform maps them onto the denser backing store.
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+setupHiDPI();
+window.addEventListener('resize', setupHiDPI);
+
 // Game constants
 const CELL_SIZE = 30;
 const BOARD_WIDTH = 10;
@@ -119,7 +137,7 @@ function drawPiece(type, rotation, x, y, offsetX = 0, offsetY = 0, preview = fal
 function render() {
   // Clear canvas
   ctx.fillStyle = '#000';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
   
   // Draw board
   const board = getBoard();
@@ -176,15 +194,15 @@ function render() {
   // Draw game over
   if (wasmExports.is_game_over()) {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+    ctx.fillRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+
     ctx.fillStyle = '#fff';
     ctx.font = 'bold 32px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 20);
+    ctx.fillText('GAME OVER', VIEW_WIDTH / 2, VIEW_HEIGHT / 2 - 20);
     ctx.font = '20px Arial';
-    ctx.fillText(`Final Score: ${score}`, canvas.width / 2, canvas.height / 2 + 20);
-    ctx.fillText('Press R to restart', canvas.width / 2, canvas.height / 2 + 50);
+    ctx.fillText(`Final Score: ${score}`, VIEW_WIDTH / 2, VIEW_HEIGHT / 2 + 20);
+    ctx.fillText('Press R to restart', VIEW_WIDTH / 2, VIEW_HEIGHT / 2 + 50);
     ctx.textAlign = 'left';
   }
 }
