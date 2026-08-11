@@ -11,6 +11,7 @@ import { GitHubActivity } from "./components/GitHubActivity";
 import { Reading } from "./components/Reading";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
+import { TetrisEasterEgg } from "./components/TetrisEasterEgg";
 import { BlogIndex } from "./components/BlogIndex";
 import { DrmArticle } from "./components/blog/DrmArticle";
 import { GitWorktreeArticle } from "./components/blog/GitWorktreeArticle";
@@ -63,6 +64,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <TetrisEasterEgg />
     </div>
   );
 }

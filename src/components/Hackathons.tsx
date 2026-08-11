@@ -83,7 +83,7 @@ export function Hackathons() {
   // Only the first rows show; the rest sit behind the arrow.
   const [expanded, setExpanded] = useState(false);
 
-  const wins = HACKATHONS.filter((h) => h.won).length;
+  const total = HACKATHONS.length;
   // Won entries first so the highlighted cards lead the grid.
   const ordered = [...HACKATHONS].sort((a, b) => Number(b.won) - Number(a.won));
 
@@ -98,9 +98,8 @@ export function Hackathons() {
             <h2 className="font-display text-sm font-semibold uppercase tracking-widest text-text dark:text-dark-text">
               Hackathons
             </h2>
-            <span className="inline-flex items-center gap-1.5 text-[12px] text-text-muted dark:text-dark-text-muted">
-              <Trophy size={12} />
-              {wins} wins
+            <span className="text-[12px] text-text-muted dark:text-dark-text-muted tabular-nums">
+              {total} hackathons
             </span>
           </div>
         </FadeIn>
