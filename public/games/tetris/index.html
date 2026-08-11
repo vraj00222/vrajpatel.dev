@@ -5,54 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tetris - WebAssembly</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      padding: 20px;
+      padding: 0;
       background: #1a1a1a;
-      color: #fff;
-      font-family: Arial, sans-serif;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
     }
-    
-    h1 {
-      margin: 0 0 20px 0;
-      text-align: center;
-      color: #fff;
-    }
-    
+
     #gameCanvas {
       border: 2px solid #444;
       background: #000;
       display: block;
     }
-    
-    .controls {
-      margin-top: 20px;
-      text-align: center;
-      color: #aaa;
-      font-size: 14px;
-    }
-    
-    .controls p {
-      margin: 5px 0;
-    }
   </style>
 </head>
 <body>
-  <h1>Tetris - WebAssembly</h1>
   <canvas id="gameCanvas" width="500" height="600"></canvas>
-  <div class="controls">
-    <p><strong>Controls:</strong></p>
-    <p>← → Arrow Keys: Move</p>
-    <p>↓ Arrow Key: Soft Drop</p>
-    <p>↑ / Z / X: Rotate</p>
-    <p>Space: Hard Drop</p>
-    <p>R: Restart (when game over)</p>
-  </div>
   <script src="tetris.js"></script>
 </body>
 </html>

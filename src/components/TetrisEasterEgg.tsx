@@ -2,6 +2,14 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Gamepad2, X } from "lucide-react";
 
+const CONTROLS = [
+  ["← →", "Move"],
+  ["↓", "Soft drop"],
+  ["↑ / Z / X", "Rotate"],
+  ["Space", "Hard drop"],
+  ["R", "Restart"],
+];
+
 export function TetrisEasterEgg() {
   const [open, setOpen] = useState(false);
 
@@ -11,9 +19,10 @@ export function TetrisEasterEgg() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Play a Tetris easter egg"
-        className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-surface dark:bg-dark-surface border border-border dark:border-dark-border text-text dark:text-dark-text animate-glow-cycle hover:scale-110 transition-transform duration-200"
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-lg px-4 h-12 text-white font-semibold [text-shadow:0_1px_3px_rgba(0,0,0,0.6)] animate-rainbow-bonkers hover:scale-105 transition-transform duration-200"
       >
-        <Gamepad2 size={20} />
+        <Gamepad2 size={18} />
+        Easter egg
       </button>
 
       <AnimatePresence>
@@ -31,21 +40,13 @@ export function TetrisEasterEgg() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 8 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-4"
+              className="max-h-[90vh] w-full max-w-[600px] overflow-y-auto rounded-xl border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-5"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="mb-3 flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-[15px] font-semibold text-text dark:text-dark-text">
-                    Tetris, hand-written in WebAssembly
-                  </p>
-                  <p className="mt-1 text-[12.5px] text-text-muted dark:text-dark-text-muted leading-relaxed">
-                    Vibe-coded on a Sunday — no C or Rust compiler, the whole
-                    game loop is raw WAT. 2.3KB binary, sub-5ms frames, zero
-                    garbage collection, and the entire thing loads in a
-                    single HTTP request.
-                  </p>
-                </div>
+              <div className="mb-4 flex items-start justify-between gap-4">
+                <p className="text-[15px] font-semibold text-text dark:text-dark-text">
+                  Tetris, hand-written in WebAssembly
+                </p>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
@@ -56,12 +57,38 @@ export function TetrisEasterEgg() {
                 </button>
               </div>
 
-              <iframe
-                src="/games/tetris/index.html"
-                title="Tetris (WebAssembly)"
-                className="w-full rounded-lg border border-border dark:border-dark-border"
-                style={{ height: "70vh" }}
-              />
+              <div className="mb-4 flex flex-wrap justify-center gap-x-4 gap-y-1.5">
+                {CONTROLS.map(([key, action]) => (
+                  <span
+                    key={key}
+                    className="text-[12px] text-text-muted dark:text-dark-text-muted"
+                  >
+                    <kbd className="rounded border border-border dark:border-dark-border bg-hover-bg dark:bg-dark-hover-bg px-1.5 py-0.5 text-[11px] font-mono text-text dark:text-dark-text">
+                      {key}
+                    </kbd>{" "}
+                    {action}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex justify-center">
+                <iframe
+                  src="/games/tetris/index.html"
+                  title="Tetris (WebAssembly)"
+                  width={506}
+                  height={606}
+                  className="max-w-full rounded-lg border border-border dark:border-dark-border"
+                />
+              </div>
+
+              <p className="mt-4 text-[12.5px] text-text-muted dark:text-dark-text-muted leading-relaxed">
+                Vibe-coded on a Sunday — no C or Rust compiler, the whole
+                game loop is raw WebAssembly Text Format, written by hand.
+                Sub-5ms frames, zero garbage collection. The compiled game
+                engine — grid, physics, scoring, all of it — is a 2.3KB
+                WebAssembly binary, under 4KB, and the entire game just
+                loaded in your browser in a single HTTP request.
+              </p>
             </motion.div>
           </motion.div>
         )}

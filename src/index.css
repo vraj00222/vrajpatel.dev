@@ -58,18 +58,18 @@ html { scroll-behavior: smooth; }
   animation: aurora 60s linear infinite;
 }
 
-/* Rainbow glow — the Tetris easter-egg button. */
-@keyframes glow-cycle {
-  0%   { box-shadow: 0 0 14px 3px #f0000090; }
-  17%  { box-shadow: 0 0 14px 3px #f0a00090; }
-  34%  { box-shadow: 0 0 14px 3px #f0f00090; }
-  50%  { box-shadow: 0 0 14px 3px #00f00090; }
-  67%  { box-shadow: 0 0 14px 3px #00f0f090; }
-  84%  { box-shadow: 0 0 14px 3px #0000f090; }
-  100% { box-shadow: 0 0 14px 3px #f0000090; }
+/* Rainbow bonkers — the Tetris easter-egg button goes full send. */
+@keyframes rainbow-bonkers {
+  0%   { background-color: #f00000; box-shadow: 0 0 18px 4px #f0000090; }
+  17%  { background-color: #f0a000; box-shadow: 0 0 18px 4px #f0a00090; }
+  34%  { background-color: #f0f000; box-shadow: 0 0 18px 4px #f0f00090; }
+  50%  { background-color: #00c000; box-shadow: 0 0 18px 4px #00c00090; }
+  67%  { background-color: #00c0d0; box-shadow: 0 0 18px 4px #00c0d090; }
+  84%  { background-color: #4040f0; box-shadow: 0 0 18px 4px #4040f090; }
+  100% { background-color: #f00000; box-shadow: 0 0 18px 4px #f0000090; }
 }
-@utility animate-glow-cycle {
-  animation: glow-cycle 4s linear infinite;
+@utility animate-rainbow-bonkers {
+  animation: rainbow-bonkers 2.5s linear infinite;
 }
 
 body {
