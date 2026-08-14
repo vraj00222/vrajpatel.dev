@@ -250,6 +250,13 @@ export const HACKATHONS: Hackathon[] = [
     won: false,
     project: "Crew",
   },
+  {
+    name: "MongoDB.local Build Fest: The Persistent Context Sprint",
+    image: "/hackathons/mongodb-buildfest.png",
+    alt: "MongoDB.local Build Fest, The Persistent Context Sprint Hackathon logo",
+    won: false,
+    project: "SCAR",
+  },
 ];
 
 export const PUBLICATION = {
