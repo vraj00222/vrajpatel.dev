@@ -58,6 +58,11 @@ export function Projects() {
                             {project.award}
                           </span>
                         )}
+                        {"hackathon" in project && project.hackathon && (
+                          <span className="text-[11px] font-medium text-text-muted dark:text-dark-text-muted bg-hover-bg dark:bg-dark-hover-bg px-1.5 py-0.5 rounded">
+                            {project.hackathon}
+                          </span>
+                        )}
                       </div>
                       {/* Capped independently of the wider section so the
                           measure stays around 75 characters. */}

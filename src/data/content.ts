@@ -80,15 +80,16 @@ export const PROJECTS = [
   {
     name: "MediHunt",
     description: "An agentic drug-discovery pipeline: name a disease and it finds the protein target, ranks it, folds the complex with Boltz-2 across replicate seeds, and only proposes a druggable site when the ensemble actually converges — otherwise it abstains and says so. Every refusal is written to disk as an accountability record, and a biosecurity gate screens each run before anything else executes.",
-    tech: ["Python", "Boltz-2", "Modal", "Claude Code", "MCP"],
+    tech: ["Python", "Paperclip", "Boltz-2", "Modal", "BenchFlow", "Claude Code"],
     github: "https://github.com/roknabadi/reAGENT-2026",
-    award: "re:AGENT 2026",
+    hackathon: "re:AGENT 2026",
   },
   {
     name: "Hopper",
     description: "Every scanner tells you a package is vulnerable. Hopper walks the five hops from that package, through the dependencies nobody chose to install, to the customer contract it breaches and the hour you owe them notice by. Most advisories return no path at all — and that proof of absence is the product.",
     tech: ["TypeScript", "FalkorDB", "Claude API", "React", "Express"],
     github: "https://github.com/vraj00222/hopper",
+    hackathon: "Memory Meets Motion 2026",
   },
   {
     name: "Claudware",
@@ -96,6 +97,7 @@ export const PROJECTS = [
     tech: ["TypeScript", "React", "Three.js", "Claude Code"],
     github: "https://github.com/vraj00222/Claudware",
     live: "https://claudewaresite.vercel.app/",
+    hackathon: "CAL AI Hackathon 2026",
   },
   {
     name: "Yellow",
@@ -103,7 +105,7 @@ export const PROJECTS = [
     tech: ["TypeScript", "React", "InsForge", "OpenAI", "MCP"],
     github: "https://github.com/vraj00222/yellow-",
     live: "https://www.youtube.com/shorts/u8KBF_esBb4",
-    award: "Entrepreneur First Hackathon",
+    hackathon: "Entrepreneur First Hackathon",
   },
   {
     name: "agent-farm",
@@ -146,7 +148,7 @@ export const PROJECTS = [
     description: "Chrome extension for sustainability-scored shopping. On-device AI via Meta ExecuTorch, zero data transmission.",
     tech: ["TypeScript", "React", "Chrome API", "ExecuTorch"],
     github: "https://github.com/vraj00222",
-    award: "SFHACKS 2026",
+    hackathon: "SF Hacks 2026",
   },
   {
     name: "repomap",
@@ -179,12 +181,14 @@ export const PROJECTS = [
     description: "An agent swarm you watch instead of read. Say one sentence and five voice-native agents split an inbox-clearing, calendar-booking task between themselves, narrating in five different accents — when one hits a decision only you can make, it phones you, asks out loud, and the crew carries on from your answer.",
     tech: ["JavaScript", "Swift", "VoiceOS", "MCP", "Python"],
     github: "https://github.com/vraj00222/crew",
+    hackathon: "Hack with VoiceOS",
   },
   {
     name: "Amortize",
     description: "A local proxy that makes AI agents cheaper to run. Point any client at it with one env var — no code changes — and it strips context the model doesn't need, replays verified prior work instead of re-running the model, and proves the savings with a per-step cost ledger: measured −28% tokens on a cold run and −97% on a replayed skill, same output.",
     tech: ["Python", "Snowflake", "Anthropic API", "uv"],
     github: "https://github.com/vraj00222/Amort",
+    hackathon: "Beta Fund Hackathon",
   },
 ] as const;
 
