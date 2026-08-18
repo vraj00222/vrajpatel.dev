@@ -85,6 +85,13 @@ export const PROJECTS = [
     hackathon: "re:AGENT 2026",
   },
   {
+    name: "SCAR",
+    description: "Offline evals judge an agent before you ship it — SCAR judges it while it runs. A supervisor reads the step change stream live and can halt a run mid-failure, then a reflector turns each caught failure into a scar: a durable lesson the next agent inherits before its first token. The win condition is transfer — a scar earned on one task measurably helps on an unrelated one, same model, same tools.",
+    tech: ["Python", "MongoDB", "Claude API", "OpenRouter"],
+    github: "https://github.com/vraj00222/Scar",
+    hackathon: "MongoDB.local Build Fest",
+  },
+  {
     name: "Hopper",
     description: "Every scanner tells you a package is vulnerable. Hopper walks the five hops from that package, through the dependencies nobody chose to install, to the customer contract it breaches and the hour you owe them notice by. Most advisories return no path at all — and that proof of absence is the product.",
     tech: ["TypeScript", "FalkorDB", "Claude API", "React", "Express"],
