@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, Copy, Check } from "lucide-react";
+import { User, Copy, Check } from "lucide-react";
 import { buildAgentMarkdown } from "../data/agentMarkdown";
 
 const MARKDOWN = buildAgentMarkdown();
@@ -19,10 +19,11 @@ export function AgentView({ onBack }: { onBack: () => void }) {
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={onBack}
-            className="inline-flex items-center gap-1.5 text-[13px] text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors"
+            className="p-2 -ml-2 rounded-md text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-all duration-200"
+            aria-label="Back to site"
+            title="Back to site"
           >
-            <ArrowLeft size={14} />
-            Back to site
+            <User size={15} />
           </button>
           <button
             onClick={copy}
