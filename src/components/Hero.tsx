@@ -10,7 +10,7 @@ import heroPhoto from "../assets/vraj.jpg";
 // statement has room on both sides of it.
 const THESIS = "I build full-stack systems, publish ML research, and teach algorithms.";
 const SUPPORTING_LINE =
-  "Software engineer and CS grad student at Cal State Fullerton, looking for full-time roles starting May 2026.";
+  "Software engineer and CS grad student at Cal State Fullerton, open to full-time roles.";
 
 export function Hero() {
   const shouldReduceMotion = useReducedMotion();
