@@ -68,6 +68,12 @@ export const READING: PaperCategory[] = [
     ],
   },
   {
+    label: "AI & Deep Learning",
+    papers: [
+      { title: "Attention Is All You Need", authors: "A. Vaswani et al.", venue: "NeurIPS", year: 2017, url: "https://arxiv.org/abs/1706.03762" },
+    ],
+  },
+  {
     label: "Distributed Systems",
     papers: [
       { title: "Distributed Operating Systems", authors: "S. Mullender", venue: "ACM Comput. Surv.", year: 1996, url: "https://doi.org/10.1145/234313.234407" },
