@@ -1,5 +1,6 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Navbar } from "./components/Navbar";
+import { AgentView } from "./components/AgentView";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { Experience } from "./components/Experience";
@@ -28,6 +29,8 @@ const BLOG_ARTICLES: Record<string, () => ReactNode> = {
 };
 
 export default function App() {
+  const [agentMode, setAgentMode] = useState(false);
+
   if (typeof window !== "undefined") {
     const path = window.location.pathname.replace(/\/+$/, "") || "/";
     const Article = BLOG_ARTICLES[path];
@@ -36,12 +39,14 @@ export default function App() {
     if (path === "/blog" || path.startsWith("/blog/")) return <BlogIndex />;
   }
 
+  if (agentMode) return <AgentView onBack={() => setAgentMode(false)} />;
+
   return (
     <div className="min-h-screen">
       <a href="#about" className="skip-link">
         Skip to content
       </a>
-      <Navbar />
+      <Navbar onAgentMode={() => setAgentMode(true)} />
       <main>
         <Hero />
         <Divider />

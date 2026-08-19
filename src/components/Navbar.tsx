@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X, Sun, Moon, Bot } from "lucide-react";
 import { NAV_LINKS } from "../data/content";
 import { useActiveSection } from "../hooks/useActiveSection";
 
@@ -11,7 +11,7 @@ function getInitialTheme(): "light" | "dark" {
   return document.documentElement.classList.contains("dark") ? "dark" : "light";
 }
 
-export function Navbar() {
+export function Navbar({ onAgentMode }: { onAgentMode: () => void }) {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
   const active = useActiveSection(sectionIds);
@@ -56,6 +56,14 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={onAgentMode}
+            className="p-2 rounded-md text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-all duration-200"
+            aria-label="View agent-friendly markdown"
+            title="View agent-friendly markdown"
+          >
+            <Bot size={15} />
+          </button>
           <button
             onClick={toggleTheme}
             className="p-2 rounded-md text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-all duration-200"
