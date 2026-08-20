@@ -14,7 +14,17 @@ export interface StatItem {
 }
 
 export const STATS: StatItem[] = [
-  { value: "02", label: "Hackathon wins" },
+  {
+    value: "02",
+    sub: "$1k prize",
+    label: "Hackathon wins",
+    href: "https://devpost.com/vrajpatel00222",
+    preview: {
+      title: "Vraj Patel — software portfolio on Devpost",
+      facts: "Best Solo Hack — Citrus Hack 2026 · $1k prize — HackDartmouth X",
+      image: "/stats/devpost.png",
+    },
+  },
   { value: "200+", label: "Students taught · DSA" },
   {
     value: "66K+ stars",
