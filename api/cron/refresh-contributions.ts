@@ -30,7 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const currentYear = new Date().getUTCFullYear();
 
   // Build absolute URL to our own /api/contributions
-  const host = req.headers.host || "vrajpatel.dev";
+  const host = req.headers.host || "vrajpatel.xyz";
   const protocol = host.startsWith("localhost") ? "http" : "https";
   const base = `${protocol}://${host}/api/contributions`;
 

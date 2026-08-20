@@ -169,7 +169,7 @@ async function fetchFromGitHub(
     headers: {
       Authorization: `Bearer ${GITHUB_TOKEN}`,
       "Content-Type": "application/json",
-      "User-Agent": "vrajpatel.dev",
+      "User-Agent": "vrajpatel.xyz",
     },
     body: JSON.stringify({
       query,

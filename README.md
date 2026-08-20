@@ -1,4 +1,4 @@
-# vrajpatel.dev
+# vrajpatel.xyz
 
 My personal portfolio and blog — a fast, single-page site with a dark/light
 theme, live GitHub activity, and long-form writing on the things I build and

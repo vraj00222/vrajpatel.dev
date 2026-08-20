@@ -25,7 +25,7 @@ function githubHeaders() {
   return {
     Authorization: `Bearer ${GITHUB_TOKEN}`,
     Accept: "application/vnd.github+json",
-    "User-Agent": "vrajpatel.dev",
+    "User-Agent": "vrajpatel.xyz",
     "X-GitHub-Api-Version": "2022-11-28",
   };
 }
