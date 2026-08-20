@@ -1,3 +1,52 @@
+// The proof strip under the hero — real numbers, written plainly. Stats that
+// carry a `href` are clickable: hovering shows a live preview card (og image +
+// proof facts) and clicking opens the site so the number can be verified.
+export interface StatItem {
+  value: string;
+  label: string;
+  href?: string;
+  preview?: {
+    title: string;
+    facts: string;
+    image: string;
+  };
+}
+
+export const STATS: StatItem[] = [
+  { value: "02", label: "Hackathon wins" },
+  { value: "200+", label: "Students taught · DSA" },
+  {
+    value: "66K+",
+    label: "GitHub stars · CareerOps",
+    href: "https://career-ops.org/",
+    preview: {
+      title: "career-ops — open-source AI job search command center",
+      facts: "100% open-source · 12K+ forks · #1 Repo of the Day",
+      image: "/stats/career-ops.png",
+    },
+  },
+  {
+    value: "10M+",
+    label: "Professionals · Caveman",
+    href: "https://caveman.so/",
+    preview: {
+      title: "Caveman — the token-efficient stack for agent-native development",
+      facts: "74K GitHub stars · #1 on Hacker News · 65% fewer output tokens",
+      image: "/stats/caveman.png",
+    },
+  },
+  {
+    value: "MLX",
+    label: "Contributor · Apple ML",
+    href: "https://github.com/ml-explore/mlx/pull/4361",
+    preview: {
+      title: "MLX — array framework for Apple silicon · my merged PR",
+      facts: "Merged #4361 — validate eps in Adam at construction · 28K+ stars · Apple ML research",
+      image: "/stats/mlx.png",
+    },
+  },
+] as const;
+
 export const PERSONAL = {
   name: "Vraj Patel",
   bio: "Software engineer and CS grad student at Cal State Fullerton. I build full-stack systems, publish ML research, and teach algorithms. Open to full-time roles.",

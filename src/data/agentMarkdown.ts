@@ -1,5 +1,6 @@
 import {
   PERSONAL,
+  STATS,
   EDUCATION,
   EXPERIENCE,
   PROJECTS,
@@ -13,6 +14,13 @@ export function buildAgentMarkdown(): string {
   const lines: string[] = [];
 
   lines.push(`# ${PERSONAL.name}`, "", PERSONAL.bio, "");
+
+  lines.push("## Quick facts", "");
+  for (const s of STATS) {
+    const link = s.href ? ` — ${s.href}` : "";
+    lines.push(`- ${s.value} — ${s.label}${link}`);
+  }
+  lines.push("");
   lines.push(
     `- Location: ${PERSONAL.location}`,
     `- Email: ${PERSONAL.email}`,
