@@ -25,7 +25,11 @@ export const STATS: StatItem[] = [
       image: "/stats/devpost.png",
     },
   },
-  { value: "200+", label: "Students taught · DSA" },
+  { value: "200+", label: "Students taught · DSA", preview: {
+      title: "CSUF staff directory",
+      facts: "Named on the Cal State Fullerton staff directory",
+      image: "/stats/csufdirectory.png",
+    } },
   {
     value: "66K+ stars",
     sub: "100k+ users",
