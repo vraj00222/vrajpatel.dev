@@ -46,6 +46,7 @@ export function Stats() {
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border dark:border-dark-border bg-border dark:bg-dark-border sm:grid-cols-3 lg:grid-cols-5">
             {STATS.map((stat) => {
               const isLink = Boolean(stat.href);
+              const isInteractive = isLink || Boolean(stat.preview);
 
               const showPreview = (
                 e: { currentTarget: HTMLElement },
@@ -81,23 +82,37 @@ export function Stats() {
               const cellClass =
                 "group relative flex flex-col items-center justify-center gap-1 bg-bg dark:bg-dark-bg px-3 py-5 text-center transition-colors duration-150";
 
-              return isLink ? (
-                <a
+              if (isLink) {
+                return (
+                  <a
+                    key={stat.label}
+                    href={stat.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={(e) => showPreview(e, stat)}
+                    onMouseLeave={() => setActive(null)}
+                    onFocus={(e) => showPreview(e, stat)}
+                    onBlur={() => setActive(null)}
+                    className={`${cellClass} hover:bg-hover-bg dark:hover:bg-dark-hover-bg focus-visible:z-10`}
+                    aria-label={`${stat.value} ${stat.label} — verify`}
+                  >
+                    {inner}
+                  </a>
+                );
+              }
+
+              return (
+                <div
                   key={stat.label}
-                  href={stat.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onMouseEnter={(e) => showPreview(e, stat)}
-                  onMouseLeave={() => setActive(null)}
-                  onFocus={(e) => showPreview(e, stat)}
-                  onBlur={() => setActive(null)}
-                  className={`${cellClass} hover:bg-hover-bg dark:hover:bg-dark-hover-bg focus-visible:z-10`}
-                  aria-label={`${stat.value} ${stat.label} — verify`}
+                  className={cellClass}
+                  {...(isInteractive
+                    ? {
+                        onMouseEnter: (e: React.MouseEvent<HTMLDivElement>) =>
+                          showPreview(e, stat),
+                        onMouseLeave: () => setActive(null),
+                      }
+                    : {})}
                 >
-                  {inner}
-                </a>
-              ) : (
-                <div key={stat.label} className={cellClass}>
                   {inner}
                 </div>
               );
@@ -139,10 +154,12 @@ export function Stats() {
                 <p className="mt-1.5 text-[11px] leading-snug text-text-secondary dark:text-dark-text-secondary">
                   {active.stat.preview!.facts}
                 </p>
-                <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-text-muted dark:text-dark-text-muted">
-                  Verify
-                  <ArrowUpRight size={11} />
-                </span>
+                {active.stat.href && (
+                  <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-text-muted dark:text-dark-text-muted">
+                    Verify
+                    <ArrowUpRight size={11} />
+                  </span>
+                )}
               </div>
             </div>
           </motion.div>

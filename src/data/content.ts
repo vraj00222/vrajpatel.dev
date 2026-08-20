@@ -51,7 +51,6 @@ export const STATS: StatItem[] = [
   {
     value: "MLX",
     label: "Contributor · Apple ML",
-    href: "https://github.com/ml-explore/mlx/pull/4361",
     preview: {
       title: "MLX — array framework for Apple silicon · my merged PR",
       facts: "Merged #4361 — validate eps in Adam at construction · 28K+ stars · Apple ML research",
