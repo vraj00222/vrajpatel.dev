@@ -50,12 +50,8 @@ export const STATS: StatItem[] = [
   },
   {
     value: "MLX",
+    sub: "28K+ stars",
     label: "Contributor · Apple ML",
-    preview: {
-      title: "MLX — array framework for Apple silicon · my merged PR",
-      facts: "Merged #4361 — validate eps in Adam at construction · 28K+ stars · Apple ML research",
-      image: "/stats/mlx.png",
-    },
   },
 ] as const;
 
