@@ -4,6 +4,7 @@
 export interface StatItem {
   value: string;
   label: string;
+  sub?: string;
   href?: string;
   preview?: {
     title: string;
@@ -16,22 +17,24 @@ export const STATS: StatItem[] = [
   { value: "02", label: "Hackathon wins" },
   { value: "200+", label: "Students taught · DSA" },
   {
-    value: "66K+",
+    value: "66K★",
+    sub: "/ 10M+ users",
     label: "Contributor · CareerOps",
     href: "https://career-ops.org/",
     preview: {
       title: "career-ops — open-source AI job search command center",
-      facts: "100% open-source · 12K+ forks · #1 Repo of the Day",
+      facts: "66K+ stars · 10M+ users · 100% open-source · #1 Repo of the Day",
       image: "/stats/career-ops.png",
     },
   },
   {
-    value: "10M+",
+    value: "74K★",
+    sub: "/ 10M+ users",
     label: "Contributor · Caveman",
     href: "https://caveman.so/",
     preview: {
       title: "Caveman — the token-efficient stack for agent-native development",
-      facts: "74K GitHub stars · #1 on Hacker News · 65% fewer output tokens",
+      facts: "74K+ stars · 10M+ users · #1 on Hacker News · 65% fewer output tokens",
       image: "/stats/caveman.png",
     },
   },

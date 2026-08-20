@@ -58,6 +58,11 @@ export function Stats() {
                 <>
                   <span className="font-display text-2xl font-semibold tracking-tight text-text dark:text-dark-text sm:text-3xl">
                     {stat.value}
+                    {stat.sub && (
+                      <span className="ml-1 text-sm font-medium text-text-muted dark:text-dark-text-muted sm:text-base">
+                        {stat.sub}
+                      </span>
+                    )}
                   </span>
                   <span className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-text-muted dark:text-dark-text-muted">
                     {stat.label}

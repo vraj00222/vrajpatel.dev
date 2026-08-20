@@ -18,7 +18,8 @@ export function buildAgentMarkdown(): string {
   lines.push("## Quick facts", "");
   for (const s of STATS) {
     const link = s.href ? ` — ${s.href}` : "";
-    lines.push(`- ${s.value} — ${s.label}${link}`);
+    const sub = s.sub ? ` ${s.sub}` : "";
+    lines.push(`- ${s.value}${sub} — ${s.label}${link}`);
   }
   lines.push("");
   lines.push(
