@@ -8,9 +8,9 @@ import heroPhoto from "../assets/vraj.jpg";
 // The one claim the page is built around. Split out of PERSONAL.bio, which
 // ships as a single paragraph. Everything else in the hero stays small so the
 // statement has room on both sides of it.
-const THESIS = "I build full-stack systems, publish ML research, and teach algorithms.";
+const THESIS = "I build full-stack systems and AI infra, publish ML research, and teach algorithms.";
 const SUPPORTING_LINE =
-  "Software engineer and CS grad student at Cal State Fullerton, open to full-time roles.";
+  "CS grad student at Cal State Fullerton, building systems that scale and research that matters.";
 
 export function Hero() {
   const shouldReduceMotion = useReducedMotion();

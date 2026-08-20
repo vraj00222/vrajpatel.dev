@@ -57,7 +57,7 @@ export const STATS: StatItem[] = [
 
 export const PERSONAL = {
   name: "Vraj Patel",
-  bio: "Software engineer and CS grad student at Cal State Fullerton. I build full-stack systems, publish ML research, and teach algorithms. Open to full-time roles.",
+  bio: "Software engineer focused on AI agents and infrastructure. CS grad student at Cal State Fullerton — I build full-stack systems, publish ML research, and teach algorithms.",
   location: "San Francisco, CA",
   email: "vrajpatel00222@gmail.com",
   github: "https://github.com/vraj00222",
