@@ -17,19 +17,19 @@ export const STATS: StatItem[] = [
   { value: "02", label: "Hackathon wins" },
   { value: "200+", label: "Students taught · DSA" },
   {
-    value: "66K★",
-    sub: "/ 10M+ users",
+    value: "66K+ stars",
+    sub: "100k+ users",
     label: "Contributor · CareerOps",
     href: "https://career-ops.org/",
     preview: {
       title: "career-ops — open-source AI job search command center",
-      facts: "66K+ stars · 10M+ users · 100% open-source · #1 Repo of the Day",
+      facts: "66K+ stars · 100k+ users · 100% open-source · #1 Repo of the Day",
       image: "/stats/career-ops.png",
     },
   },
   {
-    value: "74K★",
-    sub: "/ 10M+ users",
+    value: "74K+ stars",
+    sub: "10M+ users",
     label: "Contributor · Caveman",
     href: "https://caveman.so/",
     preview: {
