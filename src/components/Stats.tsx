@@ -56,10 +56,12 @@ export function Stats() {
 
               const inner = (
                 <>
-                  <span className="font-display text-2xl font-semibold tracking-tight text-text dark:text-dark-text sm:text-3xl">
-                    {stat.value}
+                  <span className="flex flex-col items-center leading-tight">
+                    <span className="font-display text-xl font-semibold tracking-tight text-text dark:text-dark-text sm:text-2xl">
+                      {stat.value}
+                    </span>
                     {stat.sub && (
-                      <span className="ml-1 text-sm font-medium text-text-muted dark:text-dark-text-muted sm:text-base">
+                      <span className="mt-0.5 font-display text-[15px] font-medium tracking-tight text-text-muted dark:text-dark-text-muted sm:text-[17px]">
                         {stat.sub}
                       </span>
                     )}
