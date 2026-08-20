@@ -17,7 +17,7 @@ export const STATS: StatItem[] = [
   { value: "200+", label: "Students taught · DSA" },
   {
     value: "66K+",
-    label: "GitHub stars · CareerOps",
+    label: "Contributor · CareerOps",
     href: "https://career-ops.org/",
     preview: {
       title: "career-ops — open-source AI job search command center",
@@ -27,7 +27,7 @@ export const STATS: StatItem[] = [
   },
   {
     value: "10M+",
-    label: "Professionals · Caveman",
+    label: "Contributor · Caveman",
     href: "https://caveman.so/",
     preview: {
       title: "Caveman — the token-efficient stack for agent-native development",

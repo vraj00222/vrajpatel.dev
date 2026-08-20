@@ -9,6 +9,19 @@ type ActivePreview = {
   stat: StatItem;
 };
 
+// Card is 256px wide and centered on the hovered cell; keep it inside the
+// viewport when that cell sits near an edge (e.g. the right-most MLX cell).
+const CARD_WIDTH = 256;
+const EDGE_PAD = 8;
+function clampCardX(rect: DOMRect): number {
+  const center = rect.left + rect.width / 2;
+  const left = Math.min(
+    Math.max(center - CARD_WIDTH / 2, EDGE_PAD),
+    window.innerWidth - CARD_WIDTH - EDGE_PAD
+  );
+  return left;
+}
+
 export function Stats() {
   const reduce = useReducedMotion();
   const [active, setActive] = useState<ActivePreview | null>(null);
@@ -94,7 +107,7 @@ export function Stats() {
             key={active.stat.label}
             className="pointer-events-none fixed z-50"
             style={{
-              left: active.rect.left + active.rect.width / 2,
+              left: clampCardX(active.rect),
               top: active.rect.top,
             }}
             initial={{ opacity: 0, y: reduce ? 0 : 8, scale: reduce ? 1 : 0.97 }}
