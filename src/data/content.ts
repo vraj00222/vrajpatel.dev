@@ -280,6 +280,12 @@ export interface Hackathon {
 
 export const HACKATHONS: Hackathon[] = [
   {
+    name: "Greptile FAST Hackathon",
+    image: "/hackathons/greptile-fast.png",
+    alt: "Greptile FAST Hackathon logo, sponsored by Stripe, OpenAI, Modal, AWS, and DoorDash",
+    won: false,
+  },
+  {
     name: "Mistral Vibe Hackathon",
     image: "/hackathons/mistral-vibe.png",
     alt: "Mistral Vibe Hackathon logo with a pixel-art Golden Gate Bridge, San Francisco",
