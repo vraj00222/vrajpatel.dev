@@ -276,6 +276,8 @@ export interface Hackathon {
   won: boolean;
   result?: string;
   project?: string;
+  /** Backed/hosted by Y Combinator — shows the orange Y badge next to the name. */
+  yc?: boolean;
 }
 
 export const HACKATHONS: Hackathon[] = [
@@ -284,6 +286,7 @@ export const HACKATHONS: Hackathon[] = [
     image: "/hackathons/greptile-fast.png",
     alt: "Greptile FAST Hackathon logo, sponsored by Stripe, OpenAI, Modal, AWS, and DoorDash",
     won: false,
+    yc: true,
   },
   {
     name: "Mistral Vibe Hackathon",

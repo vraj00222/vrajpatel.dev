@@ -6,6 +6,17 @@ import { FadeIn } from "./FadeIn";
 
 const INITIAL_VISIBLE = 4;
 
+function YCBadge() {
+  return (
+    <span
+      aria-label="Y Combinator"
+      className="inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#FF6600] text-[9px] font-bold leading-none text-white"
+    >
+      Y
+    </span>
+  );
+}
+
 function WonCard({ h }: { h: Hackathon }) {
   const subtitle = [h.result, h.project].filter(Boolean).join(" · ");
 
@@ -37,8 +48,9 @@ function WonCard({ h }: { h: Hackathon }) {
             <Trophy size={10} />
             Won
           </span>
-          <p className="mt-1.5 text-[15px] font-semibold text-text dark:text-dark-text leading-snug">
+          <p className="mt-1.5 flex items-center gap-1.5 text-[15px] font-semibold text-text dark:text-dark-text leading-snug">
             {h.name}
+            {h.yc && <YCBadge />}
           </p>
           {subtitle && (
             <p className="mt-0.5 text-[12.5px] text-text-muted dark:text-dark-text-muted">
@@ -67,8 +79,9 @@ function AttendedCard({ h }: { h: Hackathon }) {
           <span className="inline-flex items-center rounded-full bg-hover-bg dark:bg-dark-hover-bg px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-text-muted dark:text-dark-text-muted">
             Attended
           </span>
-          <p className="mt-1.5 text-[15px] font-semibold text-text dark:text-dark-text leading-snug">
+          <p className="mt-1.5 flex items-center gap-1.5 text-[15px] font-semibold text-text dark:text-dark-text leading-snug">
             {h.name}
+            {h.yc && <YCBadge />}
           </p>
           <p className="mt-0.5 text-[12.5px] text-text-muted dark:text-dark-text-muted">
             {subtitle}
