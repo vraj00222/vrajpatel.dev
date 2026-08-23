@@ -139,6 +139,14 @@ export const EXPERIENCE: ExperienceItem[] = [
 
 export const PROJECTS = [
   {
+    name: "Zephyr",
+    description: "A printing press for research papers. Paste an arXiv link and it OCRs every page, then re-typesets the argument into three honest depths — the full paper, a half-hour cut, a five-minute brief — with the authors' verbatim words highlighted, verified character-for-character against the source. A proofreader model cross-checks every claim, a grounded chat answers questions from the paper alone, and Voxtral reads the answer back aloud.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Mistral OCR", "Mistral API", "Voxtral", "Modal"],
+    github: "https://github.com/vraj00222/zephyr",
+    live: "https://zephyr-swart-phi.vercel.app/",
+    hackathon: "Mistral Vibe Hackathon",
+  },
+  {
     name: "MediHunt",
     description: "An agentic drug-discovery pipeline: name a disease and it finds the protein target, ranks it, folds the complex with Boltz-2 across replicate seeds, and only proposes a druggable site when the ensemble actually converges — otherwise it abstains and says so. Every refusal is written to disk as an accountability record, and a biosecurity gate screens each run before anything else executes.",
     tech: ["Python", "Paperclip", "Boltz-2", "Modal", "BenchFlow", "Claude Code"],
@@ -271,6 +279,13 @@ export interface Hackathon {
 }
 
 export const HACKATHONS: Hackathon[] = [
+  {
+    name: "Mistral Vibe Hackathon",
+    image: "/hackathons/mistral-vibe.png",
+    alt: "Mistral Vibe Hackathon logo with a pixel-art Golden Gate Bridge, San Francisco",
+    won: false,
+    project: "Zephyr",
+  },
   {
     name: "HackDartmouth X",
     image: "/hackathons/hackdartmouth.png",
