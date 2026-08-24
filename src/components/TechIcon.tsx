@@ -742,6 +742,15 @@ function LetterIcon({ name, size, color }: { name: string; size: number; color: 
   );
 }
 
+/* Next.js / Vercel / Cursor / Three.js ship white-on-black marks. Rendered
+   at full white, they vanish into the light-theme icon well, so callers
+   swap in a currentColor fill over a forced-dark backdrop instead. */
+const WHITE_BRAND_TECH = new Set(["Next.js", "Vercel", "Vercel AI SDK", "Cursor", "Three.js"]);
+
+export function isWhiteBrandTech(name: string): boolean {
+  return WHITE_BRAND_TECH.has(name);
+}
+
 export function getTechColor(name: string): string {
   return tech[name]?.color ?? "#a0a0a0";
 }
@@ -770,7 +779,8 @@ interface TechIconProps {
 export function TechIcon({ name, size = 16 }: TechIconProps) {
   const [hovered, setHovered] = useState(false);
   const entry = tech[name];
-  const color = entry?.color ?? "#a0a0a0";
+  const isWhiteBrand = isWhiteBrandTech(name);
+  const color = isWhiteBrand ? "currentColor" : entry?.color ?? "#a0a0a0";
 
   return (
     <motion.div
@@ -783,7 +793,11 @@ export function TechIcon({ name, size = 16 }: TechIconProps) {
     >
       <motion.div
         layout="position"
-        className="shrink-0 w-4.5 h-4.5 flex items-center justify-center"
+        className={
+          isWhiteBrand
+            ? "shrink-0 w-4.5 h-4.5 flex items-center justify-center rounded-full bg-bg/90 dark:bg-dark-bg/85 text-[#2d2d2d] dark:text-white"
+            : "shrink-0 w-4.5 h-4.5 flex items-center justify-center"
+        }
       >
         {entry ? (
           entry.icon({ size, color })

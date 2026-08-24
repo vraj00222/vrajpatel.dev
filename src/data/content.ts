@@ -423,14 +423,16 @@ export const SKILL_GROUPS = [
   {
     label: "AI & Agents",
     items: [
-      "Claude API", "OpenAI", "Gemini AI", "Gemma 4", "Novita AI",
-      "Ollama", "ElevenLabs", "ExecuTorch", "Vercel AI SDK", "VoiceOS",
-      "MCP", "RAG", "Graph RAG", "Multi-Agent Systems", "Guild.ai",
+      "Claude API", "Anthropic API", "OpenAI", "Gemini AI", "Gemma 4",
+      "Mistral API", "Mistral OCR", "Voxtral", "Veo 2", "Novita AI",
+      "Ollama", "OpenRouter", "ElevenLabs", "ExecuTorch", "Vercel AI SDK",
+      "VoiceOS", "MCP", "RAG", "Graph RAG", "Multi-Agent Systems",
+      "Guild.ai", "Greptile", "Paperclip", "BenchFlow",
     ],
   },
   {
     label: "ML & Research",
-    items: ["PyTorch", "TensorFlow", "NumPy", "Jupyter"],
+    items: ["PyTorch", "TensorFlow", "NumPy", "Jupyter", "Boltz-2"],
   },
   {
     label: "Graph & Streaming",
@@ -440,19 +442,20 @@ export const SKILL_GROUPS = [
     label: "Frameworks & Runtime",
     items: [
       "Next.js", "React", "Node.js", "Express", "Django", "FastAPI",
-      "ASP.NET", "Electron", "Ink", "Three.js", "Vite", "Tailwind CSS",
+      "ASP.NET", "Electron", "Chrome API", "Ink", "Three.js", "Vite", "Tailwind CSS",
     ],
   },
   {
     label: "Data & Infra",
     items: [
-      "PostgreSQL", "MySQL", "MongoDB", "Redis", "SQLite",
-      "Snowflake", "InsForge", "AWS", "Docker", "GitHub Actions", "Vercel",
+      "PostgreSQL", "MySQL", "SQL Server", "MongoDB", "Redis", "SQLite",
+      "Snowflake", "InsForge", "AWS", "Modal", "JWT", "Docker",
+      "GitHub Actions", "Vercel",
     ],
   },
   {
     label: "Tools",
-    items: ["Git", "uv", "npm", "Postman", "Claude Code", "Cursor"],
+    items: ["Git", "GitHub API", "uv", "npm", "Postman", "Gradescope", "Claude Code", "Cursor"],
   },
 ] as const;
 

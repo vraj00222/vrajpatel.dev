@@ -2,7 +2,7 @@ import { SKILL_GROUPS, EDUCATION } from "../data/content";
 import { FadeIn } from "./FadeIn";
 import { type CSSProperties } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { getTechColor, getTechLogo } from "./TechIcon";
+import { getTechColor, getTechLogo, isWhiteBrandTech } from "./TechIcon";
 
 function getReadableTextColor(hex: string) {
   const cleaned = hex.replace("#", "");
@@ -68,11 +68,11 @@ export function About() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {group.items.map((skill) => {
-                    // Next.js / Vercel / Cursor are white-on-black brands. The chip wash
-                    // uses near-black so it reads in either theme; the mark itself follows
-                    // currentColor so it flips with the theme instead of vanishing into
-                    // the light-mode icon well — true at rest and on hover alike.
-                    const isWhiteBrand = skill === "Next.js" || skill === "Vercel" || skill === "Vercel AI SDK" || skill === "Cursor";
+                    // Next.js / Vercel / Cursor / Three.js are white-on-black brands. The
+                    // chip wash uses near-black so it reads in either theme; the mark itself
+                    // follows currentColor so it flips with the theme instead of vanishing
+                    // into the light-mode icon well — true at rest and on hover alike.
+                    const isWhiteBrand = isWhiteBrandTech(skill);
                     const skillColor = isWhiteBrand ? "#2d2d2d" : getTechColor(skill);
                     const hoverTextColor = getReadableTextColor(skillColor);
                     const logoColor = isWhiteBrand ? "currentColor" : skillColor;
