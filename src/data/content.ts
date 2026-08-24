@@ -266,6 +266,14 @@ export const PROJECTS = [
     github: "https://github.com/vraj00222/Amort",
     hackathon: "Beta Fund Hackathon",
   },
+  {
+    name: "Bucking Fastard",
+    description: "An automated record label for software. Point it at a GitHub repo or PR and it reads the real diffs, reviews, and issues, writes grounded satirical lyrics — each backed by a receipt card linking straight to the code it's mocking — renders the track on a GPU, and produces a karaoke-style music video with Claude-authored HTML/GSAP storyboards over Veo 2 footage.",
+    tech: ["Python", "TypeScript", "Next.js", "Claude API", "Greptile", "Modal", "Veo 2"],
+    github: "https://github.com/vraj00222/bucking-fastards",
+    live: "https://droptable-127827893419.us-central1.run.app",
+    hackathon: "Greptile FAST Hackathon",
+  },
 ] as const;
 
 export interface Hackathon {
@@ -287,6 +295,7 @@ export const HACKATHONS: Hackathon[] = [
     alt: "Greptile FAST Hackathon logo, sponsored by Stripe, OpenAI, Modal, AWS, and DoorDash",
     won: false,
     yc: true,
+    project: "Bucking Fastard",
   },
   {
     name: "Mistral Vibe Hackathon",
