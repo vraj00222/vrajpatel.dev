@@ -71,6 +71,7 @@ export const READING: PaperCategory[] = [
     label: "AI & Deep Learning",
     papers: [
       { title: "Attention Is All You Need", authors: "A. Vaswani et al.", venue: "NeurIPS", year: 2017, url: "https://arxiv.org/abs/1706.03762" },
+      { title: "Mistral 7B", authors: "A. Q. Jiang et al.", venue: "arXiv", year: 2023, url: "https://arxiv.org/abs/2310.06825" },
     ],
   },
   {
