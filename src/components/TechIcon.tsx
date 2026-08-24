@@ -41,14 +41,6 @@ const tech: Record<string, TechEntry> = {
       </svg>
     ),
   },
-  Tailwind: {
-    color: "#06B6D4",
-    icon: ({ size, color }) => (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
-        <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z" />
-      </svg>
-    ),
-  },
   "GitHub API": {
     color: "#e6edf3",
     icon: ({ size, color }) => (
@@ -285,11 +277,16 @@ const tech: Record<string, TechEntry> = {
       </svg>
     ),
   },
+  /* SQL Server ships no simple-icons path — a stacked rack distinguishes
+     it from the plain "SQL" cylinder mark above. */
   "SQL Server": {
     color: "#CC2927",
     icon: ({ size, color }) => (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
-        <path d="M12 2C6.48 2 2 3.79 2 6v12c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0-2.21-4.48-4-10-4zm0 2c4.42 0 8 1.34 8 3s-3.58 3-8 3-8-1.34-8-3 3.58-3 8-3zM4 18V9.26C5.81 10.33 8.72 11 12 11s6.19-.67 8-1.74V18c0 1.66-3.58 3-8 3s-8-1.34-8-3z" />
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3.5" width="18" height="5.5" rx="1.2" />
+        <rect x="3" y="15" width="18" height="5.5" rx="1.2" />
+        <circle cx="6.5" cy="6.25" r="0.9" fill={color} stroke="none" />
+        <circle cx="6.5" cy="17.75" r="0.9" fill={color} stroke="none" />
       </svg>
     ),
   },
@@ -654,6 +651,71 @@ const tech: Record<string, TechEntry> = {
     icon: ({ size, color }) => (
       <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
         <path d="M16.778 1.844v1.919q-.569-.026-1.138-.032-.708-.008-1.415.037c-1.93.126-4.023.728-6.149 2.237-2.911 2.066-2.731 1.95-4.14 2.75-.396.223-1.342.574-2.185.798-.841.225-1.753.333-1.751.333v4.229s.768.108 1.61.333c.842.224 1.789.575 2.185.799 1.41.798 1.228.683 4.14 2.75 2.126 1.509 4.22 2.11 6.148 2.236.88.058 1.716.041 2.555.005v1.918l7.222-4.168-7.222-4.17v2.176c-.86.038-1.611.065-2.278.021-1.364-.09-2.417-.357-3.979-1.465-2.244-1.593-2.866-2.027-3.68-2.508.889-.518 1.449-.906 3.822-2.59 1.56-1.109 2.614-1.377 3.978-1.466.667-.044 1.418-.017 2.278.02v2.176L24 6.014Z" />
+      </svg>
+    ),
+  },
+  /* Greptile ships no simple-icons path — a magnifier over code brackets
+     stands in for its repo-understanding product. */
+  Greptile: {
+    color: "#22C55E",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 7.5L2.5 11l3.5 3.5M13 7.5l3.5 3.5-3.5 3.5" />
+        <circle cx="18.5" cy="17.5" r="3.3" />
+        <path d="M21 20l1.8 1.8" />
+      </svg>
+    ),
+  },
+  /* Mistral ships a multicolor "wind" mark with no simple-icons path —
+     these are single-tone stand-ins in Mistral's signature orange. */
+  "Mistral API": {
+    color: "#FA520F",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+        <rect x="2" y="3" width="4.4" height="4.4" />
+        <rect x="9.8" y="3" width="4.4" height="4.4" />
+        <rect x="17.6" y="3" width="4.4" height="4.4" />
+        <rect x="2" y="9.8" width="4.4" height="4.4" />
+        <rect x="9.8" y="9.8" width="4.4" height="4.4" />
+        <rect x="17.6" y="9.8" width="4.4" height="4.4" />
+        <rect x="2" y="16.6" width="4.4" height="4.4" />
+        <rect x="17.6" y="16.6" width="4.4" height="4.4" />
+      </svg>
+    ),
+  },
+  "Mistral OCR": {
+    color: "#FA520F",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="2.5" width="16" height="19" rx="1.5" />
+        <path d="M7.5 8h9M7.5 12h9M7.5 16h5.5" />
+      </svg>
+    ),
+  },
+  Voxtral: {
+    color: "#FA520F",
+    icon: ({ size, color }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="9.5" y="2.5" width="5" height="10" rx="2.5" />
+        <path d="M6 11a6 6 0 0012 0M12 17v4.5M9 21.5h6" />
+      </svg>
+    ),
+  },
+  /* Veo 2 (Google) borrows the Gemini-family gradient with a play mark
+     for video generation. */
+  "Veo 2": {
+    color: "#8B5CF6",
+    icon: ({ size }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <rect x="1" y="4" width="22" height="16" rx="3" fill="url(#veo2-grad)" />
+        <path d="M10 8.5l6 3.5-6 3.5z" fill="#fff" />
+        <defs>
+          <linearGradient id="veo2-grad" x1="0" y1="0" x2="24" y2="24">
+            <stop stopColor="#4285F4" />
+            <stop offset="0.5" stopColor="#A855F7" />
+            <stop offset="1" stopColor="#EA4335" />
+          </linearGradient>
+        </defs>
       </svg>
     ),
   },

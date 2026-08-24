@@ -208,7 +208,7 @@ export const PROJECTS = [
   {
     name: "GitConnect",
     description: "AI-powered platform that matches dev mentors with students by analyzing GitHub activity. Won $1,000 at HackDartmouth.",
-    tech: ["React", "GitHub API", "Gemini AI", "Tailwind"],
+    tech: ["React", "GitHub API", "Gemini AI", "Tailwind CSS"],
     github: "https://github.com/vraj00222",
     live: "https://git-connect.co",
     award: "$1k Prize — HackDartmouth X",
