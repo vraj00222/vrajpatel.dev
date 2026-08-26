@@ -79,61 +79,12 @@ export function Stats() {
     <section id="stats" className="pt-4 pb-2 px-6" data-section="stats">
       <div className="mx-auto max-w-4xl">
         <FadeIn>
-          {/* One ruled block. The personal numbers sit on top, the open-source
-              work below its own label — two different kinds of claim, but the
-              same card so the hero has a single object under it. */}
+          {/* One ruled block. The open-source work leads under its own label
+              — it is the claim the hero badge just made — and the personal
+              numbers close the card underneath it. */}
           <div className="overflow-hidden rounded-xl border border-border dark:border-dark-border">
-            {/* ── Personal ── */}
-            <div className="grid grid-cols-2 gap-px bg-border dark:bg-dark-border">
-              {STATS.map((stat) => {
-                const inner = (
-                  <span className="flex w-full flex-col items-center justify-center gap-1 px-3 py-5 text-center">
-                    <span className="flex flex-col items-center leading-tight">
-                      <span className="font-display text-xl font-semibold tracking-tight text-text dark:text-dark-text sm:text-2xl">
-                        {stat.value}
-                      </span>
-                      {stat.sub && (
-                        <span className="mt-0.5 font-display text-[15px] font-medium tracking-tight text-text-muted dark:text-dark-text-muted sm:text-[17px]">
-                          {stat.sub}
-                        </span>
-                      )}
-                    </span>
-                    <span className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-text-muted dark:text-dark-text-muted">
-                      {stat.label}
-                      {stat.href && (
-                        <ArrowUpRight
-                          size={10}
-                          className="opacity-0 transition-opacity duration-150 group-hover:opacity-100"
-                        />
-                      )}
-                    </span>
-                  </span>
-                );
-
-                const props = hoverProps(stat.label, stat.preview, stat.href);
-
-                return stat.href ? (
-                  <a
-                    key={stat.label}
-                    href={stat.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${CELL} hover:bg-hover-bg dark:hover:bg-dark-hover-bg focus-visible:z-10`}
-                    aria-label={`${stat.value} ${stat.label} — verify`}
-                    {...props}
-                  >
-                    {inner}
-                  </a>
-                ) : (
-                  <div key={stat.label} className={CELL} {...props}>
-                    {inner}
-                  </div>
-                );
-              })}
-            </div>
-
             {/* ── Open source label row ── */}
-            <div className="flex items-center justify-between gap-3 border-t border-border dark:border-dark-border bg-surface/60 dark:bg-dark-surface/60 px-4 py-2.5">
+            <div className="flex items-center justify-between gap-3 bg-surface/60 dark:bg-dark-surface/60 px-4 py-2.5">
               <span className="text-[10px] font-medium uppercase tracking-wider text-text-muted dark:text-dark-text-muted">
                 Open source · merged contributor
               </span>
@@ -192,6 +143,54 @@ export function Stats() {
                   </span>
                 </a>
               ))}
+            </div>
+            {/* ── Personal ── */}
+            <div className="grid grid-cols-2 gap-px border-t border-border dark:border-dark-border bg-border dark:bg-dark-border">
+              {STATS.map((stat) => {
+                const inner = (
+                  <span className="flex w-full flex-col items-center justify-center gap-1 px-3 py-5 text-center">
+                    <span className="flex flex-col items-center leading-tight">
+                      <span className="font-display text-xl font-semibold tracking-tight text-text dark:text-dark-text sm:text-2xl">
+                        {stat.value}
+                      </span>
+                      {stat.sub && (
+                        <span className="mt-0.5 font-display text-[15px] font-medium tracking-tight text-text-muted dark:text-dark-text-muted sm:text-[17px]">
+                          {stat.sub}
+                        </span>
+                      )}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-text-muted dark:text-dark-text-muted">
+                      {stat.label}
+                      {stat.href && (
+                        <ArrowUpRight
+                          size={10}
+                          className="opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                        />
+                      )}
+                    </span>
+                  </span>
+                );
+
+                const props = hoverProps(stat.label, stat.preview, stat.href);
+
+                return stat.href ? (
+                  <a
+                    key={stat.label}
+                    href={stat.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${CELL} hover:bg-hover-bg dark:hover:bg-dark-hover-bg focus-visible:z-10`}
+                    aria-label={`${stat.value} ${stat.label} — verify`}
+                    {...props}
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <div key={stat.label} className={CELL} {...props}>
+                    {inner}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </FadeIn>
