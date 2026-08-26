@@ -49,6 +49,9 @@ export interface ContributionItem {
   href: string;
   stars: string;
   note: string;
+  // A second mark beside the name — right now only YC, on the one repo it
+  // applies to. Optional so the other three stay a plain name.
+  badge?: { src: string; label: string };
   preview: { title: string; facts: string; image: string };
 }
 
@@ -101,6 +104,7 @@ export const CONTRIBUTIONS: ContributionItem[] = [
     // The platform counter on insforge.dev, rounded so it does not go stale:
     // 48,502 projects holding ~1 TB and serving ~34 TB of egress.
     note: "48K+ projects",
+    badge: { src: "/logos/yc.png", label: "Y Combinator-backed" },
     preview: {
       title: "InsForge — the open-source backend platform for agentic coding",
       facts:

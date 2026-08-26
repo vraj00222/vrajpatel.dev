@@ -169,6 +169,18 @@ export function Stats() {
                   <span className="min-w-0 flex flex-col leading-tight">
                     <span className="flex items-center gap-1 font-display text-[13px] font-semibold tracking-tight text-text dark:text-dark-text">
                       <span className="truncate">{c.name}</span>
+                      {c.badge && (
+                        <img
+                          src={c.badge.src}
+                          alt={c.badge.label}
+                          title={c.badge.label}
+                          width={12}
+                          height={12}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-3 w-3 shrink-0 rounded-[2px]"
+                        />
+                      )}
                       <ArrowUpRight
                         size={10}
                         className="shrink-0 opacity-0 transition-opacity duration-150 group-hover:opacity-100"
