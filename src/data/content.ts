@@ -13,10 +13,23 @@ export interface StatItem {
   };
 }
 
-// The two numbers that are mine alone. Open-source work lives in
-// CONTRIBUTIONS below — it is a different kind of claim and gets its own
-// block rather than competing for cells in the same strip.
+// The three claims that are mine alone, rarest first — a peer-reviewed IEEE
+// paper is harder to come by than a hackathon win. Open-source work lives in
+// CONTRIBUTIONS below; it is a different kind of claim and gets its own block
+// rather than competing for cells in the same strip.
 export const STATS: StatItem[] = [
+  {
+    value: "IEEE",
+    sub: "ICCE 2024",
+    label: "Peer-reviewed paper",
+    href: "https://ieeexplore.ieee.org/document/10444327",
+    preview: {
+      title: "ECG Anomaly Detection with LSTM-Autoencoder for Heartbeat Analysis",
+      facts:
+        "IEEE ICCE 2024, Las Vegas · 13 citations · 719 full-text views · doi:10.1109/ICCE59016.2024.10444327",
+      image: "/stats/ieee.png",
+    },
+  },
   {
     value: "02",
     sub: "$1k prize",
@@ -48,7 +61,10 @@ export interface ContributionItem {
   logo: string;
   href: string;
   stars: string;
-  note: string;
+  // What I actually merged. The repo's own scale is on the label row above
+  // the cells and in the preview card — borrowing it here would read as if
+  // its users were mine.
+  work: string;
   // A second mark beside the name — right now only YC, on the one repo it
   // applies to. Optional so the other three stay a plain name.
   badge?: { src: string; label: string };
@@ -62,7 +78,7 @@ export const CONTRIBUTIONS: ContributionItem[] = [
     logo: "/logos/caveman.svg",
     href: "https://caveman.so/",
     stars: "101K",
-    note: "10M+ users",
+    work: "intensity levels",
     preview: {
       title: "Caveman — the token-efficient stack for agent-native development",
       facts: "101K+ stars · 10M+ users · #1 on Hacker News · 65% fewer output tokens",
@@ -75,7 +91,7 @@ export const CONTRIBUTIONS: ContributionItem[] = [
     logo: "/logos/career-ops.png",
     href: "https://career-ops.org/",
     stars: "68K",
-    note: "100K+ users",
+    work: "setup doctor",
     preview: {
       title: "career-ops — open-source AI job search command center",
       facts: "68K+ stars · 100k+ users · 100% open-source · #1 Repo of the Day",
@@ -88,7 +104,7 @@ export const CONTRIBUTIONS: ContributionItem[] = [
     logo: "/logos/mlx.png",
     href: "https://github.com/ml-explore/mlx",
     stars: "28K",
-    note: "Apple ML",
+    work: "Adam eps guard",
     preview: {
       title: "MLX — an array framework for Apple silicon",
       facts: "28K+ stars · built by Apple machine-learning research",
@@ -101,9 +117,7 @@ export const CONTRIBUTIONS: ContributionItem[] = [
     logo: "/logos/insforge.png",
     href: "https://insforge.dev/",
     stars: "12K",
-    // The platform counter on insforge.dev, rounded so it does not go stale:
-    // 48,502 projects holding ~1 TB and serving ~34 TB of egress.
-    note: "48K+ projects",
+    work: "data-grid fix",
     badge: { src: "/logos/yc.png", label: "Y Combinator-backed" },
     preview: {
       title: "InsForge — the open-source backend platform for agentic coding",
@@ -467,54 +481,37 @@ export const EDUCATION = [
 ] as const;
 
 /**
- * Grouped so the row reads as an inventory instead of a wall of chips.
- * "Graph & Streaming" is the hackathon stack — the sponsor systems Hopper
- * was built on, kept together because they only make sense as a set.
+ * Grouped so the row reads as an inventory instead of a wall of chips, and
+ * kept to what I would defend in an interview. A long list signals "touched";
+ * a short one signals "knows". AI & agents is the largest group on purpose —
+ * it is the work, not a section of the résumé.
  */
 export const SKILL_GROUPS = [
   {
     label: "Languages",
-    items: [
-      "TypeScript", "Python", "JavaScript", "SQL",
-      "C++", "C#", "Swift", "WebAssembly",
-    ],
+    items: ["TypeScript", "Python", "C++", "SQL"],
   },
   {
     label: "AI & Agents",
     items: [
-      "Claude API", "Anthropic API", "OpenAI", "Gemini AI", "Gemma 4",
-      "Mistral API", "Mistral OCR", "Voxtral", "Veo 2", "Novita AI",
-      "Ollama", "OpenRouter", "ElevenLabs", "ExecuTorch", "Vercel AI SDK",
-      "VoiceOS", "MCP", "RAG", "Graph RAG", "Multi-Agent Systems",
-      "Guild.ai", "Greptile", "Paperclip", "BenchFlow",
+      "Claude API", "OpenAI", "MCP", "RAG", "Graph RAG",
+      "Multi-Agent Systems", "Vercel AI SDK", "Ollama", "ExecuTorch",
     ],
   },
   {
     label: "ML & Research",
-    items: ["PyTorch", "TensorFlow", "NumPy", "Jupyter", "Boltz-2"],
+    items: ["PyTorch", "TensorFlow", "NumPy"],
   },
   {
-    label: "Graph & Streaming",
-    items: ["FalkorDB", "Cypher", "LaserData", "Apache Iggy", "RocketRide"],
-  },
-  {
-    label: "Frameworks & Runtime",
+    label: "Backend & Data",
     items: [
-      "Next.js", "React", "Node.js", "Express", "Django", "FastAPI",
-      "ASP.NET", "Electron", "Chrome API", "Ink", "Three.js", "Vite", "Tailwind CSS",
+      "FastAPI", "Django", "Node.js", "PostgreSQL",
+      "Redis", "MongoDB", "FalkorDB",
     ],
   },
   {
-    label: "Data & Infra",
-    items: [
-      "PostgreSQL", "MySQL", "SQL Server", "MongoDB", "Redis", "SQLite",
-      "Snowflake", "InsForge", "AWS", "Modal", "JWT", "Docker",
-      "GitHub Actions", "Vercel",
-    ],
-  },
-  {
-    label: "Tools",
-    items: ["Git", "GitHub API", "uv", "npm", "Postman", "Gradescope", "Claude Code", "Cursor"],
+    label: "Frontend & Infra",
+    items: ["React", "Next.js", "Docker", "AWS", "Modal"],
   },
 ] as const;
 
@@ -535,6 +532,7 @@ export const LABS = [
 export const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Work", href: "#experience" },
+  { label: "Research", href: "#research" },
   { label: "GitHub", href: "#github" },
   { label: "Projects", href: "#projects" },
   { label: "Labs", href: "#labs" },

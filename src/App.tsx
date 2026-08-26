@@ -78,13 +78,13 @@ export default function App() {
         <Divider />
         <Experience />
         <Divider />
+        <Research />
+        <Divider />
         <GitHubActivity />
         <Divider />
         <Projects />
         <Divider />
         <Labs />
-        <Divider />
-        <Research />
         <Divider />
         <Hackathons />
         <Divider />

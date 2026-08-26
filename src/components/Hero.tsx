@@ -94,7 +94,7 @@ export function Hero() {
         <motion.div variants={step} className="mt-6">
           <LogosBadge
             href="#github"
-            text={`Contributor · ${CONTRIBUTION_TOTAL_STARS} stars, 10M+ users`}
+            text={`Merged into open source with ${CONTRIBUTION_TOTAL_STARS} stars`}
             logos={CONTRIBUTIONS.map((c) => ({ src: c.logo, alt: c.name }))}
           />
         </motion.div>

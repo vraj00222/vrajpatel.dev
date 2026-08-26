@@ -41,7 +41,12 @@ const MONTH_NAMES = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 const DAY_LABELS = ["Mon", "Wed", "Fri"]; // GitHub only labels Mon/Wed/Fri
-const MIN_CONTRIBUTED_REPO_STARS = 500;
+// An allowlist, not a star threshold. Sorting by recency surfaced whatever
+// merged last — a theme file next to a 101K-star badge teaches a reader the
+// wrong thing. These are the four repos the stats block already stands behind.
+const CONTRIBUTED_REPOS = new Set(
+  CONTRIBUTIONS.map((c) => c.repo.toLowerCase())
+);
 // Repos we ship a local logo for render it; everything else falls back to the
 // owner's GitHub avatar, which is always available and already square.
 const LOCAL_LOGOS: Record<string, string> = Object.fromEntries(
@@ -456,8 +461,8 @@ export function GitHubActivity() {
   const totalContributions =
     currentDays?.reduce((sum, d) => sum + d.count, 0) || 0;
   const greens = isDark ? GH_GREENS_DARK : GH_GREENS_LIGHT;
-  const filteredMergedPRs = mergedPRs.filter(
-    (pr) => (pr.stars ?? 0) >= MIN_CONTRIBUTED_REPO_STARS
+  const filteredMergedPRs = mergedPRs.filter((pr) =>
+    CONTRIBUTED_REPOS.has(pr.repo.toLowerCase())
   );
   const hasMoreContributions =
     filteredMergedPRs.length > INITIAL_VISIBLE_CONTRIBUTIONS;
@@ -661,7 +666,7 @@ export function GitHubActivity() {
             </div>
           ) : (
             <div className="rounded-lg border border-border dark:border-dark-border bg-surface dark:bg-dark-surface px-4 py-3 text-[13px] text-text-muted dark:text-dark-text-muted">
-              No recent merged PRs found from repositories with 500+ stars.
+              Could not load merged pull requests right now.
             </div>
           )}
         </FadeIn>

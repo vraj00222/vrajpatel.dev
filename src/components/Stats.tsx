@@ -104,7 +104,7 @@ export function Stats() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`${CELL} items-center gap-3 px-3.5 py-4 hover:bg-hover-bg dark:hover:bg-dark-hover-bg focus-visible:z-10`}
-                  aria-label={`${c.name} — ${c.stars} stars, ${c.note}`}
+                  aria-label={`${c.name} — ${c.stars} stars, merged: ${c.work}`}
                   {...hoverProps(c.repo, c.preview, c.href)}
                 >
                   <img
@@ -138,14 +138,14 @@ export function Stats() {
                       />
                     </span>
                     <span className="mt-0.5 truncate text-[11px] tabular-nums text-text-secondary dark:text-dark-text-secondary">
-                      {c.stars} ★ · {c.note}
+                      {c.stars} ★ · {c.work}
                     </span>
                   </span>
                 </a>
               ))}
             </div>
             {/* ── Personal ── */}
-            <div className="grid grid-cols-2 gap-px border-t border-border dark:border-dark-border bg-border dark:bg-dark-border">
+            <div className="grid grid-cols-2 gap-px border-t border-border dark:border-dark-border bg-border dark:bg-dark-border sm:grid-cols-3">
               {STATS.map((stat) => {
                 const inner = (
                   <span className="flex w-full flex-col items-center justify-center gap-1 px-3 py-5 text-center">
