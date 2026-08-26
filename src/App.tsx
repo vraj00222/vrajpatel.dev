@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { Suspense, lazy, useState, type ComponentType } from "react";
 import { Navbar } from "./components/Navbar";
 import { AgentView } from "./components/AgentView";
 import { Hero } from "./components/Hero";
@@ -14,20 +14,38 @@ import { Reading } from "./components/Reading";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { TetrisEasterEgg } from "./components/TetrisEasterEgg";
-import { BlogIndex } from "./components/BlogIndex";
-import { DrmArticle } from "./components/blog/DrmArticle";
-import { GitWorktreeArticle } from "./components/blog/GitWorktreeArticle";
-import { PocketLlmArticle } from "./components/blog/PocketLlmArticle";
 
 function Divider() {
   return <div className="section-divider mx-6" />;
 }
 
-const BLOG_ARTICLES: Record<string, () => ReactNode> = {
-  "/blog/drm": DrmArticle,
-  "/blog/git-worktrees": GitWorktreeArticle,
-  "/blog/llm-on-a-usb-stick": PocketLlmArticle,
+// The blog is a separate destination from the portfolio: nobody landing on /
+// needs three long-form articles in their bundle, and nobody reading an
+// article needs the other two. Each is its own chunk, fetched on the route
+// that actually renders it.
+const BlogIndex = lazy(() =>
+  import("./components/BlogIndex").then((m) => ({ default: m.BlogIndex }))
+);
+
+const BLOG_ARTICLES: Record<string, ComponentType> = {
+  "/blog/drm": lazy(() =>
+    import("./components/blog/DrmArticle").then((m) => ({ default: m.DrmArticle }))
+  ),
+  "/blog/git-worktrees": lazy(() =>
+    import("./components/blog/GitWorktreeArticle").then((m) => ({
+      default: m.GitWorktreeArticle,
+    }))
+  ),
+  "/blog/llm-on-a-usb-stick": lazy(() =>
+    import("./components/blog/PocketLlmArticle").then((m) => ({
+      default: m.PocketLlmArticle,
+    }))
+  ),
 };
+
+// Blank rather than a spinner — the chunk lands in a few frames on any real
+// connection, and a flashed spinner reads worse than a beat of the page bg.
+const BlogFallback = <div className="min-h-screen bg-bg dark:bg-dark-bg" />;
 
 export default function App() {
   const [agentMode, setAgentMode] = useState(false);
@@ -35,9 +53,13 @@ export default function App() {
   if (typeof window !== "undefined") {
     const path = window.location.pathname.replace(/\/+$/, "") || "/";
     const Article = BLOG_ARTICLES[path];
-    if (Article) return <Article />;
+    if (Article) {
+      return <Suspense fallback={BlogFallback}><Article /></Suspense>;
+    }
     // The blog index handles /blog and any unknown /blog/* slug.
-    if (path === "/blog" || path.startsWith("/blog/")) return <BlogIndex />;
+    if (path === "/blog" || path.startsWith("/blog/")) {
+      return <Suspense fallback={BlogFallback}><BlogIndex /></Suspense>;
+    }
   }
 
   if (agentMode) return <AgentView onBack={() => setAgentMode(false)} />;

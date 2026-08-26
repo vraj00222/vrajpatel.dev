@@ -13,6 +13,9 @@ export interface StatItem {
   };
 }
 
+// The two numbers that are mine alone. Open-source work lives in
+// CONTRIBUTIONS below — it is a different kind of claim and gets its own
+// block rather than competing for cells in the same strip.
 export const STATS: StatItem[] = [
   {
     value: "02",
@@ -25,39 +28,88 @@ export const STATS: StatItem[] = [
       image: "/stats/devpost.png",
     },
   },
-  { value: "200+", label: "Students taught · DSA", preview: {
+  {
+    value: "200+",
+    label: "Students taught · DSA",
+    preview: {
       title: "CSUF staff directory",
       facts: "Named on the Cal State Fullerton staff directory",
       image: "/stats/csufdirectory.png",
-    } },
-  {
-    value: "66K+ stars",
-    sub: "100k+ users",
-    label: "Contributor · CareerOps",
-    href: "https://career-ops.org/",
-    preview: {
-      title: "career-ops — open-source AI job search command center",
-      facts: "66K+ stars · 100k+ users · 100% open-source · #1 Repo of the Day",
-      image: "/stats/career-ops.png",
     },
   },
+] as const;
+
+// Repos I have merged code into. `stars` is a rounded snapshot — the exact
+// live count is one click away, so precision here buys nothing. Ordered by
+// reach, which is also roughly star order.
+export interface ContributionItem {
+  name: string;
+  repo: string;
+  logo: string;
+  href: string;
+  stars: string;
+  note: string;
+  preview: { title: string; facts: string; image: string };
+}
+
+export const CONTRIBUTIONS: ContributionItem[] = [
   {
-    value: "74K+ stars",
-    sub: "10M+ users",
-    label: "Contributor · Caveman",
+    name: "Caveman",
+    repo: "JuliusBrussee/caveman",
+    logo: "/logos/caveman.svg",
     href: "https://caveman.so/",
+    stars: "101K",
+    note: "10M+ users",
     preview: {
       title: "Caveman — the token-efficient stack for agent-native development",
-      facts: "74K+ stars · 10M+ users · #1 on Hacker News · 65% fewer output tokens",
+      facts: "101K+ stars · 10M+ users · #1 on Hacker News · 65% fewer output tokens",
       image: "/stats/caveman.png",
     },
   },
   {
-    value: "MLX",
-    sub: "28K+ stars",
-    label: "Contributor · Apple ML",
+    name: "CareerOps",
+    repo: "santifer/career-ops",
+    logo: "/logos/career-ops.png",
+    href: "https://career-ops.org/",
+    stars: "68K",
+    note: "100K+ users",
+    preview: {
+      title: "career-ops — open-source AI job search command center",
+      facts: "68K+ stars · 100k+ users · 100% open-source · #1 Repo of the Day",
+      image: "/stats/career-ops.png",
+    },
+  },
+  {
+    name: "MLX",
+    repo: "ml-explore/mlx",
+    logo: "/logos/mlx.png",
+    href: "https://github.com/ml-explore/mlx",
+    stars: "28K",
+    note: "Apple ML",
+    preview: {
+      title: "MLX — an array framework for Apple silicon",
+      facts: "28K+ stars · built by Apple machine-learning research",
+      image: "/stats/mlx.png",
+    },
+  },
+  {
+    name: "InsForge",
+    repo: "InsForge/InsForge",
+    logo: "/logos/insforge.png",
+    href: "https://insforge.dev/",
+    stars: "12K",
+    note: "YC-backed",
+    preview: {
+      title: "InsForge — the open-source backend platform for agentic coding",
+      facts: "12K+ stars · Y Combinator-backed · agent-native Postgres backend",
+      image: "/stats/insforge.png",
+    },
   },
 ] as const;
+
+// Total across every repo above — the one headline number for the block and
+// the hero badge. Kept as a string so it reads the same in both places.
+export const CONTRIBUTION_TOTAL_STARS = "210K+";
 
 export const PERSONAL = {
   name: "Vraj Patel",

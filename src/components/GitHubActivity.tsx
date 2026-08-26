@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown, Star } from "lucide-react";
-import { PERSONAL } from "../data/content";
+import { PERSONAL, CONTRIBUTIONS } from "../data/content";
 import { FadeIn } from "./FadeIn";
 import { GithubIcon } from "./Icons";
 // Historical years are bundled as static JSON — they don't change, so we avoid
@@ -42,6 +42,17 @@ const MONTH_NAMES = [
 ];
 const DAY_LABELS = ["Mon", "Wed", "Fri"]; // GitHub only labels Mon/Wed/Fri
 const MIN_CONTRIBUTED_REPO_STARS = 500;
+// Repos we ship a local logo for render it; everything else falls back to the
+// owner's GitHub avatar, which is always available and already square.
+const LOCAL_LOGOS: Record<string, string> = Object.fromEntries(
+  CONTRIBUTIONS.map((c) => [c.repo.toLowerCase(), c.logo])
+);
+function repoLogo(repo: string): string {
+  return (
+    LOCAL_LOGOS[repo.toLowerCase()] ??
+    `https://github.com/${repo.split("/")[0]}.png?size=64`
+  );
+}
 const INITIAL_VISIBLE_CONTRIBUTIONS = 4;
 const CELL_GAP = 3;
 const MIN_CELL_SIZE = 11; // GitHub's own square size — the narrow-screen floor
@@ -575,6 +586,16 @@ export function GitHubActivity() {
                       className="group block -mx-3 px-3 py-3 rounded-xl border border-transparent hover:border-border dark:hover:border-dark-border hover:bg-hover-bg/70 dark:hover:bg-dark-hover-bg/60 transition-colors duration-200"
                     >
                       <div className="flex items-start justify-between gap-3">
+                        <img
+                          src={repoLogo(pr.repo)}
+                          alt=""
+                          aria-hidden
+                          width={32}
+                          height={32}
+                          loading="lazy"
+                          decoding="async"
+                          className="mt-0.5 h-8 w-8 shrink-0 rounded-lg object-cover ring-1 ring-border dark:ring-dark-border"
+                        />
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2.5">
                             <p className="text-[13px] font-semibold text-text dark:text-dark-text tracking-tight truncate">

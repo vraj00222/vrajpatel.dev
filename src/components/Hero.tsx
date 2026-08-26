@@ -1,7 +1,8 @@
 import type { Variants } from "framer-motion";
 import { motion, useReducedMotion } from "framer-motion";
 import { FileText, MapPin } from "lucide-react";
-import { PERSONAL } from "../data/content";
+import { PERSONAL, CONTRIBUTIONS, CONTRIBUTION_TOTAL_STARS } from "../data/content";
+import { LogosBadge } from "./ui/logos-badge";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import heroPhoto from "../assets/vraj.jpg";
 
@@ -88,6 +89,14 @@ export function Hero() {
           <p className="mt-10 max-w-lg text-[15px] leading-[1.7] text-text-secondary dark:text-dark-text-secondary">
             {SUPPORTING_LINE}
           </p>
+        </motion.div>
+
+        <motion.div variants={step} className="mt-6">
+          <LogosBadge
+            href="#github"
+            text={`Contributor · ${CONTRIBUTION_TOTAL_STARS} stars, 10M+ users`}
+            logos={CONTRIBUTIONS.map((c) => ({ src: c.logo, alt: c.name }))}
+          />
         </motion.div>
 
         <motion.div variants={step} className="flex items-center gap-5 mt-6">

@@ -91,7 +91,7 @@ export function ArticleShell({
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-          className="rounded-2xl border border-border/80 dark:border-dark-border/80 bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-xl p-6 sm:p-8"
+          className="rounded-2xl border border-border/80 dark:border-dark-border/80 bg-surface dark:bg-dark-surface p-6 sm:p-8"
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-border dark:border-dark-border bg-hover-bg/80 dark:bg-dark-hover-bg/80 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary">
             {icon}

@@ -107,7 +107,7 @@ export function BlogIndex() {
                   ease: [0.4, 0, 0.2, 1],
                 }}
                 whileHover={{ y: -2 }}
-                className="group flex items-center gap-5 rounded-2xl border border-border/80 dark:border-dark-border/80 bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-xl p-5 sm:p-6 transition-[border-color,box-shadow] duration-300 hover:border-border-hover dark:hover:border-dark-border-hover hover:shadow-[0_18px_40px_-22px_rgba(0,0,0,0.25)] dark:hover:shadow-[0_18px_50px_-22px_rgba(0,0,0,0.8)]"
+                className="group flex items-center gap-5 rounded-2xl border border-border/80 dark:border-dark-border/80 bg-surface dark:bg-dark-surface p-5 sm:p-6 transition-[border-color,box-shadow] duration-300 hover:border-border-hover dark:hover:border-dark-border-hover hover:shadow-[0_18px_40px_-22px_rgba(0,0,0,0.25)] dark:hover:shadow-[0_18px_50px_-22px_rgba(0,0,0,0.8)]"
               >
                 <div className="hidden sm:flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-border dark:border-dark-border bg-hover-bg/60 dark:bg-dark-hover-bg/60 text-text-secondary dark:text-dark-text-secondary">
                   <Icon size={22} strokeWidth={1.5} />
