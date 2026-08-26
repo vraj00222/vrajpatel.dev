@@ -98,10 +98,13 @@ export const CONTRIBUTIONS: ContributionItem[] = [
     logo: "/logos/insforge.png",
     href: "https://insforge.dev/",
     stars: "12K",
-    note: "YC-backed",
+    // The platform counter on insforge.dev, rounded so it does not go stale:
+    // 48,502 projects holding ~1 TB and serving ~34 TB of egress.
+    note: "48K+ projects",
     preview: {
       title: "InsForge — the open-source backend platform for agentic coding",
-      facts: "12K+ stars · Y Combinator-backed · agent-native Postgres backend",
+      facts:
+        "12K+ stars · Y Combinator-backed · 48K+ agent-built projects · 1 TB stored, 34 TB served",
       image: "/stats/insforge.png",
     },
   },
