@@ -43,10 +43,15 @@ const MONTH_NAMES = [
 const DAY_LABELS = ["Mon", "Wed", "Fri"]; // GitHub only labels Mon/Wed/Fri
 // An allowlist, not a star threshold. Sorting by recency surfaced whatever
 // merged last — a theme file next to a 101K-star badge teaches a reader the
-// wrong thing. These are the four repos the stats block already stands behind.
+// wrong thing. These are the four repos the stats block already stands behind,
+// and they always sort first.
 const CONTRIBUTED_REPOS = new Set(
   CONTRIBUTIONS.map((c) => c.repo.toLowerCase())
 );
+// Real merged work in smaller repos. Worth showing, not worth leading with —
+// these sort last, which puts them behind "Load more" rather than in the
+// four rows a reader sees first.
+const SECONDARY_REPOS = new Set(["lingdojo/kana-dojo"]);
 // Repos we ship a local logo for render it; everything else falls back to the
 // owner's GitHub avatar, which is always available and already square.
 const LOCAL_LOGOS: Record<string, string> = Object.fromEntries(
@@ -461,9 +466,17 @@ export function GitHubActivity() {
   const totalContributions =
     currentDays?.reduce((sum, d) => sum + d.count, 0) || 0;
   const greens = isDark ? GH_GREENS_DARK : GH_GREENS_LIGHT;
-  const filteredMergedPRs = mergedPRs.filter((pr) =>
-    CONTRIBUTED_REPOS.has(pr.repo.toLowerCase())
-  );
+  // sort() is stable, so recency order survives inside each tier.
+  const filteredMergedPRs = mergedPRs
+    .filter((pr) => {
+      const repo = pr.repo.toLowerCase();
+      return CONTRIBUTED_REPOS.has(repo) || SECONDARY_REPOS.has(repo);
+    })
+    .sort(
+      (a, b) =>
+        Number(!CONTRIBUTED_REPOS.has(a.repo.toLowerCase())) -
+        Number(!CONTRIBUTED_REPOS.has(b.repo.toLowerCase()))
+    );
   const hasMoreContributions =
     filteredMergedPRs.length > INITIAL_VISIBLE_CONTRIBUTIONS;
   const visibleMergedPRs = showAllContributions
