@@ -126,11 +126,25 @@ export const CONTRIBUTIONS: ContributionItem[] = [
       image: "/stats/insforge.png",
     },
   },
+  {
+    name: "vgpu",
+    repo: "vercel-labs/vgpu",
+    logo: "/logos/vercel.svg",
+    href: "https://github.com/vercel-labs/vgpu",
+    stars: "2.1K",
+    work: "canvas DPR fix",
+    preview: {
+      title: "vgpu — the WebGPU framework from Vercel Labs",
+      facts:
+        "2.1K+ stars · Vercel Labs · fixes canvasMouseTracker DPR scaling — exposes normalized + canvasPixels (#445, co-authored)",
+      image: "/stats/vgpu.png",
+    },
+  },
 ] as const;
 
 // Total across every repo above — the one headline number for the block and
 // the hero badge. Kept as a string so it reads the same in both places.
-export const CONTRIBUTION_TOTAL_STARS = "210K+";
+export const CONTRIBUTION_TOTAL_STARS = "211K+";
 
 export const PERSONAL = {
   name: "Vraj Patel",

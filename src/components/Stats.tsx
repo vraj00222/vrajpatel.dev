@@ -96,7 +96,7 @@ export function Stats() {
             </div>
 
             {/* ── Contributed repos ── */}
-            <div className="grid grid-cols-2 gap-px border-t border-border dark:border-dark-border bg-border dark:bg-dark-border sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-px border-t border-border dark:border-dark-border bg-border dark:bg-dark-border sm:grid-cols-3 lg:grid-cols-5">
               {CONTRIBUTIONS.map((c) => (
                 <a
                   key={c.repo}
