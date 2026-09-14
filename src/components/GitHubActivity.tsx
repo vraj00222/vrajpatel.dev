@@ -49,9 +49,23 @@ const CONTRIBUTED_REPOS = new Set(
   CONTRIBUTIONS.map((c) => c.repo.toLowerCase())
 );
 // Real merged work in smaller repos. Worth showing, not worth leading with —
-// these sort last, which puts them behind "Load more" rather than in the
-// four rows a reader sees first.
-const SECONDARY_REPOS = new Set(["lingdojo/kana-dojo"]);
+ // these sort last, which puts them behind "Load more" rather than in the
+ // four rows a reader sees first.
+ const SECONDARY_REPOS = new Set(["lingdojo/kana-dojo"]);
+
+// Pinned because author-search misses co-authored PRs — e.g. vgpu #445 was
+// authored by matiasngf with `Co-authored-by: vraj <vrajpatel00222@gmail.com>`,
+// so `author:vraj00222` never returns it. Keep this list in sync with
+// CONTRIBUTIONS for primary repos that need guaranteed visibility.
+const PINNED_MERGED_PRS: MergedPR[] = [
+  {
+    title: "feat(render): expose both canvas mouse coordinate spaces",
+    repo: "vercel-labs/vgpu",
+    repoDescription: "The WebGPU library, designed for agents.",
+    url: "https://github.com/vercel-labs/vgpu/pull/445",
+    stars: 2148,
+  },
+];
 // Repos we ship a local logo for render it; everything else falls back to the
 // owner's GitHub avatar, which is always available and already square.
 const LOCAL_LOGOS: Record<string, string> = Object.fromEntries(
@@ -466,8 +480,14 @@ export function GitHubActivity() {
   const totalContributions =
     currentDays?.reduce((sum, d) => sum + d.count, 0) || 0;
   const greens = isDark ? GH_GREENS_DARK : GH_GREENS_LIGHT;
+  // Merge pinned co-authored PRs that author-search misses, then filter.
+  const mergedWithPinned = (() => {
+    const seen = new Set(mergedPRs.map((p) => p.url));
+    const extra = PINNED_MERGED_PRS.filter((p) => !seen.has(p.url));
+    return extra.length ? [...mergedPRs, ...extra] : mergedPRs;
+  })();
   // sort() is stable, so recency order survives inside each tier.
-  const filteredMergedPRs = mergedPRs
+  const filteredMergedPRs = mergedWithPinned
     .filter((pr) => {
       const repo = pr.repo.toLowerCase();
       return CONTRIBUTED_REPOS.has(repo) || SECONDARY_REPOS.has(repo);

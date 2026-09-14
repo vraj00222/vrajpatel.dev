@@ -130,14 +130,14 @@ export const CONTRIBUTIONS: ContributionItem[] = [
     name: "vgpu",
     repo: "vercel-labs/vgpu",
     logo: "/logos/vercel.svg",
-    href: "https://github.com/vercel-labs/vgpu",
+    href: "https://vgpu.sh/",
     stars: "2.1K",
     work: "canvas DPR fix",
     preview: {
       title: "vgpu — the WebGPU framework from Vercel Labs",
       facts:
-        "2.1K+ stars · Vercel Labs · fixes canvasMouseTracker DPR scaling — exposes normalized + canvasPixels (#445, co-authored)",
-      image: "/stats/vgpu.png",
+        "2.1K+ stars · Vercel Labs · vgpu.sh — fixes canvasMouseTracker DPR scaling — normalized + canvasPixels (#445, co-authored)",
+      image: "/stats/vgpu.webp",
     },
   },
 ] as const;
