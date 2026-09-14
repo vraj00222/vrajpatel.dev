@@ -73,20 +73,6 @@ export interface ContributionItem {
 
 export const CONTRIBUTIONS: ContributionItem[] = [
   {
-    name: "vgpu",
-    repo: "vercel-labs/vgpu",
-    logo: "/logos/vercel.svg",
-    href: "https://vgpu.sh/",
-    stars: "2.1K",
-    work: "canvas DPR fix",
-    preview: {
-      title: "vgpu — the WebGPU framework from Vercel Labs",
-      facts:
-        "2.1K+ stars · Vercel Labs · vgpu.sh — fixes canvasMouseTracker DPR scaling — normalized + canvasPixels (#445, co-authored)",
-      image: "/stats/vgpu.webp",
-    },
-  },
-  {
     name: "Caveman",
     repo: "JuliusBrussee/caveman",
     logo: "/logos/caveman.svg",
@@ -138,6 +124,20 @@ export const CONTRIBUTIONS: ContributionItem[] = [
       facts:
         "12K+ stars · Y Combinator-backed · 48K+ agent-built projects · 1 TB stored, 34 TB served",
       image: "/stats/insforge.png",
+    },
+  },
+  {
+    name: "vgpu",
+    repo: "vercel-labs/vgpu",
+    logo: "/logos/vercel.svg",
+    href: "https://vgpu.sh/",
+    stars: "2.1K",
+    work: "canvas DPR fix",
+    preview: {
+      title: "vgpu — the WebGPU framework from Vercel Labs",
+      facts:
+        "2.1K+ stars · Vercel Labs · vgpu.sh — fixes canvasMouseTracker DPR scaling — normalized + canvasPixels (#445, co-authored)",
+      image: "/stats/vgpu.webp",
     },
   },
 ] as const;
