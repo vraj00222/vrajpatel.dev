@@ -481,10 +481,12 @@ export function GitHubActivity() {
     currentDays?.reduce((sum, d) => sum + d.count, 0) || 0;
   const greens = isDark ? GH_GREENS_DARK : GH_GREENS_LIGHT;
   // Merge pinned co-authored PRs that author-search misses, then filter.
+  // Pinned go first so latest/repinned (e.g. vgpu #445) appears at the top
+  // of the list, not appended as #4 behind the tier.
   const mergedWithPinned = (() => {
     const seen = new Set(mergedPRs.map((p) => p.url));
     const extra = PINNED_MERGED_PRS.filter((p) => !seen.has(p.url));
-    return extra.length ? [...mergedPRs, ...extra] : mergedPRs;
+    return extra.length ? [...extra, ...mergedPRs] : mergedPRs;
   })();
   // sort() is stable, so recency order survives inside each tier.
   const filteredMergedPRs = mergedWithPinned
