@@ -87,14 +87,14 @@ export const CONTRIBUTIONS: ContributionItem[] = [
   },
   {
     name: "CareerOps",
-    repo: "santifer/career-ops",
+    repo: "career-ops-hq/career-ops",
     logo: "/logos/career-ops.png",
     href: "https://career-ops.org/",
-    stars: "68K",
+    stars: "71K",
     work: "setup doctor",
     preview: {
       title: "career-ops — open-source AI job search command center",
-      facts: "68K+ stars · 100k+ users · 100% open-source · #1 Repo of the Day",
+      facts: "71K+ stars · 100k+ users · 100% open-source · #1 Repo of the Day",
       image: "/stats/career-ops.png",
     },
   },
@@ -144,7 +144,7 @@ export const CONTRIBUTIONS: ContributionItem[] = [
 
 // Total across every repo above — the one headline number for the block and
 // the hero badge. Kept as a string so it reads the same in both places.
-export const CONTRIBUTION_TOTAL_STARS = "211K+";
+export const CONTRIBUTION_TOTAL_STARS = "214K+";
 
 export const PERSONAL = {
   name: "Vraj Patel",
