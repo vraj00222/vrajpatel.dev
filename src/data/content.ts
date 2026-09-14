@@ -73,15 +73,29 @@ export interface ContributionItem {
 
 export const CONTRIBUTIONS: ContributionItem[] = [
   {
+    name: "vgpu",
+    repo: "vercel-labs/vgpu",
+    logo: "/logos/vercel.svg",
+    href: "https://vgpu.sh/",
+    stars: "2.1K",
+    work: "canvas DPR fix",
+    preview: {
+      title: "vgpu — the WebGPU framework from Vercel Labs",
+      facts:
+        "2.1K+ stars · Vercel Labs · vgpu.sh — fixes canvasMouseTracker DPR scaling — normalized + canvasPixels (#445, co-authored)",
+      image: "/stats/vgpu.webp",
+    },
+  },
+  {
     name: "Caveman",
     repo: "JuliusBrussee/caveman",
     logo: "/logos/caveman.svg",
     href: "https://caveman.so/",
-    stars: "101K",
+    stars: "105K",
     work: "intensity levels",
     preview: {
       title: "Caveman — the token-efficient stack for agent-native development",
-      facts: "101K+ stars · 10M+ users · #1 on Hacker News · 65% fewer output tokens",
+      facts: "105K+ stars · 10M+ users · #1 on Hacker News · 65% fewer output tokens",
       image: "/stats/caveman.png",
     },
   },
@@ -116,35 +130,21 @@ export const CONTRIBUTIONS: ContributionItem[] = [
     repo: "InsForge/InsForge",
     logo: "/logos/insforge.png",
     href: "https://insforge.dev/",
-    stars: "12K",
+    stars: "13K",
     work: "data-grid fix",
     badge: { src: "/logos/yc.png", label: "Y Combinator-backed" },
     preview: {
       title: "InsForge — the open-source backend platform for agentic coding",
       facts:
-        "12K+ stars · Y Combinator-backed · 48K+ agent-built projects · 1 TB stored, 34 TB served",
+        "13K+ stars · Y Combinator-backed · 48K+ agent-built projects · 1 TB stored, 34 TB served",
       image: "/stats/insforge.png",
-    },
-  },
-  {
-    name: "vgpu",
-    repo: "vercel-labs/vgpu",
-    logo: "/logos/vercel.svg",
-    href: "https://vgpu.sh/",
-    stars: "2.1K",
-    work: "canvas DPR fix",
-    preview: {
-      title: "vgpu — the WebGPU framework from Vercel Labs",
-      facts:
-        "2.1K+ stars · Vercel Labs · vgpu.sh — fixes canvasMouseTracker DPR scaling — normalized + canvasPixels (#445, co-authored)",
-      image: "/stats/vgpu.webp",
     },
   },
 ] as const;
 
 // Total across every repo above — the one headline number for the block and
 // the hero badge. Kept as a string so it reads the same in both places.
-export const CONTRIBUTION_TOTAL_STARS = "214K+";
+export const CONTRIBUTION_TOTAL_STARS = "219K+";
 
 export const PERSONAL = {
   name: "Vraj Patel",

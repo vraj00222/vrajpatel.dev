@@ -63,7 +63,7 @@ const PINNED_MERGED_PRS: MergedPR[] = [
     repo: "vercel-labs/vgpu",
     repoDescription: "The WebGPU library, designed for agents.",
     url: "https://github.com/vercel-labs/vgpu/pull/445",
-    stars: 2148,
+    stars: 2109,
   },
 ];
 // Repos we ship a local logo for render it; everything else falls back to the
