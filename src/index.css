@@ -78,8 +78,12 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.7;
   font-weight: 400;
+  letter-spacing: -0.011em;
+  font-feature-settings: "cv02", "cv03", "calt" 1;
+  font-variant-ligatures: common-ligatures;
+  text-rendering: optimizeLegibility;
   background-color: var(--color-bg);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
@@ -89,6 +93,12 @@ body {
 .dark body {
   background-color: var(--color-dark-bg);
   color: var(--color-dark-text-secondary);
+}
+
+/* Slightly lift contrast for dropdown/body copy on dark */
+:root {
+  --color-dark-text-secondary: #c8c8c8;
+  --color-dark-text-muted: #9a9a9a;
 }
 
 /* Typography scale per spec */

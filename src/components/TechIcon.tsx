@@ -811,7 +811,7 @@ export function TechIcon({ name, size = 16 }: TechIconProps) {
           animate={{ opacity: 1, width: "auto" }}
           exit={{ opacity: 0, width: 0 }}
           transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-          className="text-[12px] font-medium text-text dark:text-dark-text whitespace-nowrap overflow-hidden"
+          className="text-[13px] font-medium text-text dark:text-dark-text whitespace-nowrap overflow-hidden"
         >
           {name}
         </motion.span>

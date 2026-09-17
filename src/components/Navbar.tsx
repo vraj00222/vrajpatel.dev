@@ -33,7 +33,7 @@ export function Navbar({ onAgentMode }: { onAgentMode: () => void }) {
       <nav className="mx-auto max-w-4xl flex items-center justify-between gap-8 px-6 h-14">
         <a
           href="#hero"
-          className="font-display text-sm font-semibold text-text dark:text-dark-text tracking-tight"
+          className="font-display text-[15px] font-semibold text-text dark:text-dark-text tracking-tight"
         >
           vraj.
         </a>
@@ -43,9 +43,9 @@ export function Navbar({ onAgentMode }: { onAgentMode: () => void }) {
             <li key={link.href}>
               <a
                 href={link.href}
-                className={`text-[13px] transition-colors duration-200 ${
+                className={`text-[14px] font-medium transition-colors duration-200 ${
                   active === link.href.replace("#", "")
-                    ? "text-text dark:text-dark-text font-medium"
+                    ? "text-text dark:text-dark-text"
                     : "text-text-muted hover:text-text dark:text-dark-text-muted dark:hover:text-dark-text"
                 }`}
               >
@@ -107,7 +107,7 @@ export function Navbar({ onAgentMode }: { onAgentMode: () => void }) {
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="block py-2.5 text-[14px] text-text-secondary dark:text-dark-text-secondary hover:text-text dark:hover:text-dark-text transition-colors"
+                  className="block py-3 text-[15.5px] font-medium text-text-secondary dark:text-dark-text-secondary hover:text-text dark:hover:text-dark-text transition-colors leading-relaxed"
                 >
                   {link.label}
                 </a>

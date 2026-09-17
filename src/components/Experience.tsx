@@ -44,7 +44,7 @@ export function Experience() {
                       )}
                       <div className="min-w-0">
                         <div className="flex items-center gap-2.5 flex-wrap">
-                          <span className="text-[15px] font-semibold text-text dark:text-dark-text">
+                          <span className="text-[16px] font-semibold text-text dark:text-dark-text tracking-tight">
                             {job.company}
                           </span>
                           {job.period.includes("Present") && (
@@ -54,17 +54,17 @@ export function Experience() {
                             </span>
                           )}
                         </div>
-                        <p className="text-[13px] font-medium text-text dark:text-dark-text mt-0.5">
+                        <p className="text-[14px] font-medium text-text dark:text-dark-text mt-0.5">
                           {job.title}
                         </p>
                       </div>
                     </div>
                     <div className="shrink-0 flex items-center gap-3">
                       <div className="text-right hidden sm:block">
-                        <p className="text-[13px] text-text-secondary dark:text-dark-text-secondary tabular-nums">
+                        <p className="text-[13.5px] text-text-secondary dark:text-dark-text-secondary tabular-nums font-medium">
                           {job.period}
                         </p>
-                        <p className="text-[12px] text-text-muted dark:text-dark-text-muted mt-0.5">
+                        <p className="text-[13px] text-text-muted dark:text-dark-text-muted mt-0.5">
                           {job.location}
                         </p>
                       </div>
@@ -81,7 +81,7 @@ export function Experience() {
                   </div>
                   {/* Mobile period/location */}
                   <div className="sm:hidden mt-1.5 ml-[52px]">
-                    <p className="text-[12px] text-text-muted dark:text-dark-text-muted">
+                    <p className="text-[13px] text-text-muted dark:text-dark-text-muted">
                       {job.period} &middot; {job.location}
                     </p>
                   </div>
@@ -97,10 +97,10 @@ export function Experience() {
                       transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="border-t border-border dark:border-dark-border px-4 py-4 space-y-4">
+                      <div className="border-t border-border dark:border-dark-border px-4 py-4 space-y-5">
                         {/* Tech stack — primary role (headline removed per request) */}
                         <div>
-                          <div className="flex flex-wrap gap-1.5">
+                          <div className="flex flex-wrap gap-2">
                             {job.tech.map((t) => (
                               <TechIcon key={t} name={t} />
                             ))}
@@ -109,14 +109,14 @@ export function Experience() {
 
                         {/* What I've done */}
                         <div>
-                          <p className="text-[13px] font-semibold text-text dark:text-dark-text mb-2">
+                          <p className="text-[14px] font-semibold text-text dark:text-dark-text mb-2.5">
                             What I've done
                           </p>
-                          <ul className="space-y-2">
+                          <ul className="space-y-2.5">
                             {job.bullets.map((bullet, bi) => (
                               <li
                                 key={bi}
-                                className="text-[13px] text-text-secondary dark:text-dark-text-secondary leading-[1.7] pl-3 relative before:content-['▪'] before:absolute before:left-0 before:text-text-muted dark:before:text-dark-text-muted before:text-[10px] before:top-0.75"
+                                className="text-[15px] text-text-secondary dark:text-dark-text-secondary leading-[1.65] pl-4 relative before:content-['▪'] before:absolute before:left-0 before:text-text-muted dark:before:text-dark-text-muted before:text-[11px] before:top-0.5"
                               >
                                 {bullet}
                               </li>
@@ -128,23 +128,23 @@ export function Experience() {
                         {job.additionalRoles?.map((role, ri) => (
                           <div
                             key={ri}
-                            className="pt-4 border-t border-border dark:border-dark-border space-y-3"
+                            className="pt-5 border-t border-border dark:border-dark-border space-y-3"
                           >
-                            <p className="text-[13px] font-semibold text-text dark:text-dark-text">
+                            <p className="text-[14px] font-semibold text-text dark:text-dark-text">
                               {role.title}
                             </p>
                             {role.tech?.length ? (
-                              <div className="flex flex-wrap gap-1.5">
+                              <div className="flex flex-wrap gap-2">
                                 {role.tech.map((t) => (
                                   <TechIcon key={`${ri}-${t}`} name={t} />
                                 ))}
                               </div>
                             ) : null}
-                            <ul className="space-y-2">
+                            <ul className="space-y-2.5">
                               {role.bullets.map((bullet, bi) => (
                                 <li
                                   key={bi}
-                                  className="text-[13px] text-text-secondary dark:text-dark-text-secondary leading-[1.7] pl-3 relative before:content-['▪'] before:absolute before:left-0 before:text-text-muted dark:before:text-dark-text-muted before:text-[10px] before:top-0.75"
+                                  className="text-[15px] text-text-secondary dark:text-dark-text-secondary leading-[1.65] pl-4 relative before:content-['▪'] before:absolute before:left-0 before:text-text-muted dark:before:text-dark-text-muted before:text-[11px] before:top-0.5"
                                 >
                                   {bullet}
                                 </li>
