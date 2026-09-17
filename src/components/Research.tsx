@@ -24,12 +24,10 @@ export function Research() {
         </FadeIn>
 
         <FadeIn delay={0.06}>
-          {/* Blue accent (left rail + venue badge) marks this as peer-reviewed;
-              amber is reserved for hackathon wins, emerald for "currently". */}
-          <div className="rounded-lg border border-border dark:border-dark-border border-l-2 border-l-blue-600 dark:border-l-blue-400 bg-surface dark:bg-dark-surface p-5">
+          <div className="rounded-lg border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-5">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
-              <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/10 dark:bg-blue-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
-                <BadgeCheck size={11} />
+              <span className="inline-flex items-center gap-1 rounded-full bg-hover-bg dark:bg-dark-hover-bg border border-border dark:border-dark-border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary">
+                <BadgeCheck size={11} className="text-text-muted dark:text-dark-text-muted" />
                 {PUBLICATION.venue}
               </span>
               <span className="text-[10px] font-semibold uppercase tracking-wider text-text-muted dark:text-dark-text-muted">
