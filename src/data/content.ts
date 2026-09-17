@@ -218,7 +218,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: "Feb 2023 — Jul 2023",
     location: "Ahmedabad, India",
     tech: ["Django", "PostgreSQL", "Docker", "Git", "GitHub Actions", "Postman", "JWT"],
-    logo: "/logos/lucent.png",
+    logo: "/logos/lucent.jpeg",
     bullets: [
       "Built and maintained REST APIs for an internal project management platform using Django REST Framework with JWT-based authentication",
       "Designed PostgreSQL schemas for multi-tenant data isolation, wrote migrations, and optimized query plans with indexes and CTEs",
@@ -232,7 +232,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: "May 2022 — Jul 2022",
     location: "Rajkot, India",
     tech: ["C#", "ASP.NET", "SQL Server", "JavaScript", "Git"],
-    logo: "/logos/rkit.png",
+    logo: "/logos/rkit.jpeg",
     bullets: [
       "Built enterprise CRUD modules for an internal ERP system using ASP.NET Core MVC with Entity Framework and SQL Server",
       "Wrote and optimized T-SQL stored procedures for reporting dashboards, improving query performance on large datasets",
