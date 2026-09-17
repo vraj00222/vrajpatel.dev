@@ -54,7 +54,7 @@ export function Experience() {
                             </span>
                           )}
                         </div>
-                        <p className="text-[13px] text-text-muted dark:text-dark-text-muted mt-0.5">
+                        <p className="text-[13px] font-medium text-text dark:text-dark-text mt-0.5">
                           {job.title}
                         </p>
                       </div>
@@ -98,11 +98,8 @@ export function Experience() {
                       className="overflow-hidden"
                     >
                       <div className="border-t border-border dark:border-dark-border px-4 py-4 space-y-4">
-                        {/* Tech stack — primary role */}
+                        {/* Tech stack — primary role (headline removed per request) */}
                         <div>
-                          <p className="text-[13px] font-semibold text-text dark:text-dark-text mb-2.5">
-                            Technologies & Tools
-                          </p>
                           <div className="flex flex-wrap gap-1.5">
                             {job.tech.map((t) => (
                               <TechIcon key={t} name={t} />

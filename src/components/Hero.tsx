@@ -78,8 +78,8 @@ export function Hero() {
 
         <motion.div variants={step}>
           <p
-            className="mt-14 font-display font-semibold leading-[1.05] tracking-[-0.025em] text-balance text-text dark:text-dark-text"
-            style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
+            className="mt-14 font-display font-bold leading-[1.1] tracking-[-0.02em] text-balance text-text dark:text-dark-text"
+            style={{ fontSize: "clamp(1.75rem, 5vw, 2.5rem)" }}
           >
             {THESIS}
           </p>
