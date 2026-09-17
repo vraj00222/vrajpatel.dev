@@ -88,7 +88,7 @@ export function Experience() {
                       className="overflow-hidden"
                     >
                       <div className="border-t border-border dark:border-dark-border px-4 py-4 space-y-4">
-                        {/* Tech stack */}
+                        {/* Tech stack — primary role */}
                         <div>
                           <p className="text-[13px] font-semibold text-text dark:text-dark-text mb-2.5">
                             Technologies & Tools
@@ -100,10 +100,10 @@ export function Experience() {
                           </div>
                         </div>
 
-                        {/* What I've done */}
+                        {/* What I've done — primary role */}
                         <div>
                           <p className="text-[13px] font-semibold text-text dark:text-dark-text mb-2">
-                            What I've done
+                            What I've done{job.additionalRoles ? ` — ${job.title}` : ""}
                           </p>
                           <ul className="space-y-2">
                             {job.bullets.map((bullet, bi) => (
@@ -116,6 +116,35 @@ export function Experience() {
                             ))}
                           </ul>
                         </div>
+
+                        {/* Additional concurrent roles — 2nd partition visible only on expand */}
+                        {job.additionalRoles?.map((role, ri) => (
+                          <div
+                            key={ri}
+                            className="pt-4 border-t border-border dark:border-dark-border space-y-3"
+                          >
+                            <p className="text-[13px] font-semibold text-text dark:text-dark-text">
+                              {role.title}
+                            </p>
+                            {role.tech?.length ? (
+                              <div className="flex flex-wrap gap-1.5">
+                                {role.tech.map((t) => (
+                                  <TechIcon key={`${ri}-${t}`} name={t} />
+                                ))}
+                              </div>
+                            ) : null}
+                            <ul className="space-y-2">
+                              {role.bullets.map((bullet, bi) => (
+                                <li
+                                  key={bi}
+                                  className="text-[13px] text-text-secondary dark:text-dark-text-secondary leading-[1.7] pl-3 relative before:content-['▪'] before:absolute before:left-0 before:text-text-muted dark:before:text-dark-text-muted before:text-[10px] before:top-0.75"
+                                >
+                                  {bullet}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
                       </div>
                     </motion.div>
                   )}

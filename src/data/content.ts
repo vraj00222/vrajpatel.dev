@@ -167,6 +167,7 @@ export interface ExperienceItem {
   location: string;
   tech: string[];
   bullets: string[];
+  additionalRoles?: { title: string; tech: string[]; bullets: string[] }[];
 }
 
 export const EXPERIENCE: ExperienceItem[] = [
@@ -182,18 +183,17 @@ export const EXPERIENCE: ExperienceItem[] = [
       "Shipped rubric-grounded feedback templates and batch evaluation workflows with Python and Gradescope API, reducing inconsistent grading and enabling actionable, structured feedback at scale",
       "Partnered with faculty to instrument usage, iterate on UX from student/instructor feedback, and keep the platform reliable during peak submission periods",
     ],
-  },
-  {
-    title: "Teaching Associate",
-    company: "California State University, Fullerton",
-    period: "Aug 2025 — May 2026",
-    location: "Fullerton, CA",
-    tech: ["Python", "C++", "Git", "Gradescope"],
-    bullets: [
-      "Teaching CPSC 335 — Algorithm Engineering to 100+ undergraduate students, covering greedy algorithms, dynamic programming, graph traversal, and NP-completeness",
-      "Built automated grading scripts with Python and Gradescope API to batch-evaluate student submissions and provide structured feedback",
-      "Designing homework sets and exam problems that reinforce algorithmic thinking and proof techniques",
-      "Holding weekly office hours and review sessions to help students debug code and understand time complexity analysis",
+    additionalRoles: [
+      {
+        title: "Teaching Associate — CPSC 335 Algorithm Engineering (concurrent)",
+        tech: ["Python", "C++", "Git", "Gradescope"],
+        bullets: [
+          "Teaching CPSC 335 — Algorithm Engineering to 100+ undergraduate students, covering greedy algorithms, dynamic programming, graph traversal, and NP-completeness",
+          "Built automated grading scripts with Python and Gradescope API to batch-evaluate student submissions and provide structured feedback",
+          "Designing homework sets and exam problems that reinforce algorithmic thinking and proof techniques",
+          "Holding weekly office hours and review sessions to help students debug code and understand time complexity analysis",
+        ],
+      },
     ],
   },
   {
