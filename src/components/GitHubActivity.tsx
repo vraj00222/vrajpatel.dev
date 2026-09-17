@@ -34,8 +34,8 @@ interface SearchIssueItem {
   html_url: string;
 }
 
-const GH_GREENS_DARK = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
-const GH_GREENS_LIGHT = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
+const GH_GREENS_DARK = ["#22272b", "#0e4429", "#006d32", "#26a641", "#39d353"];
+const GH_GREENS_LIGHT = ["#e8e6e1", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
 const MONTH_NAMES = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",

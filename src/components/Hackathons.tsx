@@ -21,31 +21,20 @@ function WonCard({ h }: { h: Hackathon }) {
   const subtitle = [h.result, h.project].filter(Boolean).join(" · ");
 
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-amber-400/25 dark:border-amber-400/20 bg-surface dark:bg-dark-surface p-4 shadow-[0_4px_20px_-14px_rgba(251,191,36,0.4)] transition-shadow duration-300 hover:shadow-[0_6px_24px_-12px_rgba(251,191,36,0.5)]">
-      {/* soft warm wash in the corner — gentle "sunshine", not flashy */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-amber-300/10 dark:bg-amber-400/10 blur-2xl"
-      />
-
+    <div className="group relative overflow-hidden rounded-xl border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-4 transition-colors duration-200 hover:border-border-hover dark:hover:border-dark-border-hover">
       <div className="relative flex items-center gap-4">
         <div className="relative shrink-0">
-          {/* subtle halo behind the logo */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -inset-1.5 rounded-2xl bg-amber-400/15 blur-md"
-          />
           <img
             src={h.image}
             alt={h.alt}
             loading="lazy"
-            className="relative h-14 w-14 rounded-xl object-cover ring-1 ring-amber-400/30"
+            className="relative h-14 w-14 rounded-xl object-cover ring-1 ring-border dark:ring-dark-border"
           />
         </div>
 
         <div className="min-w-0 flex-1">
-          <span className="inline-flex items-center gap-1 rounded-full bg-amber-400/12 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-            <Trophy size={10} />
+          <span className="inline-flex items-center gap-1 rounded-full bg-hover-bg dark:bg-dark-hover-bg border border-border dark:border-dark-border px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary">
+            <Trophy size={10} className="text-text-muted dark:text-dark-text-muted" />
             Won
           </span>
           <p className="mt-1.5 flex items-center gap-1.5 text-[15px] font-semibold text-text dark:text-dark-text leading-snug">

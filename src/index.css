@@ -8,15 +8,15 @@
   --font-display: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
-  /* ── Light mode ── warm off-white #F8F7F5 ── */
+  /* ── Light mode ── warm off-white #F8F7F5 with darker cards ── */
   --color-bg: #F8F7F5;
-  --color-surface: #ffffff;
+  --color-surface: #EFEEE9;
   --color-text: #121314;
   --color-text-secondary: #2e3031;
   --color-text-muted: #6b6e71;
-  --color-border: #e8e6e1;
-  --color-border-hover: #d8d5d0;
-  --color-hover-bg: #efece7;
+  --color-border: #E2DDD7;
+  --color-border-hover: #D5D0C8;
+  --color-hover-bg: #E8E6E1;
 
   /* ── Dark mode ── deep charcoal #121314 ── */
   --color-dark-bg: #121314;
@@ -144,16 +144,17 @@ a:focus-visible, button:focus-visible {
 
 section[id] { scroll-margin-top: 5rem; }
 
-/* Matches the 4xl track every section hangs off, so the rule lines up with
-   the left rail instead of floating on the old narrower measure. */
+/* Section dividers — now very subtle hairline, not a hard rule */
 .section-divider {
   height: 1px;
   background: var(--color-border);
+  opacity: 0.45;
   margin: 0 auto;
   max-width: 896px;
 }
 .dark .section-divider {
   background: var(--color-dark-border);
+  opacity: 0.35;
 }
 
 .skip-link {

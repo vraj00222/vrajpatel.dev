@@ -29,7 +29,7 @@ export function Navbar({ onAgentMode }: { onAgentMode: () => void }) {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-bg/70 dark:bg-dark-bg/70 backdrop-blur-xl backdrop-saturate-150 border-b border-border dark:border-dark-border">
+    <header className="fixed top-0 inset-x-0 z-50 bg-bg/70 dark:bg-dark-bg/70 backdrop-blur-xl backdrop-saturate-150 border-b border-border/60 dark:border-dark-border/50">
       <nav className="mx-auto max-w-4xl flex items-center justify-between gap-8 px-6 h-14">
         <a
           href="#hero"
@@ -100,7 +100,7 @@ export function Navbar({ onAgentMode }: { onAgentMode: () => void }) {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-            className="md:hidden border-t border-border dark:border-dark-border bg-bg/95 dark:bg-dark-bg/95 backdrop-blur-xl px-6 py-3 space-y-1 overflow-hidden"
+            className="md:hidden border-t border-border/60 dark:border-dark-border/50 bg-bg/95 dark:bg-dark-bg/95 backdrop-blur-xl px-6 py-3 space-y-1 overflow-hidden"
           >
             {NAV_LINKS.map((link) => (
               <li key={link.href} className="list-none">
