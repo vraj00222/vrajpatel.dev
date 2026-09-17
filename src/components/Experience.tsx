@@ -6,7 +6,7 @@ import { FadeIn } from "./FadeIn";
 import { TechIcon } from "./TechIcon";
 
 export function Experience() {
-  const [expanded, setExpanded] = useState<number | null>(0);
+  const [expanded, setExpanded] = useState<number | null>(null);
 
   const toggle = (i: number) =>
     setExpanded((prev) => (prev === i ? null : i));

@@ -171,9 +171,22 @@ export interface ExperienceItem {
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
+    title: "Software Developer",
+    company: "California State University, Fullerton",
+    period: "Aug 2025 — May 2026",
+    location: "Fullerton, CA",
+    tech: ["Next.js", "TypeScript", "Python", "OpenAI", "Gradescope"],
+    bullets: [
+      "Revamped the department's course-management platform to modernize the student/instructor experience, lifting weekly active usage by 40% among 1200+ students by integrating LLM-powered features and redesigning core workflows for a faster, more intuitive UI",
+      "Automated grading and feedback tasks that previously consumed 10+ instructor hours/week, cutting turnaround ~40% across 200+ weekly submissions by building GenAI-powered pipelines that auto-generate structured feedback on Gradescope",
+      "Shipped rubric-grounded feedback templates and batch evaluation workflows with Python and Gradescope API, reducing inconsistent grading and enabling actionable, structured feedback at scale",
+      "Partnered with faculty to instrument usage, iterate on UX from student/instructor feedback, and keep the platform reliable during peak submission periods",
+    ],
+  },
+  {
     title: "Teaching Associate",
-    company: "Cal State Fullerton",
-    period: "Aug 2025 — Jun 2026",
+    company: "California State University, Fullerton",
+    period: "Aug 2025 — May 2026",
     location: "Fullerton, CA",
     tech: ["Python", "C++", "Git", "Gradescope"],
     bullets: [
