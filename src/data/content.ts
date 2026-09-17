@@ -167,6 +167,7 @@ export interface ExperienceItem {
   location: string;
   tech: string[];
   bullets: string[];
+  logo?: string;
   additionalRoles?: { title: string; tech: string[]; bullets: string[] }[];
 }
 
@@ -177,6 +178,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: "Aug 2025 — May 2026",
     location: "Fullerton, CA",
     tech: ["Next.js", "TypeScript", "Python", "OpenAI", "Gradescope"],
+    logo: "/logos/csuf.png",
     bullets: [
       "Revamped the department's course-management platform to modernize the student/instructor experience, lifting weekly active usage by 40% among 1200+ students by integrating LLM-powered features and redesigning core workflows for a faster, more intuitive UI",
       "Automated grading and feedback tasks that previously consumed 10+ instructor hours/week, cutting turnaround ~40% across 200+ weekly submissions by building GenAI-powered pipelines that auto-generate structured feedback on Gradescope",
@@ -202,6 +204,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: "Jul 2023 — Feb 2024",
     location: "Taoyuan, Taiwan",
     tech: ["Python", "TensorFlow", "PyTorch", "Jupyter"],
+    logo: "/logos/yuanze.png",
     bullets: [
       "Designed and trained LSTM-Autoencoder models for ECG anomaly detection using the MIT-BIH Arrhythmia dataset with TensorFlow and Keras",
       "Preprocessed 100k+ heartbeat signals — filtering noise, normalizing waveforms, and segmenting R-R intervals for sequence modeling",
@@ -215,6 +218,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: "Feb 2023 — Jul 2023",
     location: "Ahmedabad, India",
     tech: ["Django", "PostgreSQL", "Docker", "Git", "GitHub Actions", "Postman", "JWT"],
+    logo: "/logos/lucent.png",
     bullets: [
       "Built and maintained REST APIs for an internal project management platform using Django REST Framework with JWT-based authentication",
       "Designed PostgreSQL schemas for multi-tenant data isolation, wrote migrations, and optimized query plans with indexes and CTEs",
@@ -228,6 +232,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: "May 2022 — Jul 2022",
     location: "Rajkot, India",
     tech: ["C#", "ASP.NET", "SQL Server", "JavaScript", "Git"],
+    logo: "/logos/rkit.png",
     bullets: [
       "Built enterprise CRUD modules for an internal ERP system using ASP.NET Core MVC with Entity Framework and SQL Server",
       "Wrote and optimized T-SQL stored procedures for reporting dashboards, improving query performance on large datasets",

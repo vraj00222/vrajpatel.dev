@@ -33,21 +33,31 @@ export function Experience() {
                   className="w-full text-left px-4 py-4 bg-surface dark:bg-dark-surface hover:bg-hover-bg dark:hover:bg-dark-hover-bg transition-colors duration-200"
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2.5 flex-wrap">
-                        <span className="text-[15px] font-semibold text-text dark:text-dark-text">
-                          {job.company}
-                        </span>
-                        {job.period.includes("Present") && (
-                          <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-500/15 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
-                            Working
+                    <div className="flex items-start gap-3 min-w-0">
+                      {job.logo && (
+                        <img
+                          src={job.logo}
+                          alt={`${job.company} logo`}
+                          className="w-10 h-10 rounded-lg object-contain bg-white border border-border/60 dark:border-dark-border/60 shrink-0 p-1"
+                          loading="lazy"
+                        />
+                      )}
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2.5 flex-wrap">
+                          <span className="text-[15px] font-semibold text-text dark:text-dark-text">
+                            {job.company}
                           </span>
-                        )}
+                          {job.period.includes("Present") && (
+                            <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-500/15 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+                              Working
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[13px] text-text-muted dark:text-dark-text-muted mt-0.5">
+                          {job.title}
+                        </p>
                       </div>
-                      <p className="text-[13px] text-text-muted dark:text-dark-text-muted mt-0.5">
-                        {job.title}
-                      </p>
                     </div>
                     <div className="shrink-0 flex items-center gap-3">
                       <div className="text-right hidden sm:block">
@@ -70,7 +80,7 @@ export function Experience() {
                     </div>
                   </div>
                   {/* Mobile period/location */}
-                  <div className="sm:hidden mt-1.5">
+                  <div className="sm:hidden mt-1.5 ml-[52px]">
                     <p className="text-[12px] text-text-muted dark:text-dark-text-muted">
                       {job.period} &middot; {job.location}
                     </p>
@@ -100,10 +110,10 @@ export function Experience() {
                           </div>
                         </div>
 
-                        {/* What I've done — primary role */}
+                        {/* What I've done */}
                         <div>
                           <p className="text-[13px] font-semibold text-text dark:text-dark-text mb-2">
-                            What I've done{job.additionalRoles ? ` — ${job.title}` : ""}
+                            What I've done
                           </p>
                           <ul className="space-y-2">
                             {job.bullets.map((bullet, bi) => (
