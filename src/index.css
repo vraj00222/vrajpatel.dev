@@ -8,25 +8,25 @@
   --font-display: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
-  /* ── Light mode ── high-contrast black on white ── */
-  --color-bg: #ffffff;
-  --color-surface: #f8f8f8;
-  --color-text: #000000;
-  --color-text-secondary: #000000;
-  --color-text-muted: #222222;
-  --color-border: #e5e5e5;
-  --color-border-hover: #cccccc;
-  --color-hover-bg: #f2f2f2;
+  /* ── Light mode ── warm off-white #F8F7F5 ── */
+  --color-bg: #F8F7F5;
+  --color-surface: #ffffff;
+  --color-text: #121314;
+  --color-text-secondary: #2e3031;
+  --color-text-muted: #6b6e71;
+  --color-border: #e8e6e1;
+  --color-border-hover: #d8d5d0;
+  --color-hover-bg: #efece7;
 
-  /* ── Dark mode ── deep black, bright white ── */
-  --color-dark-bg: #050505;
-  --color-dark-surface: #111111;
-  --color-dark-text: #ffffff;
-  --color-dark-text-secondary: #b0b0b0;
-  --color-dark-text-muted: #5a5a5a;
-  --color-dark-border: #1e1e1e;
-  --color-dark-border-hover: #333333;
-  --color-dark-hover-bg: #0f0f0f;
+  /* ── Dark mode ── deep charcoal #121314 ── */
+  --color-dark-bg: #121314;
+  --color-dark-surface: #1c1e1f;
+  --color-dark-text: #F8F7F5;
+  --color-dark-text-secondary: #c8c9ca;
+  --color-dark-text-muted: #9a9d9f;
+  --color-dark-border: #2a2e30;
+  --color-dark-border-hover: #3a3f42;
+  --color-dark-hover-bg: #1e2122;
 
   /* GitHub greens — light + dark */
   --color-gh-0: #ebedf0;
@@ -95,11 +95,7 @@ body {
   color: var(--color-dark-text-secondary);
 }
 
-/* Slightly lift contrast for dropdown/body copy on dark */
-:root {
-  --color-dark-text-secondary: #c8c8c8;
-  --color-dark-text-muted: #9a9a9a;
-}
+/* Dark contrast already lifted in @theme above */
 
 /* Typography scale per spec */
 h1 {
